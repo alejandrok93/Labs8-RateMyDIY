@@ -5,6 +5,10 @@ const server = express();
 
 const db = require('./config/dbConfig');
 
+// using SendGrid's v3 Node.js Library
+// https://github.com/sendgrid/sendgrid-nodejs
+const sgMail = require('@sendgrid/mail');
+
 // MIDDLEWARE
 const configureMiddleware = require('./config/middleware');
 
@@ -20,9 +24,27 @@ server.get('/', (req, res) => {
 	);
 });
 
-server.get('/hello', (req, res) => {
-	console.log('hey');
-	res.send('hi');
+// sendgrid test implementation
+server.post('/sendgrid/test', (req, res) => {
+	const recipient = req.body.to;
+	const msg = {
+		to: recipient,
+		from: 'ratemydyics@ratemydyi.com',
+		subject: 'Welcome to RateMyDIY',
+		text: `Thank you for subscribing to Rate My DIY mail service.`,
+		html: '<strong>Thank you for subscribing to Rate My DIY mail service.</strong>',
+	};
+	if (!req.body.to) {
+		return res.status(422).json({ error: 'Email cannot be empty.' });
+	} else {
+		sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+		sgMail.send(msg).then(() => {
+			res.status(200).json({ message: `Email successfully sent to ${recipient}` }).end();
+		}).catch(err => {
+			console.error(err.toString());
+			res.status(500).end();
+		});
+	}
 });
 
 const userRoutes = require('./routes/userRoutes');

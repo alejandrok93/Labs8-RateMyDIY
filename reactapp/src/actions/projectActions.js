@@ -1,60 +1,112 @@
 import axios from 'axios';
-export const FETCH_MYPROJECT = 'FETCH_MYPROJECT';
-export const FETCH_MYPROJECT_SUCCESS = 'FETCH_MYPROJECT_SUCCESS';
-export const FETCH_MYPROJECT_ERROR = 'FETCH_MYPROJECT_ERROR';
 
-export const FETCH_MYREVIEWS = 'FETCH_MYREVIEWS';
-export const FETCH_MYREVIEWS_SUCCESS = 'FETCH_MYREVIEWS_SUCCESS';
-export const FETCH_MYREVIEWS_ERROR = 'FETCH_MYREVIEWS_ERROR';
+// getProject
+export const GETTING_PROJECT = 'GETTING_PROJECT';
+export const GOT_PROJECT = 'GOT_PROJECT';
+export const GET_PROJECT_ERROR = 'GET_PROJECT_ERROR';
+// addProject
+export const ADDING_PROJECT = 'ADDING_PROJECT';
+export const ADDED_PROJECT = 'ADDED_PROJECT';
+export const ADD_PROJECT_ERROR = 'ADD_PROJECT_ERROR';
+// editProject
+export const UPDATING_PROJECT = 'UPDATING_PROJECT';
+export const UPDATED_PROJECT = 'UPDATED_PROJECT';
+export const UPDATE_PROJECT_ERROR = 'UPDATE_PROJECT_ERROR';
+// deleteProject
+export const DELETING_PROJECT = 'DELETING_PROJECT';
+export const DELETED_PROJECT = 'DELETED_PROJECT';
+export const DELETE_PROJECT_ERROR = 'DELETE_PROJECT_ERROR';
+// getProjectReviews
+// export const GETTING_PROJECTS_REVIEWS = 'GETTING_PROJECTS_REVIEWS';
+// export const GOT_PROJECT_REVIEWS = 'GOT_PROJECT_REVIEWS';
+// export const GET_PROJECT_REVIEWS_ERROR = 'GET_PROJECT_REVIEWS_ERROR';
 
-export const FETCH_SEARCH_RESULTS = 'FETCH_SEARCH_RESULTS';
-export const FETCH_SEARCH_RESULTS_SUCCESS = 'FETCH_SEARCH_RESULTS_SUCCESS';
-export const FETCH_SEARCH_RESULTS_ERROR = 'FETCH_SEARCH_RESULTS_ERROR';
+// Loading message tester
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-export const fetchMyProjects = () => {
+const port = 5000;
+
+// get project by id
+export const getProject = id => {
 	return dispatch => {
-		dispatch({ type: FETCH_MYPROJECT });
+		dispatch({ type: GETTING_PROJECT });
+
 		axios
-			.get('https://ratemydiy.herokuapp.com/api/myProjects')
-			.then(response => {
-				dispatch({ type: FETCH_MYPROJECT_SUCCESS, payload: response.data });
+			.get(
+				`${process.env.BACKEND_URL ||
+					`http://localhost:${port}`}/api/projects/${id}`
+			)
+
+			.then(async ({ data }) => {
+				await sleep(500);
+				dispatch({ type: GOT_PROJECT, payload: data });
 			})
-			.catch(err => {
-				console.log(err);
-				dispatch({ type: FETCH_MYPROJECT_ERROR });
-			});
+
+			.catch(error => dispatch({ type: GET_PROJECT_ERROR, payload: error }));
 	};
 };
 
-export const fetchMyReviews = () => {
+// add project
+export const addProject = project => {
 	return dispatch => {
-		dispatch({ type: FETCH_MYREVIEWS });
+		dispatch({ type: ADDING_PROJECT });
+
 		axios
-			.get('https://ratemydiy.herokuapp.com/api/reviewList')
-			.then(response => {
-				dispatch({ type: FETCH_MYREVIEWS_SUCCESS, payload: response.data });
+			.post(
+				`${process.env.BACKEND_URL ||
+					`http://localhost:${port}`}/api/projects/`,
+				project
+			)
+
+			.then(async () => {
+				await sleep(500);
+				dispatch({ type: ADDED_PROJECT });
 			})
-			.catch(err => {
-				console.log(err);
-				dispatch({ type: FETCH_MYREVIEWS_ERROR });
-			});
+
+			.catch(error => dispatch({ type: ADD_PROJECT_ERROR, payload: error }));
 	};
 };
 
-export const fetchSearchResults = () => {
+// update project
+export const updateProject = (id, changes) => {
 	return dispatch => {
-		dispatch({ type: FETCH_SEARCH_RESULTS });
+		dispatch({ type: UPDATING_PROJECT });
+
 		axios
-			.get('someURL')
-			.then(response => {
-				dispatch({
-					type: FETCH_SEARCH_RESULTS_SUCCESS,
-					payload: response.data
-				});
+			.put(
+				`${process.env.BACKEND_URL ||
+					`http://localhost:${port}`}/api/projects/${id}`,
+				changes
+			)
+
+			.then(async ({ data }) => {
+				await sleep(500);
+				dispatch({ type: UPDATED_PROJECT, payload: data });
 			})
-			.catch(err => {
-				console.log(err);
-				dispatch({ type: FETCH_SEARCH_RESULTS_ERROR });
-			});
+
+			.catch(error => dispatch({ type: UPDATE_PROJECT_ERROR, payload: error }));
+	};
+};
+
+// delete project
+export const deleteProject = id => {
+	return dispatch => {
+		dispatch({ type: DELETING_PROJECT });
+
+		axios
+			.delete(
+				`${process.env.BACKEND_URL ||
+					`http://localhost:${port}`}/api/projects/${id}`
+			)
+
+			.then(async () => {
+				await sleep(500);
+				dispatch({ type: DELETED_PROJECT, payload: {} });
+				// dispatch({ type: SET_REDIRECT, payload: '/' });
+			})
+
+			.catch(error => dispatch({ type: DELETE_PROJECT_ERROR, payload: error }));
 	};
 };

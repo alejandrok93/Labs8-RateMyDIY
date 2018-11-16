@@ -4,6 +4,10 @@ const express = require('express');
 const server = express();
 
 const db = require('./config/dbConfig');
+const twilio = require('twilio'); 
+const accountSid = "AC5015bf59d92c66d960602ce3a51d6e1d";
+const authToken = "df07b21ee914b8532f3dbc78fd8e32e8"; 
+const client = new twilio(accountSid, authToken);
 
 // MIDDLEWARE
 const configureMiddleware = require('./config/middleware');
@@ -25,6 +29,7 @@ server.get('/hello', (req, res) => {
 	res.send('hi');
 });
 
+
 const userRoutes = require('./routes/userRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -32,6 +37,39 @@ const postRoutes = require('./routes/postRoutes');
 server.use('/api/users', userRoutes);
 server.use('/api/projects', projectRoutes);
 server.use('/api/posts', postRoutes);
+
+
+
+
+//Twilio 
+server.get('/send-text', (req, res) => {
+    //Welcome Message
+    res.send('Hello to the Twilio Server')
+
+    //_GET Variables
+    const { recipient, textmessage } = req.query;
+
+
+    //Send Text
+    client.messages.create({
+        body: textmessage,
+        to: recipient,  // Text this number
+        from: '+15625219688 ' // From a valid Twilio number
+    }).then((message) => console.log(message.sid));
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // server.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");

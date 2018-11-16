@@ -75,4 +75,8 @@ router.delete('/:post_id', ensureLoggedIn, function(req, res, next) {
 		});
 });
 
+
+
+
+
 module.exports = router;

@@ -31,8 +31,8 @@ const AppContainer = styled.div`
   display: flex;
   max-width: 1280px;
   min-width: 600px;
-  height: 100vh;
-  background: #eff;
+  height: auto;
+  background: #EFF;
   margin: 10px auto;
 `;
 

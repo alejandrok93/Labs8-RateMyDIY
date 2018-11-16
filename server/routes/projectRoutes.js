@@ -8,9 +8,24 @@ const authenticate = require("../config/authMiddleware");
 
 const db = require("../models/projectModel");
 
+// setup-aws-s3.js config for aws-sdk and multer
+const upload = require('../setup-aws-s3');
+
+const singleUpload = upload.single('image')
+
+// Amazon AWS Upload endpoint
+router.post('/image-upload', function (req, res) {
+	singleUpload(req, res, function (err, some) {
+		if (err) {
+			return res.status(422).send({ errors: [{ title: 'Image Upload Error', detail: err.message }] });
+		}
+		return res.json({ 'imageUrl': req.file.location });
+	});
+})
+
 // get project by id
-router.get("/:project_id", function(req, res, next) {
-  const { project_id } = req.params;
+router.get('/:project_id', function (req, res, next) {
+	const { project_id } = req.params;
 
   db.getProjectByID(project_id)
     .then(project => {
@@ -26,8 +41,9 @@ router.get("/:project_id", function(req, res, next) {
 });
 
 // get reviews by project id
-router.get("/:project_id/reviews", function(req, res, next) {
-  const { project_id } = req.params;
+
+router.get('/:project_id/reviews', function (req, res, next) {
+	const { project_id } = req.params;
 
   db.getReviewsByProjectID(project_id)
     .then(reviews => {
@@ -51,8 +67,9 @@ router.get("/", (req, res) => {
 });
 
 // add project
-router.post("/", ensureLoggedIn, authenticate, function(req, res, next) {
-  const { user_id, project_name, img_url, text } = req.body;
+router.post('/', ensureLoggedIn, authenticate, function (req, res, next) {
+	const { user_id, project_name, img_url, text } = req.body;
+
 
   if (!project_name || !img_url || !text) {
     return res.status(422).json({ error: "Missing parameters." });
@@ -69,9 +86,10 @@ router.post("/", ensureLoggedIn, authenticate, function(req, res, next) {
 });
 
 // update project by id
-router.put("/:project_id", ensureLoggedIn, function(req, res, next) {
-  const { user_id, project_name, img_url, text } = req.body;
-  const { project_id } = req.params;
+
+router.put('/:project_id', ensureLoggedIn, function (req, res, next) {
+	const { user_id, project_name, img_url, text } = req.body;
+	const { project_id } = req.params;
 
   if (!project_name || !img_url || !text) {
     return res.status(422).json({ error: "Missing parameters." });
@@ -92,9 +110,10 @@ router.put("/:project_id", ensureLoggedIn, function(req, res, next) {
 });
 
 // delete project by id
-router.delete("/:project_id", ensureLoggedIn, function(req, res, next) {
-  const { user_id } = req.body;
-  const { project_id } = req.params;
+router.delete('/:project_id', ensureLoggedIn, function (req, res, next) {
+	const { user_id } = req.body;
+	const { project_id } = req.params;
+
 
   db.removeProject(user_id, project_id)
     .then(count => {

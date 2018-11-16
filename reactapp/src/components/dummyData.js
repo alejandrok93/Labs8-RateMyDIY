@@ -2,17 +2,17 @@ module.exports = {
   featuredProjects: [
     {
       id: 1,
-      name: "Micro brew IPA",
-      star_count: 4.2,
-      author: "alejandrok",
-      photo_url: "http:// someURL.com"
+      name: "Half Turn Jimmy Twist",
+      star_count: 3.2,
+      author: "Tim",
+      photo_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGzDMUBhpy4KeOU-EAumo-fG8gCrYW7_v1y0LvcR-26z8kruWk"
     },
     {
       id: 2,
-      name: "Steak Recipe",
+      name: "Flannel Jig with Hidden Hole",
       star_count: 4.2,
-      author: "john",
-      photo_url: "someURL.com"
+      author: "Al",
+      photo_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGzDMUBhpy4KeOU-EAumo-fG8gCrYW7_v1y0LvcR-26z8kruWk"
     }
   ],
   popularMakers: [
@@ -21,35 +21,35 @@ module.exports = {
       name: "Alejandrok",
       star_count: 4.2,
       author: "alejandrok",
-      photo_url: "http:// someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     },
     {
       id: 2,
       name: "Max",
       star_count: 4.2,
       author: "john",
-      photo_url: "someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     },
     {
       id: 1,
       name: "Mike",
       star_count: 4.2,
       author: "alejandrok",
-      photo_url: "http:// someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     },
     {
       id: 2,
       name: "David",
       star_count: 4.2,
       author: "john",
-      photo_url: "someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     },
     {
       id: 2,
       name: "Tristen",
       star_count: 4.2,
       author: "john",
-      photo_url: "someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     }
   ],
   popularReviewers: [
@@ -58,14 +58,14 @@ module.exports = {
       name: "Tristen",
       star_count: 4.2,
       author: "john",
-      photo_url: "someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     },
     {
       id: 2,
       name: "David",
       star_count: 4.5,
       author: "David",
-      photo_url: "someURL.com"
+      photo_url: "https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg"
     }
   ]
 };

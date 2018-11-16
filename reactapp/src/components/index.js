@@ -22,4 +22,4 @@ export { default as UserSettingResumes } from "./_UserSettingsPage/Resumes/Resum
 export { default as UserSettingSettings } from "./_UserSettingsPage/Settings/Settings";
 export { default as UserSettingSkills } from "./_UserSettingsPage/Skills/Skills";
 export { default as SearchPage } from "./_SearchPage/SearchPage";
-export { default as DropDown } from "./Dropdown/DropDown";
+export { default as DropDown } from "./DropDown/DropDown";

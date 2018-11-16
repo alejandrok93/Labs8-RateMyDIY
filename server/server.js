@@ -49,15 +49,13 @@ server.post('/sendgrid/test', (req, res) => {
 	}
 });
 
-const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const postRoutes = require('./routes/postRoutes');
-const userRoutes = require('./routes/userRoutes');
 
-server.use('/', authRoutes);
+server.use('/api/users', userRoutes);
 server.use('/api/projects', projectRoutes);
 server.use('/api/posts', postRoutes);
-server.use('/api/users', userRoutes);
 
 // server.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");

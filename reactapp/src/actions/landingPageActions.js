@@ -1,5 +1,5 @@
 // import axios from "axios"; // This is not used
-import axios from "axios";
+
 // export actions consts
 export const GET_PROJECTS = "GET_PROJECTS";
 export const GET_MAKERS = "GET_MAKERS";
@@ -12,12 +12,8 @@ export const GET_REVIEWERS = "GET_REVIEWERS";
 
 export const getProjects = () => {
   return dispatch => {
-    //const data = require("../components/dummyData.js");
-    axios
-      .get("http://localhost:5000/api/projects")
-      .then(response =>
-        dispatch({ type: GET_PROJECTS, payload: response.data })
-      );
+    const data = require("../components/dummyData.js");
+    dispatch({ type: GET_PROJECTS, payload: data.featuredProjects });
   };
 };
 

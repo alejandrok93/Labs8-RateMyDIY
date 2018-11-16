@@ -1,7 +1,7 @@
 // Import Dependencies
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from 'styled-components';
 //Import components
 import { ProjectTile } from "../../../components";
 
@@ -9,7 +9,7 @@ import { ProjectTile } from "../../../components";
 const FeaturedProjectsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: #FFF;
 `;
 const FeaturedProjectListTiles = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const FeaturedProjectListTiles = styled.div`
 const FeaturedProjectTitle = styled.h1`
   font-size: 18px;
   width: 100%;
-  margin: 10px 25px;
+  margin: 10px 25px; 
 `;
 
 class FeaturedProjects extends Component {
@@ -33,7 +33,6 @@ class FeaturedProjects extends Component {
       <FeaturedProjectsWrapper>
         <FeaturedProjectTitle>Featured Projects</FeaturedProjectTitle>
         <FeaturedProjectListTiles>
-          {console.log(this.props.featuredProjects)}
           {this.props.featuredProjects.map(project => (
             <ProjectTile project={project} />
           ))}

@@ -92,7 +92,7 @@ class DropDown extends React.Component {
             </form></ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>
-              Send Email
+              Close Modal
             </Button>{" "}
           </ModalFooter>
         </Modal>

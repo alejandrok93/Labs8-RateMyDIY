@@ -25,7 +25,9 @@ transform: 1s;
 
 const SearchBarWrapper = styled.div`
   display: flex;
+  width: 100%;
   height: 35px;
+  align-items: baseline;
 `;
 const SearchBarSearchButtonWrapper = styled.div`
   display: flex;
@@ -55,6 +57,7 @@ const SearchBarButton = styled.button`
 const SearchBar = props => {
   return (
     <SearchWrapper>
+
       <SelectWrapper>
         <SelectStyle name="Maker" id="maker">
           {/* Need to poll DB for list of makers */}

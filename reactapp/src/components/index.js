@@ -22,4 +22,10 @@ export { default as UserSettingResumes } from "./_UserSettingsPage/Resumes/Resum
 export { default as UserSettingSettings } from "./_UserSettingsPage/Settings/Settings";
 export { default as UserSettingSkills } from "./_UserSettingsPage/Skills/Skills";
 export { default as SearchPage } from "./_SearchPage/SearchPage";
-export { default as DropDown } from "./Dropdown/DropDown";
+export { default as DropDown } from "./DropDown/DropDown";
+export { default as Twillio } from "./_Twillio/Twillio";
+export { default as ProjectPage } from './_ProjectPage/ProjectPage';
+export { default as Post } from './_ProjectPage/Post';
+export { default as ConfirmModal } from './_ProjectPage/ConfirmModal';
+export { default as StarCount } from './StarCount/StarCount';
+export { default as DeleteModal } from './_ProjectPage/DeleteModal';

@@ -25,10 +25,15 @@ transform: 1s;
 
 const SearchBarWrapper = styled.div`
   display: flex;
+  width: 100%;
+  height: 35px;
+  align-items: baseline;
+`;
+const SearchBarSearchButtonWrapper = styled.div`
+  display: flex;
   height: 100px;
   align-items: flex-end;
 `;
-
 const SearchBarInput = styled.input`
   width: 100%;
   height: 35px;
@@ -52,6 +57,7 @@ const SearchBarButton = styled.button`
 const SearchBar = props => {
   return (
     <SearchWrapper>
+
       <SelectWrapper>
         <SelectStyle name="Maker" id="maker">
           {/* Need to poll DB for list of makers */}
@@ -79,13 +85,15 @@ const SearchBar = props => {
           <option value="">Stars</option>
         </SelectStyle>
       </SelectWrapper>
-      <SearchBarWrapper>
-        <SearchBarInput
-          onChange={e => props.handleChange(e)}
-          placeholder="Find a DIY project"
-        />
-        <SearchBarButton className="search-button">Search</SearchBarButton>
-      </SearchBarWrapper>
+      <SearchBarSearchButtonWrapper>
+        <SearchBarWrapper>
+          <SearchBarInput
+            onChange={e => props.handleChange(e)}
+            placeholder="Find a DIY project"
+          />
+          <SearchBarButton className="search-button">Search</SearchBarButton>
+        </SearchBarWrapper>
+      </SearchBarSearchButtonWrapper>
     </SearchWrapper>
   );
 };

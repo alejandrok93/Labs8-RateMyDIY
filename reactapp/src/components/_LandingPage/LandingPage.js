@@ -1,7 +1,7 @@
 // Import Dependencies
 import React, { Component } from "react";
 // import { NavLink, Link, Route } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 import { connect } from "react-redux";
 import { getProjects, getMakers, getReviewers } from "../../actions";
 
@@ -11,7 +11,8 @@ import {
   FeaturedProjects,
   PopularMakers,
   PopularReviewers,
-  SearchBar
+  SearchBar,
+  Twillio
 } from "../../components";
 
 // styled-components
@@ -61,7 +62,7 @@ class LandingPage extends Component {
         </DropdownMenu>
         <LandingPageContentWrapper>
           <SearchBar handleChange={this.handleChange} />
-
+          <Twillio />
           <FeaturedProjects featuredProjects={this.props.featuredProjects} />
           <PopularMakers popularMakers={this.props.popularMakers} />
           <PopularReviewers reviewers={this.props.popularReviewers} />

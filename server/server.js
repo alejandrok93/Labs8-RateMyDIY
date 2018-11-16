@@ -37,7 +37,9 @@ server.post('/sendgrid/test', (req, res) => {
 	if (!req.body.to) {
 		return res.status(422).json({ error: 'Email cannot be empty.' });
 	} else {
+		// pulls api key from .env file
 		sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+		// sends email based on message object set above.
 		sgMail.send(msg).then(() => {
 			res.status(200).json({ message: `Email successfully sent to ${recipient}` }).end();
 		}).catch(err => {

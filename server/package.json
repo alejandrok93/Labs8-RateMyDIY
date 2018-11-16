@@ -20,6 +20,7 @@
 		"testEnvironment": "node"
 	},
 	"dependencies": {
+		"@sendgrid/mail": "^6.3.1",
 		"aws-sdk": "^2.356.0",
 		"connect-ensure-login": "^0.1.1",
 		"connect-session-knex": "^1.4.0",

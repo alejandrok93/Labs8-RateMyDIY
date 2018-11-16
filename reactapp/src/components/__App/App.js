@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom"; // removed Link from import (unused)
 import styled from "styled-components";
 import Auth from "../../components/Auth/Auth";
+import { connect } from "react-redux";
+import { loggedIn } from "../../actions/index";
 
 // Components
 import {
@@ -19,8 +21,9 @@ import {
   UserSettingSkills,
   UserSettingResumes,
   UserSettingSettings,
+
   //  SearchBar, // not used
-  SearchPage,
+  SearchPage
 } from "../../components";
 
 //Styles
@@ -32,7 +35,14 @@ const AppContainer = styled.div`
   background: #EFF;
   margin: 10px auto;
 `;
+
 class App extends Component {
+  state = {};
+
+  componentDidMount() {
+    this.props.loggedIn();
+  }
+
   render() {
     return (
       <AppContainer>
@@ -75,4 +85,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  userInfo: state.loggedInReducer.userInfo,
+  gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+  error: state.loggedInReducer.userInfo
+});
+
+export default connect(
+  mapStateToProps,
+  { loggedIn }
+)(App);

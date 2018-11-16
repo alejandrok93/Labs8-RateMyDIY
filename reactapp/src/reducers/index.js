@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
-import exampleReducer from "./exampleReducer";
+import loggedInReducer from "./loggedInReducer";
 import landingPageReducer from "./landingPageReducer";
 import myProjectReducer from "./myProjectReducer";
 import searchReducer from "./searchReducer";
-import settingsReducer from "./settingsReducer"
+import settingsReducer from "./settingsReducer";
 
 export default combineReducers({
-  exampleReducer,
+  loggedInReducer,
   landingPageReducer,
   myProjectReducer,
   searchReducer,

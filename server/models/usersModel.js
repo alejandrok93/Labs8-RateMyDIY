@@ -10,9 +10,9 @@ function getUsers() {
   return db("users");
 }
 
-function getUsersByID(id) {
+function getUsersByID(user_id) {
   return db("users")
-    .where({ id })
+    .where({ user_id: user_id })
     .first();
 }
 

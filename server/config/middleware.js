@@ -15,10 +15,11 @@ var store = new KnexSessionStore({
   createtable: false
 });
 
+// httpOnly configuration set to true for production
 const sessionConfig = {
   store: store,
   secret: [process.env.SESSION_SECRET || "TKd8^S$W-HPS3NtF"],
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 1 week
+  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: false }, // 1 week
   resave: false,
   saveUninitialized: false
 };
@@ -26,7 +27,7 @@ const sessionConfig = {
 module.exports = server => {
   //removed Logger middleware to debug server endpoints
   //server.use(logger('tiny'));
-  server.use(cors());
+  server.use(cors({ "Access-Control-Allow-Origin": "http://localhost:3000" }));
   server.use(helmet());
   server.use(express.json());
   server.use(cookieParser());

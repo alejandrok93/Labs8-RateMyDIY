@@ -59,6 +59,7 @@ class ProjectTile extends React.Component {
     return (
       <ProjectTileWrapper>
         {/* removed src="${https://someAWS.S3.URL}" */}
+
         <ImageHolder>
           <ProjectImage
             alt="PLACEHOLDER! alt text"
@@ -72,7 +73,7 @@ class ProjectTile extends React.Component {
             <span className="fa fa-star checked" />
             <span className="fa fa-star checked" />
           </div>
-          <p className="project-name">{this.props.project.name}</p>
+          <p className="project-name">{this.props.project.project_name}</p>
           <Link to={`/${this.props.project.author}`}>
             {this.props.project.author}
           </Link>

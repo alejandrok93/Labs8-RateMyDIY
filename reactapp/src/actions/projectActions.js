@@ -34,10 +34,7 @@ export const getProject = id => {
 		dispatch({ type: GETTING_PROJECT });
 
 		axios
-			.get(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/projects/${id}`
-			)
+			.get(`https://ratemydiy.herokuapp.com/api/projects/${id}`)
 
 			.then(async ({ data }) => {
 				await sleep(500);
@@ -54,11 +51,7 @@ export const addProject = project => {
 		dispatch({ type: ADDING_PROJECT });
 
 		axios
-			.post(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/projects/`,
-				project
-			)
+			.post(`https://ratemydiy.herokuapp.com/api/projects/`, project)
 
 			.then(async () => {
 				await sleep(500);
@@ -75,11 +68,7 @@ export const updateProject = (id, changes) => {
 		dispatch({ type: UPDATING_PROJECT });
 
 		axios
-			.put(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/projects/${id}`,
-				changes
-			)
+			.put(`https://ratemydiy.herokuapp.com/api/projects/${id}`, changes)
 
 			.then(async ({ data }) => {
 				await sleep(500);
@@ -96,10 +85,7 @@ export const deleteProject = id => {
 		dispatch({ type: DELETING_PROJECT });
 
 		axios
-			.delete(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/projects/${id}`
-			)
+			.delete(`https://ratemydiy.herokuapp.com/api/projects/${id}`)
 
 			.then(async () => {
 				await sleep(500);

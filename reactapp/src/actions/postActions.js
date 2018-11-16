@@ -34,10 +34,7 @@ export const getPost = id => {
 		dispatch({ type: GETTING_POST });
 
 		axios
-			.get(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/posts/${id}`
-			)
+			.get(`https://ratemydiy.herokuapp.com/api/posts/${id}`)
 
 			.then(async ({ data }) => {
 				await sleep(500);
@@ -54,10 +51,7 @@ export const addPost = post => {
 		dispatch({ type: ADDING_POST });
 
 		axios
-			.post(
-				`${process.env.BACKEND_URL || `http://localhost:${port}`}/api/posts/`,
-				post
-			)
+			.post(`https://ratemydiy.herokuapp.com/api/posts/`, post)
 
 			.then(async () => {
 				await sleep(500);
@@ -74,11 +68,7 @@ export const updatePost = (id, changes) => {
 		dispatch({ type: UPDATING_POST });
 
 		axios
-			.put(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/posts/${id}`,
-				changes
-			)
+			.put(`https://ratemydiy.herokuapp.com/api/posts/${id}`, changes)
 
 			.then(async ({ data }) => {
 				await sleep(500);
@@ -95,10 +85,7 @@ export const deletePost = id => {
 		dispatch({ type: DELETING_POST });
 
 		axios
-			.delete(
-				`${process.env.BACKEND_URL ||
-					`http://localhost:${port}`}/api/posts/${id}`
-			)
+			.delete(`https://ratemydiy.herokuapp.com/api/posts/${id}`)
 
 			.then(async () => {
 				await sleep(500);

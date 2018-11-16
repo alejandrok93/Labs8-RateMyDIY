@@ -12,9 +12,7 @@ class Twillio extends Component {
     const { text } = this.state;
     //pass text message GET variables via query string
     fetch(
-      `http://localhost:5000/send-text?recipient=${
-        text.recipient
-      }&textmessage=${text.textmessage}`
+      `http://localhost:5000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`
     ).catch(err => console.error(err));
   };
 

@@ -114,7 +114,7 @@ class ProjectPage extends Component {
 	};
 
 	// Returns true if user is author
-	owner = () => this.props.project.user_id === this.props.user_id;
+	owner = () => this.props.project.user_id === this.props.userInfo.user_id;
 	// owner = () => true;
 
 	// Disable other buttons when there is an active form
@@ -310,7 +310,7 @@ class ProjectPage extends Component {
 const mapStateToProps = state => {
 	console.log(state);
 	return {
-		// userInfo: state.userReducer.userInfo,
+		userInfo: state.loggedInReducer.userInfo,
 
 		project: state.projectReducer.project,
 		gettingProject: state.projectReducer.gettingProject,

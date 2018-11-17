@@ -1,6 +1,6 @@
-const dotenv = require("dotenv");
-const passport = require("passport");
-const Auth0Strategy = require("passport-auth0");
+const dotenv = require('dotenv');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
 
 dotenv.load();
 
@@ -10,8 +10,7 @@ let strategy = new Auth0Strategy(
 		clientID: process.env.AUTH0_CLIENT_ID,
 		clientSecret: process.env.AUTH0_CLIENT_SECRET,
 		callbackURL:
-			process.env.AUTH0_CALLBACK_URL ||
-			'http://localhost:5000/callback'
+			(process.env.BACKEND_URL || `http://localhost:5000`) + `/callback`
 	},
 	function(accessToken, refreshToken, extraParams, profile, done) {
 		// accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -20,18 +19,17 @@ let strategy = new Auth0Strategy(
 		// console.log(profile);
 		return done(null, profile);
 	}
-
 );
 
 passport.use(strategy);
 
 // You can use this section to keep a smaller payload
 passport.serializeUser(function(user, done) {
-  done(null, user);
+	done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-  done(null, user);
+	done(null, user);
 });
 
 module.exports = strategy;

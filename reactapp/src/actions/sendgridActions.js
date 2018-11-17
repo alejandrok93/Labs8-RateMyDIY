@@ -5,21 +5,24 @@ export const SEND_EMAIL_SUCCESS = 'SEND_EMAIL_SUCCESS';
 export const SEND_EMAIL_ERROR = 'SEND_EMAIL_ERROR';
 // Test loading messages
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export const sendEmail = to => {
-  return dispatch => {
-    dispatch({ type: SEND_EMAIL });
+	return dispatch => {
+		dispatch({ type: SEND_EMAIL });
 
-    axios
-      .post('https://ratemydiy.herokuapp.com/sendgrid/test', { to })
+		axios
+			.post(
+				(process.env.BACKEND_URL || `http://localhost:5000`) + '/sendgrid/test',
+				{ to }
+			)
 
-      .then(async (data) => {
-        await sleep(1000);
-        dispatch({ type: SEND_EMAIL_SUCCESS, payload: data });
-      })
+			.then(async data => {
+				await sleep(1000);
+				dispatch({ type: SEND_EMAIL_SUCCESS, payload: data });
+			})
 
-      .catch(error => dispatch({ type: SEND_EMAIL_ERROR, payload: error }));
-  };
+			.catch(error => dispatch({ type: SEND_EMAIL_ERROR, payload: error }));
+	};
 };

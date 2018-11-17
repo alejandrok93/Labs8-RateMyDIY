@@ -8,10 +8,10 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { sendEmail } from '../../actions';
 
 const loginURL =
-	(process.env.BACKEND_URL || `http://localhost:5000`) + `/signin`;
+	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`;
 
 const logoutURL =
-	(process.env.BACKEND_URL || `http://localhost:5000`) + `/signout`;
+	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
 
 // styled-components
 const DropDownWrapper = styled.div`

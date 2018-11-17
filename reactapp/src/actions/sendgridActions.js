@@ -14,7 +14,8 @@ export const sendEmail = to => {
 
 		axios
 			.post(
-				(process.env.BACKEND_URL || `http://localhost:5000`) + '/sendgrid/test',
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					'/sendgrid/test',
 				{ to }
 			)
 

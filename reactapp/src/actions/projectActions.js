@@ -33,7 +33,7 @@ export const getProject = id => {
 
 		axios
 			.get(
-				(process.env.BACKEND_URL || `http://localhost:5000`) +
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
 					`/api/projects/${id}`
 			)
 
@@ -53,7 +53,8 @@ export const addProject = project => {
 
 		axios
 			.post(
-				(process.env.BACKEND_URL || `http://localhost:5000`) + `/api/projects/`,
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/projects/`,
 				project
 			)
 
@@ -73,7 +74,7 @@ export const updateProject = (id, changes) => {
 
 		axios
 			.put(
-				(process.env.BACKEND_URL || `http://localhost:5000`) +
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
 					`/api/projects/${id}`,
 				changes
 			)
@@ -94,7 +95,7 @@ export const deleteProject = id => {
 
 		axios
 			.delete(
-				(process.env.BACKEND_URL || `http://localhost:5000`) +
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
 					`/api/projects/${id}`
 			)
 

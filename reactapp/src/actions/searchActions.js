@@ -16,7 +16,8 @@ export const fetchMyProjects = () => {
 		dispatch({ type: FETCH_MYPROJECT });
 		axios
 			.get(
-				(process.env.BACKEND_URL || `http://localhost:5000`) + '/api/myProjects'
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					'/api/myProjects'
 			)
 			.then(response => {
 				dispatch({ type: FETCH_MYPROJECT_SUCCESS, payload: response.data });
@@ -33,7 +34,8 @@ export const fetchMyReviews = () => {
 		dispatch({ type: FETCH_MYREVIEWS });
 		axios
 			.get(
-				(process.env.BACKEND_URL || `http://localhost:5000`) + '/api/reviewList'
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					'/api/reviewList'
 			)
 			.then(response => {
 				dispatch({ type: FETCH_MYREVIEWS_SUCCESS, payload: response.data });

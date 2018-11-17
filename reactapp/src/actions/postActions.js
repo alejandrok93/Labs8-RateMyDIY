@@ -33,7 +33,7 @@ export const getPost = id => {
 
 		axios
 			.get(
-				(process.env.BACKEND_URL || `http://localhost:5000`) +
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
 					`/api/posts/${id}`
 			)
 
@@ -53,7 +53,8 @@ export const addPost = post => {
 
 		axios
 			.post(
-				(process.env.BACKEND_URL || `http://localhost:5000`) + `/api/posts/`,
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/posts/`,
 				post
 			)
 
@@ -73,7 +74,7 @@ export const updatePost = (id, changes) => {
 
 		axios
 			.put(
-				(process.env.BACKEND_URL || `http://localhost:5000`) +
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
 					`/api/posts/${id}`,
 				changes
 			)
@@ -94,7 +95,8 @@ export const deletePost = id => {
 
 		axios
 			.delete(
-				(process.env.BACKEND_URL || `http://localhost:5000`) + `/posts/${id}`
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/posts/${id}`
 			)
 
 			.then(async () => {

@@ -4,7 +4,9 @@ const Auth = () => {
 	return (
 		<div>
 			<a
-				href={(process.env.BACKEND_URL || `http://localhost:5000`) + `/signin`}
+				href={
+					(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`
+				}
 			>
 				Sign Up or Sign In
 			</a>

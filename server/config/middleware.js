@@ -26,8 +26,8 @@ const sessionConfig = {
 // https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
 var allowedOrigins = [
 	'http://localhost:3000',
-	'https://ratemydiy.netlify.com/',
-	'https://ratemydiy-dev.netlify.com/'
+	'https://ratemydiy.netlify.com',
+	'https://ratemydiy-dev.netlify.com'
 ];
 
 const corsConfig = {

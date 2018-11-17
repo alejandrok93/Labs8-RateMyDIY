@@ -23,15 +23,34 @@ const sessionConfig = {
 	saveUninitialized: false
 };
 
+// https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
+var allowedOrigins = [
+	'http://localhost:3000',
+	'https://ratemydiy.netlify.com/',
+	'https://ratemydiy-dev.netlify.com/'
+];
+
+const corsConfig = {
+	origin: function(origin, callback) {
+		// allow requests with no origin
+		// (like mobile apps or curl requests)
+		if (!origin) return callback(null, true);
+
+		if (allowedOrigins.indexOf(origin) === -1) {
+			var msg =
+				'The CORS policy for this site does not ' +
+				'allow access from the specified Origin.';
+			return callback(new Error(msg), false);
+		}
+
+		return callback(null, true);
+	}
+};
+
+// order matters!
 module.exports = server => {
-	//removed Logger middleware to debug server endpoints
 	server.use(logger('tiny'));
-	server.use(
-		cors({
-			credentials: true,
-			origin: process.env.FRONTEND_URL || 'http://localhost:3000'
-		})
-	);
+	server.use(cors(corsConfig));
 	server.use(helmet());
 	server.use(express.json());
 	server.use(cookieParser());

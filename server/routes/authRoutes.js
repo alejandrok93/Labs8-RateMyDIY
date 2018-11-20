@@ -34,18 +34,18 @@ router.get('/callback', function(req, res, next) {
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
 			console.log(req.user._json);
-			let role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
-			let sub = req.user._json.sub.split('|');
-			let auth_id = sub[1];
-			let username = req.user._json.nickname;
-			let user = {
-				auth_id,
-				username
-			};
+			const role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
 			if (role[0] === 'new') {
+				const sub = req.user._json.sub.split('|');
+				const auth_id = sub[1];
+				const username = req.user._json.nickname;
+				const user = {
+					auth_id,
+					username
+				};
 				usersDB
 					.addUser(user)
-					.then(res => {
+					.then(dbRes => {
 						res.redirect(
 							returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
 						);

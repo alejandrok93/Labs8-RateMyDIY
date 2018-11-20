@@ -7,7 +7,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 const usersDB = require('../models/usersModel');
 const authDB = require('../models/authModel');
 
-const authenticate = require('../config/authMiddleware');
+// const authenticate = require('../config/authMiddleware');
 
 router.get(
 	'/signin',

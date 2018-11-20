@@ -3,7 +3,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const passport = require('passport');
-const strategy = require('../setup-passport');
+require('../setup-passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 var KnexSessionStore = require('connect-session-knex')(session);

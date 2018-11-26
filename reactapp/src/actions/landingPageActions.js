@@ -11,7 +11,7 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const getLandingPageProjects = id => {
+export const getLandingPageProjects = () => {
 	return dispatch => {
 		dispatch({ type: GETTING_FEATURED_PROJECTS });
 

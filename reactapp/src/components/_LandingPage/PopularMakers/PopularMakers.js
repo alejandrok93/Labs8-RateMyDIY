@@ -1,7 +1,6 @@
 // Import Dependencies
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { Link } from "react-router-dom";
 //Import components
 import { MakerTile } from '../../../components';
 // import connect for reducers
@@ -14,6 +13,7 @@ const PopularMakersWrapper = styled.div`
 	flex-direction: column;
 	background: #fff;
 `;
+
 const PopularMakerListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -29,6 +29,7 @@ const PopularMakersTitle = styled.h1`
 class PopularMakers extends Component {
 	componentDidMount() {
 		this.props.getPopularMakers();
+		console.log("this.props.getPopularMakers()", this.props.popularMakers)
 	}
 	render() {
 		return (
@@ -36,7 +37,7 @@ class PopularMakers extends Component {
 				<PopularMakerListTiles>
 					<PopularMakersTitle>Popular Makers</PopularMakersTitle>
 					{this.props.popularMakers.map(maker => (
-						<MakerTile maker={maker} key={maker.maker_id} />
+						<MakerTile maker={maker} key={maker.user_id} />
 					))}
 				</PopularMakerListTiles>
 			</PopularMakersWrapper>
@@ -45,7 +46,7 @@ class PopularMakers extends Component {
 }
 
 const mapStateToProps = state => ({
-	popularMakers: state.landingPageReducer.featuredProjects,
+	popularMakers: state.landingPageReducer.popularMakers,
 	fetching: state.landingPageReducer.fetching,
 	error: state.landingPageReducer.error
 });

@@ -62,7 +62,7 @@ class ProjectTile extends React.Component {
         <ImageHolder>
           <ProjectImage
             alt="PLACEHOLDER! alt text"
-            src={this.props.project.photo_url} />
+            src={this.props.project.img_url} />
         </ImageHolder>
         <Details>
           <div className="star-rating">
@@ -72,9 +72,9 @@ class ProjectTile extends React.Component {
             <span className="fa fa-star checked" />
             <span className="fa fa-star checked" />
           </div>
-          <p className="project-name">{this.props.project.name}</p>
-          <Link to={`/${this.props.project.author}`}>
-            {this.props.project.author}
+          <a href={`/project/${this.props.project.project_id}`} className="project-name">{this.props.project.project_name}</a>
+          <Link to={`/${this.props.project.user_id}`}>
+            {this.props.project.username}
           </Link>
           {/* React strap Modal */}
           <Button color="danger" onClick={this.toggle}>
@@ -89,7 +89,7 @@ class ProjectTile extends React.Component {
             dialogClassName="my-modal"
           >
             <ModalHeader toggle={this.toggle}>
-              {this.props.project.name}
+              {this.props.project.project_name}
             </ModalHeader>
             <ModalBody>
               <span className="fa fa-star checked" />
@@ -98,7 +98,7 @@ class ProjectTile extends React.Component {
               <span className="fa fa-star checked" />
               <span className="fa fa-star checked" />
             </ModalBody>
-            <ModalBody>{this.props.project.author}</ModalBody>
+            <ModalBody>{this.props.project.user_id}</ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={this.toggle}>
                 Do Something

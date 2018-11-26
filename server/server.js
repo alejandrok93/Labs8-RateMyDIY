@@ -64,11 +64,13 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const postRoutes = require('./routes/postRoutes');
+const landingPageRoutes = require('./routes/landingPageRoutes');
 
 server.use('/', authRoutes);
 server.use('/api/users', userRoutes);
 server.use('/api/projects', projectRoutes);
 server.use('/api/posts', postRoutes);
+server.use('/api/lp', landingPageRoutes)
 
 //Twilio
 server.get('/send-text', (req, res) => {

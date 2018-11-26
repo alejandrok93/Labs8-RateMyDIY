@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 //Import components
 import { ProjectTile } from '../../../components';
+// import connect for reducers
+import { connect } from 'react-redux';
+import { getLandingPageProjects } from '../../../actions/landingPageActions';
 
 //Import Styling
 const FeaturedProjectsWrapper = styled.div`
@@ -24,10 +27,10 @@ const FeaturedProjectTitle = styled.h1`
 `;
 
 class FeaturedProjects extends Component {
-	// constructor() {
-	//   super();
-	// } // useless constructor
-
+	componentDidMount() {
+		this.props.getLandingPageProjects();
+		console.log(`CONSOLE LOG: !!!!! ${this.props}`)
+	}
 	render() {
 		return (
 			<FeaturedProjectsWrapper>
@@ -42,4 +45,13 @@ class FeaturedProjects extends Component {
 	}
 }
 
-export default FeaturedProjects;
+const mapStateToProps = state => ({
+	featuredProjects: state.landingPageReducer.featuredProjects,
+	fetching: state.landingPageReducer.fetching,
+	error: state.landingPageReducer.error
+});
+
+export default connect(
+	mapStateToProps,
+	{ getLandingPageProjects }
+)(FeaturedProjects);

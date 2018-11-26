@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 //Import components
 import { ProjectTile } from '../../../components';
+// import connect for reducers
+import { connect } from 'react-redux';
+import { getLandingPageProjects } from '../../../actions/landingPageActions';
 
 //Import Styling
 const FeaturedProjectsWrapper = styled.div`
@@ -42,4 +45,13 @@ class FeaturedProjects extends Component {
 	}
 }
 
-export default FeaturedProjects;
+const mapStateToProps = state => ({
+	projects: state.projects,
+	fetching: state.fetching,
+	error: state.error
+});
+
+export default connect(
+	mapStateToProps,
+	{ getLandingPageProjects }
+)(FeaturedProjects);

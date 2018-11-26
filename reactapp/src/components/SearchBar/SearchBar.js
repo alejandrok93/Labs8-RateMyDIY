@@ -17,10 +17,10 @@ const SelectWrapper = styled.div`
 `;
 
 const SelectStyle = styled.select`
-height: 24px;
-width: 20%;
-transform: 1s;
-/* border-radius: 5px; */
+  height: 24px;
+  width: 20%;
+  transform: 1s;
+  /* border-radius: 5px; */
 `;
 
 const SearchBarWrapper = styled.div`
@@ -57,7 +57,6 @@ const SearchBarButton = styled.button`
 const SearchBar = props => {
   return (
     <SearchWrapper>
-
       <SelectWrapper>
         <SelectStyle name="Maker" id="maker">
           {/* Need to poll DB for list of makers */}
@@ -91,7 +90,12 @@ const SearchBar = props => {
             onChange={e => props.handleChange(e)}
             placeholder="Find a DIY project"
           />
-          <SearchBarButton className="search-button">Search</SearchBarButton>
+          <SearchBarButton
+            onClick={e => props.handleSearch(e)}
+            className="search-button"
+          >
+            Search
+          </SearchBarButton>
         </SearchBarWrapper>
       </SearchBarSearchButtonWrapper>
     </SearchWrapper>

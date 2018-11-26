@@ -60,17 +60,21 @@ server.post("/sendgrid/test", (req, res) => {
   }
 });
 
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const projectRoutes = require("./routes/projectRoutes");
-const postRoutes = require("./routes/postRoutes");
+
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const postRoutes = require('./routes/postRoutes');
+const landingPageRoutes = require('./routes/landingPageRoutes');
 const searchRoutes = require("./routes/searchRoutes");
 
-server.use("/", authRoutes);
-server.use("/api/users", userRoutes);
-server.use("/api/projects", projectRoutes);
-server.use("/api/posts", postRoutes);
+server.use('/', authRoutes);
+server.use('/api/users', userRoutes);
+server.use('/api/projects', projectRoutes);
+server.use('/api/posts', postRoutes);
+server.use('/api/lp', landingPageRoutes)
 server.use("/api/search", searchRoutes);
+
 
 //Twilio
 server.get("/send-text", (req, res) => {

@@ -2,12 +2,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 // import { Link } from "react-router-dom";
-
 //Import components
 import { MakerTile } from '../../../components';
+// import connect for reducers
+import { connect } from 'react-redux';
+import { getPopularMakers } from '../../../actions/landingPageActions';
 
 // styled components
-
 const PopularMakersWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -26,10 +27,9 @@ const PopularMakersTitle = styled.h1`
 `;
 
 class PopularMakers extends Component {
-	// constructor() {
-	//   super();
-	// } // useless constructor
-	componentDidMount() {}
+	componentDidMount() {
+		this.props.getPopularMakers();
+	}
 	render() {
 		return (
 			<PopularMakersWrapper>
@@ -44,4 +44,13 @@ class PopularMakers extends Component {
 	}
 }
 
-export default PopularMakers;
+const mapStateToProps = state => ({
+	popularMakers: state.landingPageReducer.featuredProjects,
+	fetching: state.landingPageReducer.fetching,
+	error: state.landingPageReducer.error
+});
+
+export default connect(
+	mapStateToProps,
+	{ getPopularMakers }
+)(PopularMakers);

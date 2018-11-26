@@ -27,10 +27,10 @@ const FeaturedProjectTitle = styled.h1`
 `;
 
 class FeaturedProjects extends Component {
-	// constructor() {
-	//   super();
-	// } // useless constructor
-
+	componentDidMount() {
+		this.props.getLandingPageProjects();
+		console.log(`CONSOLE LOG: !!!!! ${this.props}`)
+	}
 	render() {
 		return (
 			<FeaturedProjectsWrapper>
@@ -46,9 +46,9 @@ class FeaturedProjects extends Component {
 }
 
 const mapStateToProps = state => ({
-	projects: state.projects,
-	fetching: state.fetching,
-	error: state.error
+	featuredProjects: state.landingPageReducer.featuredProjects,
+	fetching: state.landingPageReducer.fetching,
+	error: state.landingPageReducer.error
 });
 
 export default connect(

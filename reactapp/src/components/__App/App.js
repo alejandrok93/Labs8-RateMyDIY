@@ -1,53 +1,53 @@
 // Dependencies
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom'; // removed Link from import (unused)
-import styled from 'styled-components';
-import Auth from '../../components/Auth/Auth';
-import { connect } from 'react-redux';
-import { loggedIn } from '../../actions/index';
+import React, { Component } from "react";
+import { Route } from "react-router-dom"; // removed Link from import (unused)
+import styled from "styled-components";
+import Auth from "../../components/Auth/Auth";
+import { connect } from "react-redux";
+import { loggedIn } from "../../actions/index";
 
 // Components
 import {
-	ReviewList,
-	LandingPage,
-	ProjectList,
-	CreateEditPage,
-	Billing,
-	UserSettingsSideBar,
-	UserSettingsSummaries,
-	UserSettingBilling,
-	UserSettingEducation,
-	UserSettingPositions,
-	UserSettingSkills,
-	UserSettingResumes,
-	UserSettingSettings,
-	//  SearchBar, // not used
-	SearchPage,
-	ProjectPage
-} from '../../components';
+  ReviewList,
+  LandingPage,
+  ProjectList,
+  CreateEditPage,
+  Billing,
+  UserSettingsSideBar,
+  UserSettingsSummaries,
+  UserSettingBilling,
+  UserSettingEducation,
+  UserSettingPositions,
+  UserSettingSkills,
+  UserSettingResumes,
+  UserSettingSettings,
+  //  SearchBar, // not used
+  SearchPage,
+  ProjectPage
+} from "../../components";
 
 //Styles
 const AppContainer = styled.div`
-	display: flex;
-	max-width: 1280px;
-	min-width: 600px;
-	height: auto;
-	background: #eff;
-	margin: 10px auto;
+  display: flex;
+  max-width: 1280px;
+  min-width: 600px;
+  height: auto;
+  background: #eff;
+  margin: 10px auto;
 `;
 
 class App extends Component {
-	state = {};
+  state = {};
 
-	componentDidMount() {
-		this.props.loggedIn();
-	}
+  componentDidMount() {
+    this.props.loggedIn();
+  }
 
-	render() {
-		return (
-			<AppContainer>
-				{/* <h1>Navigation</h1> */}
-				{/* <ul>
+  render() {
+    return (
+      <AppContainer>
+        {/* <h1>Navigation</h1> */}
+        {/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -64,35 +64,35 @@ class App extends Component {
             <Link to="/signin">Sign Up or Sign In</Link>
           </li>
         </ul> */}
-				{/* <Navbar /> */}
-				<Route exact path="/" component={LandingPage} />
-				<Route path="/settings" component={UserSettingsSideBar} />
-				<Route path="/settings/summaries" component={UserSettingsSummaries} />
-				<Route exact path="/ReviewList" component={ReviewList} />
-				<Route exact path="/ProjectList" component={ProjectList} />
-				<Route exact path="/Billing" component={Billing} />
-				<Route exact path="/CreateEditPage" component={CreateEditPage} />
-				<Route path="/settings/positions" component={UserSettingEducation} />
-				<Route path="/settings/education" component={UserSettingPositions} />
-				<Route path="/settings/skills" component={UserSettingSkills} />
-				<Route path="/settings/resumes" component={UserSettingResumes} />
-				<Route path="/settings/billing" component={UserSettingBilling} />
-				<Route path="/settings/settings" component={UserSettingSettings} />
-				<Route path="/search" component={SearchPage} />
-				<Route path="/signin" component={Auth} />
-				<Route path="/project/:id" component={ProjectPage} />
-			</AppContainer>
-		);
-	}
+        {/* <Navbar /> */}
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/settings" component={UserSettingsSideBar} />
+        <Route path="/settings/summaries" component={UserSettingsSummaries} />
+        <Route exact path="/ReviewList" component={ReviewList} />
+        <Route exact path="/ProjectList" component={ProjectList} />
+        <Route exact path="/Billing" component={Billing} />
+        <Route exact path="/CreateEditPage" component={CreateEditPage} />
+        <Route path="/settings/positions" component={UserSettingEducation} />
+        <Route path="/settings/education" component={UserSettingPositions} />
+        <Route path="/settings/skills" component={UserSettingSkills} />
+        <Route path="/settings/resumes" component={UserSettingResumes} />
+        <Route path="/settings/billing" component={UserSettingBilling} />
+        <Route path="/settings/settings" component={UserSettingSettings} />
+        <Route path="/search" component={SearchPage} />
+        <Route path="/signin" component={Auth} />
+        <Route path="/project/:id" component={ProjectPage} />
+      </AppContainer>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-	userInfo: state.loggedInReducer.userInfo,
-	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
-	error: state.loggedInReducer.userInfo
+  userInfo: state.loggedInReducer.userInfo,
+  gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+  error: state.loggedInReducer.userInfo
 });
 
 export default connect(
-	mapStateToProps,
-	{ loggedIn }
+  mapStateToProps,
+  { loggedIn }
 )(App);

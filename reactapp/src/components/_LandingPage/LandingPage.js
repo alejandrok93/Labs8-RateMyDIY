@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { getReviewers } from "../../actions";
 
+
 //Import components
 import {
   DropDown,
@@ -46,9 +47,11 @@ class LandingPage extends Component {
   };
 
   handleSearch = e => {
-    //HTTP request to server
-    //Get search results from server
-    //Save to Redux store
+    //call featch search results action
+    this.props.fetchSearchResults(this.state.input);
+
+    //push to search page
+    this.props.history.push("/search");
   };
 
   render() {
@@ -59,7 +62,10 @@ class LandingPage extends Component {
           <DropDown />
         </DropdownMenu>
         <LandingPageContentWrapper>
-          <SearchBar handleChange={this.handleChange} />
+          <SearchBar
+            handleChange={this.handleChange}
+            handleSearch={this.handleSearch}
+          />
           <Twillio />
           <FeaturedProjects featuredProjects={this.props.featuredProjects} />
           <PopularMakers popularMakers={this.props.popularMakers} />

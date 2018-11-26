@@ -7,7 +7,17 @@ import {
 } from "../actions/landingPageActions";
 
 const initialState = {
-  featuredProjects: [],
+  featuredProjects: [{
+    "project_id": '',
+    "user_id": '',
+    "project_name": '',
+    "img_url": '',
+    "text": '',
+    "last_updated": '',
+    "project_rating": '',
+    "rating_sum": '',
+    "rating_count": ''
+  }],
   popularMakers: [],
   popularReviewers: [
     {
@@ -26,12 +36,11 @@ const landingPageReducer = (state = initialState, action) => {
     case GETTING_FEATURED_PROJECTS:
       return {
         ...state,
-        featuredProjects: action.payload
       };
     case GOT_FEATURED_PROJECTS:
       return {
         ...state,
-        error: action.payload
+        featuredProjects: action.payload
       };
     case GETTING_FEATURED_PROJECTS_ERROR:
       return {

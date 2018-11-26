@@ -64,11 +64,13 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const postRoutes = require("./routes/postRoutes");
+const searchRoutes = require("./routes/searchRoutes");
 
 server.use("/", authRoutes);
 server.use("/api/users", userRoutes);
 server.use("/api/projects", projectRoutes);
 server.use("/api/posts", postRoutes);
+server.use("/api/search", searchRoutes);
 
 //Twilio
 server.get("/send-text", (req, res) => {
@@ -104,13 +106,6 @@ server.get("/send-text", (req, res) => {
       from: "+15625219688 " // From a valid Twilio number
     })
     .then(message => console.log(message.sid));
-});
-
-//Search API endpoint
-server.get("/api/search", (req, res) => {
-  const query = req.query.query;
-  console.log("query:" + query);
-  res.status(200).json({ projects: { id: 1 } });
 });
 
 // server.use(function(req, res, next) {

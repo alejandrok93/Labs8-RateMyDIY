@@ -3,7 +3,7 @@ import React, { Component } from "react";
 // import { NavLink, Link, Route } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { getMakers, getReviewers } from "../../actions";
+import { getReviewers } from "../../actions";
 
 //Import components
 import {
@@ -37,7 +37,6 @@ class LandingPage extends Component {
 
   componentDidMount() {
     console.log("component did mount!");
-    this.props.getMakers();
     this.props.getReviewers();
   }
 
@@ -81,5 +80,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getMakers, getReviewers }
+  { getReviewers }
 )(LandingPage);

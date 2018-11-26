@@ -8,7 +8,7 @@ import { ProjectTile } from '../../../components';
 import { connect } from 'react-redux';
 import { getLandingPageProjects } from '../../../actions/landingPageActions';
 
-//Import Styling
+// styled components
 const FeaturedProjectsWrapper = styled.div`
 	display: flex;
 	flex-direction: column;

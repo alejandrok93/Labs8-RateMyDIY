@@ -1,10 +1,11 @@
 const db = require('../config/dbConfig');
 
 module.exports = {
-  getLandingPageProjects,
+  getPopularProjects,
+  getPopularMakers
 };
 
-function getLandingPageProjects() {
+function getPopularProjects() {
   return db('projects')
     .join("users", "projects.user_id", "users.user_id")
     .select("projects.img_url",
@@ -14,5 +15,11 @@ function getLandingPageProjects() {
       "projects.project_id",
       "projects.project_rating")
     .orderBy('project_rating', 'desc')
+    .limit(4)
+}
+
+function getPopularMakers() {
+  return db('users')
+    .orderBy('user_rating', 'desc')
     .limit(4)
 }

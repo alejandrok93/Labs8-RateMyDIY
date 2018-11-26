@@ -2,7 +2,9 @@ import {
   GETTING_FEATURED_PROJECTS,
   GOT_FEATURED_PROJECTS,
   GETTING_FEATURED_PROJECTS_ERROR,
-  GET_MAKERS,
+  GETTING_POPULAR_MAKERS,
+  GOT_POPULAR_MAKERS,
+  GETTING_POPULAR_MAKERS_ERROR,
   GET_REVIEWERS
 } from "../actions/landingPageActions";
 
@@ -48,10 +50,20 @@ const landingPageReducer = (state = initialState, action) => {
         fetching: false,
         error: `${action.payload}`
       };
-    case GET_MAKERS:
+    case GETTING_POPULAR_MAKERS:
       return {
         ...state,
-        popularMakers: action.payload
+      };
+    case GOT_POPULAR_MAKERS:
+      return {
+        ...state,
+        featuredProjects: action.payload
+      };
+    case GETTING_POPULAR_MAKERS_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        error: `${action.payload}`
       };
     case GET_REVIEWERS:
       return {

@@ -15,7 +15,10 @@ export const fetchMyProjects = () => {
 	return dispatch => {
 		dispatch({ type: FETCH_MYPROJECT });
 		axios
-			.get('https://ratemydiy.herokuapp.com/api/myProjects')
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					'/api/myProjects'
+			)
 			.then(response => {
 				dispatch({ type: FETCH_MYPROJECT_SUCCESS, payload: response.data });
 			})
@@ -30,7 +33,10 @@ export const fetchMyReviews = () => {
 	return dispatch => {
 		dispatch({ type: FETCH_MYREVIEWS });
 		axios
-			.get('https://ratemydiy.herokuapp.com/api/reviewList')
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					'/api/reviewList'
+			)
 			.then(response => {
 				dispatch({ type: FETCH_MYREVIEWS_SUCCESS, payload: response.data });
 			})

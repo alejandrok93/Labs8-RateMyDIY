@@ -2,7 +2,7 @@ exports.up = function(knex, Promise) {
 	return knex.schema.createTable('projects', table => {
 		table.increments('project_id'); //primary key
 		table
-			.string('user_id') // author's primary key
+			.integer('user_id') // author's primary key
 			.unsigned()
 			.notNullable();
 		// .references('users.user_id');

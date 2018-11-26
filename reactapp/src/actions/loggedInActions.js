@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 // get userInfo
 export const GETTING_USER_INFO = 'GETTING_USER_INFO';
@@ -10,7 +11,9 @@ export const loggedIn = () => {
 		dispatch({ type: GETTING_USER_INFO });
 
 		axios
-			.get(`https://ratemydiy.herokuapp.com/loggedin`)
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/loggedIn`
+			)
 
 			.then(({ data }) => {
 				dispatch({ type: GOT_USER_INFO, payload: data });

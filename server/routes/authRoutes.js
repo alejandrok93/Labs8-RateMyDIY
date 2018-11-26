@@ -7,7 +7,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 const usersDB = require('../models/usersModel');
 const authDB = require('../models/authModel');
 
-const authenticate = require('../config/authMiddleware');
+// const authenticate = require('../config/authMiddleware');
 
 router.get(
 	'/signin',
@@ -34,21 +34,20 @@ router.get('/callback', function(req, res, next) {
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
 			console.log(req.user._json);
-			let role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
-			let sub = req.user._json.sub.split('|');
-			let auth_id = sub[1];
-			let username = req.user._json.nickname;
-			let user = {
-				auth_id,
-				username
-			};
+			const role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
 			if (role[0] === 'new') {
+				const sub = req.user._json.sub.split('|');
+				const auth_id = sub[1];
+				const username = req.user._json.nickname;
+				const user = {
+					auth_id,
+					username
+				};
 				usersDB
 					.addUser(user)
-					.then(res => {
+					.then(dbRes => {
 						res.redirect(
-							returnTo || `https://ratemydiy.netlify.com`
-							// ||	`http://localhost:3000`
+							returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
 						);
 					})
 					.catch(err => {
@@ -56,34 +55,43 @@ router.get('/callback', function(req, res, next) {
 					});
 			} else {
 				res.redirect(
-					returnTo || `https://ratemydiy.netlify.com`
-					// || `http://localhost:3000`
+					returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
 				);
 			}
 		});
 	})(req, res, next);
 });
 
-router.get('/loggedIn', function(req, res) {
-	console.log('loggedIn', req.cookies);
-	const auth_id = req.user._json.sub.split('|')[1];
+router.get('/loggedIn', function(req, res, next) {
+	// console.log('cookies:', req.cookies);
+	// console.log('user:', req.user);
 
-	authDB
-		.loggedIn(auth_id)
-		.then(res => {
-			res.status(200).json(res);
-		})
-		.catch(err => {
-			res.status(500).json(err);
-		});
+	if (req.user) {
+		const auth_id = req.user._json.sub.split('|')[1];
+		console.log('auth_id', auth_id);
+
+		authDB
+			.loggedIn(auth_id)
+			.then(userInfo => {
+				res.status(200).json(userInfo);
+			})
+			.catch(err => {
+				res.status(500).json(err);
+			});
+	} else {
+		res.status(200).json({});
+	}
 });
 
 router.get('/signout', (req, res) => {
 	req.logout();
-	res.redirect('/');
+	res.redirect(process.env.FRONTEND_URL || `http://localhost:3000`);
 });
 
-router.post('/test', ensureLoggedIn, authenticate, function(req, res, next) {
+router.post('/test', ensureLoggedIn, function(req, res, next) {
+	console.log('cookies:', req.cookies);
+	console.log('user:', req.user);
+
 	//console.log(req.user);
 	//console.log(req.user.app_metadata);
 	res.status(200).json({ message: 'it works' });

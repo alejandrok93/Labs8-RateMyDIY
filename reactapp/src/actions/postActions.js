@@ -26,15 +26,16 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const port = 5000;
-
 // get post by id
 export const getPost = id => {
 	return dispatch => {
 		dispatch({ type: GETTING_POST });
 
 		axios
-			.get(`https://ratemydiy.herokuapp.com/api/posts/${id}`)
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/posts/${id}`
+			)
 
 			.then(async ({ data }) => {
 				await sleep(500);
@@ -51,7 +52,11 @@ export const addPost = post => {
 		dispatch({ type: ADDING_POST });
 
 		axios
-			.post(`https://ratemydiy.herokuapp.com/api/posts/`, post)
+			.post(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/posts/`,
+				post
+			)
 
 			.then(async () => {
 				await sleep(500);
@@ -68,7 +73,11 @@ export const updatePost = (id, changes) => {
 		dispatch({ type: UPDATING_POST });
 
 		axios
-			.put(`https://ratemydiy.herokuapp.com/api/posts/${id}`, changes)
+			.put(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/posts/${id}`,
+				changes
+			)
 
 			.then(async ({ data }) => {
 				await sleep(500);
@@ -85,7 +94,10 @@ export const deletePost = id => {
 		dispatch({ type: DELETING_POST });
 
 		axios
-			.delete(`https://ratemydiy.herokuapp.com/api/posts/${id}`)
+			.delete(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/posts/${id}`
+			)
 
 			.then(async () => {
 				await sleep(500);

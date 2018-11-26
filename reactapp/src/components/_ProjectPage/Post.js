@@ -1,7 +1,5 @@
 // Dependencies
 import React, { Component } from 'react';
-import { getProject } from '../../actions';
-import { connect } from 'react-redux';
 
 // Components
 import {} from '../../components';

@@ -68,7 +68,7 @@ router.get('/loggedIn', function(req, res, next) {
 
 	if (req.user) {
 		const auth_id = req.user._json.sub.split('|')[1];
-		console.log('auth_id', auth_id);
+		console.log('User connected with auth_id', auth_id);
 
 		authDB
 			.loggedIn(auth_id)

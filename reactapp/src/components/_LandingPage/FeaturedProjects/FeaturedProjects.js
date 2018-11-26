@@ -1,12 +1,11 @@
 // Import Dependencies
 import React, { Component } from 'react';
-// import { Link } from "react-router-dom";
 import styled from 'styled-components';
 //Import components
 import { ProjectTile } from '../../../components';
 // import connect for reducers
 import { connect } from 'react-redux';
-import { getLandingPageProjects } from '../../../actions/landingPageActions';
+import { getFeaturedProjects } from '../../../actions/landingPageActions';
 
 // styled components
 const FeaturedProjectsWrapper = styled.div`
@@ -14,6 +13,7 @@ const FeaturedProjectsWrapper = styled.div`
 	flex-direction: column;
 	background: #fff;
 `;
+
 const FeaturedProjectListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -28,8 +28,7 @@ const FeaturedProjectTitle = styled.h1`
 
 class FeaturedProjects extends Component {
 	componentDidMount() {
-		this.props.getLandingPageProjects();
-		console.log(`CONSOLE LOG: !!!!! ${this.props}`)
+		this.props.getFeaturedProjects();
 	}
 	render() {
 		return (
@@ -53,5 +52,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{ getLandingPageProjects }
+	{ getFeaturedProjects }
 )(FeaturedProjects);

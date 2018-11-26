@@ -6,14 +6,16 @@ export const GETTING_FEATURED_PROJECTS_ERROR = 'GETTING_FEATURED_PROJECTS_ERROR'
 export const GETTING_POPULAR_MAKERS = 'GET_POPULAR_MAKERS';
 export const GOT_POPULAR_MAKERS = 'GOT_POPULAR_MAKERS';
 export const GETTING_POPULAR_MAKERS_ERROR = 'GET_POPULAR_MAKERS_ERROR';
-export const GET_REVIEWERS = 'GET_REVIEWERS';
+export const GETTING_POPULAR_REVIEWERS = 'GET_POPULAR_REVIEWERS';
+export const GOT_POPULAR_REVIEWERS = 'GOT_POPULAR_REVIEWERS';
+export const GETTING_POPULAR_REVIEWERS_ERROR = 'GET_POPULAR_REVIEWERS_ERROR';
 
 // Test loading messages
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const getLandingPageProjects = () => {
+export const getFeaturedProjects = () => {
 	return dispatch => {
 		dispatch({ type: GETTING_FEATURED_PROJECTS });
 
@@ -31,6 +33,7 @@ export const getLandingPageProjects = () => {
 			.catch(error => dispatch({ type: GETTING_FEATURED_PROJECTS_ERROR, payload: error }));
 	};
 };
+
 export const getPopularMakers = () => {
 	return dispatch => {
 		dispatch({ type: GETTING_POPULAR_MAKERS });
@@ -38,7 +41,7 @@ export const getPopularMakers = () => {
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/lp/projects`
+				`/api/lp/makers`
 			)
 
 			.then(async ({ data }) => {
@@ -50,9 +53,21 @@ export const getPopularMakers = () => {
 	};
 };
 
-export const getReviewers = () => {
+export const getPopularReviewers = () => {
 	return dispatch => {
-		const data = require('../components/dummyData.js');
-		dispatch({ type: GET_REVIEWERS, payload: data.popularReviewers });
+		dispatch({ type: GETTING_POPULAR_REVIEWERS });
+
+		axios
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+				`/api/lp/reviewers`
+			)
+
+			.then(async ({ data }) => {
+				await sleep(500);
+				dispatch({ type: GOT_POPULAR_REVIEWERS, payload: data });
+			})
+
+			.catch(error => dispatch({ type: GETTING_POPULAR_REVIEWERS_ERROR, payload: error }));
 	};
 };

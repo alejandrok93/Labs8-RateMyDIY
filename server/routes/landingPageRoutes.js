@@ -32,4 +32,18 @@ router.get('/makers', function (req, res) {
     });
 });
 
+router.get('/reviewers', function (req, res) {
+  db.getPopularReviewers()
+    .then(reviewer => {
+      if (reviewer) {
+        res.status(200).json(reviewer);
+      } else {
+        res.status(404).json({ error: 'Reviewers not found.' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;

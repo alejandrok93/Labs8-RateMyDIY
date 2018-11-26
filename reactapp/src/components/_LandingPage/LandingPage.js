@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 // import { NavLink, Link, Route } from "react-router-dom";
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { getReviewers, fetchSearchResults } from '../../actions';
 
 //Import components
 import {
@@ -29,15 +27,10 @@ const DropdownMenu = styled.div`
 	width: 100%;
 `;
 
-class LandingPage extends Component {
+export default class LandingPage extends Component {
 	constructor() {
 		super();
 		this.state = { input: '' };
-	}
-
-	componentDidMount() {
-		console.log('component did mount!');
-		this.props.getReviewers();
 	}
 
 	handleChange = e => {
@@ -66,24 +59,11 @@ class LandingPage extends Component {
 						handleSearch={this.handleSearch}
 					/>
 					<Twillio />
-					<FeaturedProjects featuredProjects={this.props.featuredProjects} />
-					<PopularMakers popularMakers={this.props.popularMakers} />
-					<PopularReviewers reviewers={this.props.popularReviewers} />
+					<FeaturedProjects />
+					<PopularMakers />
+					<PopularReviewers />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
 	}
 }
-
-const mapStateToProps = state => {
-	return {
-		featuredProjects: state.landingPageReducer.featuredProjects,
-		popularMakers: state.landingPageReducer.popularMakers,
-		popularReviewers: state.landingPageReducer.popularReviewers
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{ getReviewers, fetchSearchResults }
-)(LandingPage);

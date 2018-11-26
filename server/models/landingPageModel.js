@@ -2,7 +2,8 @@ const db = require('../config/dbConfig');
 
 module.exports = {
   getPopularProjects,
-  getPopularMakers
+  getPopularMakers,
+  getPopularReviewers
 };
 
 function getPopularProjects() {
@@ -21,5 +22,11 @@ function getPopularProjects() {
 function getPopularMakers() {
   return db('users')
     .orderBy('user_rating', 'desc')
+    .limit(4)
+}
+
+function getPopularReviewers() {
+  return db('users')
+    .orderBy('helpfulness', 'desc')
     .limit(4)
 }

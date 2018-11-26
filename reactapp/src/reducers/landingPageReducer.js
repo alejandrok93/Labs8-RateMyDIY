@@ -5,30 +5,17 @@ import {
   GETTING_POPULAR_MAKERS,
   GOT_POPULAR_MAKERS,
   GETTING_POPULAR_MAKERS_ERROR,
-  GET_REVIEWERS
+  GETTING_POPULAR_REVIEWERS,
+  GOT_POPULAR_REVIEWERS,
+  GETTING_POPULAR_REVIEWERS_ERROR
 } from "../actions/landingPageActions";
 
 const initialState = {
-  featuredProjects: [{
-    "project_id": '',
-    "user_id": '',
-    "project_name": '',
-    "img_url": '',
-    "text": '',
-    "last_updated": '',
-    "project_rating": '',
-    "rating_sum": '',
-    "rating_count": ''
-  }],
-  popularMakers: [],
+  featuredProjects: [
+  ],
+  popularMakers: [
+  ],
   popularReviewers: [
-    {
-      id: 2,
-      name: "Tristen",
-      star_count: 4.2,
-      author: "john",
-      photo_url: "someURL.com"
-    }
   ]
 };
 
@@ -38,10 +25,12 @@ const landingPageReducer = (state = initialState, action) => {
     case GETTING_FEATURED_PROJECTS:
       return {
         ...state,
+        fetching: true,
       };
     case GOT_FEATURED_PROJECTS:
       return {
         ...state,
+        fetching: false,
         featuredProjects: action.payload
       };
     case GETTING_FEATURED_PROJECTS_ERROR:
@@ -53,11 +42,13 @@ const landingPageReducer = (state = initialState, action) => {
     case GETTING_POPULAR_MAKERS:
       return {
         ...state,
+        fetching: true,
       };
     case GOT_POPULAR_MAKERS:
       return {
         ...state,
-        featuredProjects: action.payload
+        fetching: false,
+        popularMakers: action.payload
       };
     case GETTING_POPULAR_MAKERS_ERROR:
       return {
@@ -65,10 +56,22 @@ const landingPageReducer = (state = initialState, action) => {
         fetching: false,
         error: `${action.payload}`
       };
-    case GET_REVIEWERS:
+    case GETTING_POPULAR_REVIEWERS:
       return {
         ...state,
-        popularReviewers: action.payload
+        fetching: true,
+      };
+    case GOT_POPULAR_REVIEWERS:
+      return {
+        ...state,
+        fetching: false,
+        featuredProjects: action.payload
+      };
+    case GETTING_POPULAR_REVIEWERS_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        error: `${action.payload}`
       };
     default:
       return state;

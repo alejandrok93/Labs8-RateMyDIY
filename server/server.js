@@ -70,7 +70,7 @@ server.use('/', authRoutes);
 server.use('/api/users', userRoutes);
 server.use('/api/projects', projectRoutes);
 server.use('/api/posts', postRoutes);
-server.use('/api/landingPage', landingPageRoutes)
+server.use('/api/lp', landingPageRoutes)
 
 //Twilio
 server.get('/send-text', (req, res) => {

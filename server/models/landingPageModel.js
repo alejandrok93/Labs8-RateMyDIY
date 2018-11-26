@@ -6,9 +6,6 @@ module.exports = {
 
 function getLandingPageProjects() {
   return db('projects')
-    .where({
-      project_rating: '4',
-      project_rating: '5'
-    })
-    .first()
+    .orderBy('project_rating', 'desc')
+    .limit(4)
 }

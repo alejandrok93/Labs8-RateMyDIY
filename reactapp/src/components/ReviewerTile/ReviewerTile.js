@@ -62,10 +62,10 @@ class ReviewerTile extends React.Component {
         <ImageHolder>
           <ReviewerImage
             alt="PLACEHOLDER! alt text"
-            src={this.props.reviewer.photo_url} />
+            src={this.props.reviewer.img_url} />
         </ImageHolder>
         <Details>
-          <p className="project-name">{this.props.reviewer.name}</p>
+          <p className="project-name">{this.props.reviewer.username}</p>
           {/* React strap Modal */}
           <Button color="danger" onClick={this.toggle}>
             {" "}
@@ -79,7 +79,7 @@ class ReviewerTile extends React.Component {
             dialogClassName="my-modal"
           >
             <ModalHeader toggle={this.toggle}>
-              {this.props.reviewer.name}
+              {this.props.reviewer.username}
             </ModalHeader>
             <ModalFooter>
               <Button color="primary" onClick={this.toggle}>

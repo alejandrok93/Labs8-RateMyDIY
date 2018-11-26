@@ -2,9 +2,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 // import { Link } from "react-router-dom";
-
 //Import components
 import { ReviewerTile } from '../../../components';
+// import connect for reducers
+import { connect } from 'react-redux';
+import { getPopularReviewers } from '../../../actions/landingPageActions';
+
 
 // styled-components
 
@@ -27,16 +30,15 @@ const PopularMakersTitle = styled.h1`
 `;
 
 class PopularReviewers extends Component {
-	// constructor() {
-	//   super();
-	// } // useless constructor
-	componentDidMount() {}
+	componentDidMount() {
+		this.props.getPopularReviewers();
+	}
 	render() {
 		return (
 			<PopularReviewersWrapper>
 				<PopularMakersTitle>Popular Reviewers</PopularMakersTitle>
 				<PopularReviewersListTiles>
-					{this.props.reviewers.map(reviewer => (
+					{this.props.popularReviewers.map(reviewer => (
 						<ReviewerTile reviewer={reviewer} key={reviewer.reviewer_id} />
 					))}
 				</PopularReviewersListTiles>
@@ -45,4 +47,13 @@ class PopularReviewers extends Component {
 	}
 }
 
-export default PopularReviewers;
+const mapStateToProps = state => ({
+	popularReviewers: state.landingPageReducer.featuredProjects,
+	fetching: state.landingPageReducer.fetching,
+	error: state.landingPageReducer.error
+});
+
+export default connect(
+	mapStateToProps,
+	{ getPopularReviewers }
+)(PopularReviewers);

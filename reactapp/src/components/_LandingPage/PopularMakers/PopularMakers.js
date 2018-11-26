@@ -29,7 +29,6 @@ const PopularMakersTitle = styled.h1`
 class PopularMakers extends Component {
 	componentDidMount() {
 		this.props.getPopularMakers();
-		console.log("this.props.getPopularMakers()", this.props.popularMakers)
 	}
 	render() {
 		return (

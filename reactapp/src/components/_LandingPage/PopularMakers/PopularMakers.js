@@ -46,8 +46,8 @@ class PopularMakers extends Component {
 
 const mapStateToProps = state => ({
 	popularMakers: state.landingPageReducer.popularMakers,
-	fetching: state.landingPageReducer.fetching,
-	error: state.landingPageReducer.error
+	gettingPopularMakers: state.landingPageReducer.gettingPopularMakers,
+	popularMakersError: state.landingPageReducer.popularMakersError
 });
 
 export default connect(

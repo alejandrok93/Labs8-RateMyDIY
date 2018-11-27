@@ -46,8 +46,8 @@ class FeaturedProjects extends Component {
 
 const mapStateToProps = state => ({
 	featuredProjects: state.landingPageReducer.featuredProjects,
-	fetching: state.landingPageReducer.fetching,
-	error: state.landingPageReducer.error
+	gettingFeaturedProjects: state.landingPageReducer.fetchingFeaturedProjects,
+	featuredProjectsError: state.landingPageReducer.featuredProjectsError
 });
 
 export default connect(

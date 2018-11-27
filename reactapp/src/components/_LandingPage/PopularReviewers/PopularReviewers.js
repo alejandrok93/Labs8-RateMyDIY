@@ -48,8 +48,8 @@ class PopularReviewers extends Component {
 
 const mapStateToProps = state => ({
 	popularReviewers: state.landingPageReducer.popularReviewers,
-	fetching: state.landingPageReducer.fetching,
-	error: state.landingPageReducer.error
+	gettingPopularReviewers: state.landingPageReducer.fetchingPopularReviewers,
+	popularReviewersError: state.landingPageReducer.popularReviewersError
 });
 
 export default connect(

@@ -1,17 +1,53 @@
-import React from 'react'; // removed { component } from import
+import React, { Component } from 'react'; // removed { component } from import
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { getUsername } from '../../actions';
+axios.defaults.withCredentials = true;
+class Auth extends Component {
+	state = {
+		username: ''
+	}
 
-const Auth = () => {
-	return (
-		<div>
-			<a
-				href={
-					(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`
-				}
-			>
-				Sign Up or Sign In
-			</a>
-		</div>
-	);
-};
+	changeHandler = event => {
+		this.setState({ [event.target.name]: event.target.value });
+	};
 
-export default Auth;
+
+	changeName = event => {
+		event.preventDefault();
+		this.props.getUsername(this.state.username);
+	}
+
+	render() {
+		if (this.props.redirect) {
+			return <Redirect push to={this.props.redirect} />;
+		} else {
+			return (
+				<div>
+					{this.props.error ? 
+						<h2>{this.props.error.error}</h2> 
+						: 
+						<h2>Please choose a username</h2> }
+					<input 
+						type='text'
+						value={this.state.username}
+						name='username'
+						onChange={this.changeHandler}
+					/>
+					<button onClick={this.changeName}>Submit</button>
+				</div>
+			);
+		}
+	}
+}
+
+const mapStateToProps = state => ({
+	gettingUsername: state.usernameReducer.gettingUsername,
+	username: state.usernameReducer.username,
+	error: state.usernameReducer.error,
+	redirect: state.usernameReducer.redirect
+
+});
+
+export default connect(mapStateToProps, { getUsername })(Auth);

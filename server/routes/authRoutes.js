@@ -33,26 +33,11 @@ router.get('/callback', function(req, res, next) {
 			}
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
-			console.log(req.user._json);
-			const role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
+			const role = req.user.profile._json['https://ratemydiy.herokuapp.com/roles'];
 			if (role[0] === 'new') {
-				const sub = req.user._json.sub.split('|');
-				const auth_id = sub[1];
-				const username = req.user._json.nickname;
-				const user = {
-					auth_id,
-					username
-				};
-				usersDB
-					.addUser(user)
-					.then(dbRes => {
-						res.redirect(
-							returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
-						);
-					})
-					.catch(err => {
-						res.status(500).json(err);
-					});
+				res.redirect(
+					(process.env.FRONTEND_URL || `http://localhost:3000`) + `/signin`
+				);
 			} else {
 				res.redirect(
 					returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
@@ -67,7 +52,7 @@ router.get('/loggedIn', function(req, res, next) {
 	// console.log('user:', req.user);
 
 	if (req.user) {
-		const auth_id = req.user._json.sub.split('|')[1];
+		const auth_id = req.user.profile._json.sub.split('|')[1];
 		console.log('User connected with auth_id', auth_id);
 
 		authDB

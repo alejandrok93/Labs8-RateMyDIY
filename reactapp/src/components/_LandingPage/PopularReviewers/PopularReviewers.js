@@ -8,7 +8,6 @@ import { ReviewerTile } from '../../../components';
 import { connect } from 'react-redux';
 import { getPopularReviewers } from '../../../actions/landingPageActions';
 
-
 // styled-components
 
 const PopularReviewersWrapper = styled.div`
@@ -39,7 +38,7 @@ class PopularReviewers extends Component {
 				<PopularMakersTitle>Popular Reviewers</PopularMakersTitle>
 				<PopularReviewersListTiles>
 					{this.props.popularReviewers.map(reviewer => (
-						<ReviewerTile reviewer={reviewer} key={reviewer.reviewer_id} />
+						<ReviewerTile reviewer={reviewer} key={reviewer.user_id} />
 					))}
 				</PopularReviewersListTiles>
 			</PopularReviewersWrapper>
@@ -48,7 +47,7 @@ class PopularReviewers extends Component {
 }
 
 const mapStateToProps = state => ({
-	popularReviewers: state.landingPageReducer.featuredProjects,
+	popularReviewers: state.landingPageReducer.popularReviewers,
 	fetching: state.landingPageReducer.fetching,
 	error: state.landingPageReducer.error
 });

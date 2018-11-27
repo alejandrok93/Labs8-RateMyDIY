@@ -133,7 +133,7 @@ export const deleteProject = (project_id, user_id) => {
 
 			.then(async () => {
 				await sleep(500);
-				dispatch({ type: DELETED_PROJECT, payload: {} });
+				dispatch({ type: DELETED_PROJECT });
 			})
 
 			.catch(error => dispatch({ type: DELETE_PROJECT_ERROR, payload: error }));

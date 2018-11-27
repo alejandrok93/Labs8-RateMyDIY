@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 // import { NavLink, Link, Route } from "react-router-dom";
 import styled from 'styled-components';
+//Added Redux imports
+import { fetchSearchResults } from '../../actions/index';
+import { connect } from 'react-redux';
 
 //Import components
 import {
@@ -27,7 +30,7 @@ const DropdownMenu = styled.div`
 	width: 100%;
 `;
 
-export default class LandingPage extends Component {
+class LandingPage extends Component {
 	constructor() {
 		super();
 		this.state = { input: '' };
@@ -67,3 +70,12 @@ export default class LandingPage extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	projects: state.searchReducer.projects
+});
+
+export default connect(
+	mapStateToProps,
+	{ fetchSearchResults }
+)(LandingPage);

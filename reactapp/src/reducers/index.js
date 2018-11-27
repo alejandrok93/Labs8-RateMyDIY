@@ -6,6 +6,7 @@ import postReducer from './postReducer';
 import searchReducer from './searchReducer';
 import settingsReducer from './settingsReducer';
 import sendgridReducer from './sendgridReducer';
+import usernameReducer from './usernameReducer';
 
 export default combineReducers({
 	loggedInReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
 	postReducer,
 	searchReducer,
 	settingsReducer,
-	sendgridReducer
+	sendgridReducer,
+	usernameReducer
 });

@@ -6,6 +6,7 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex("users").insert([
         {
+          user_id: 1,
           auth_id: 1,
           username: "alejandrok",
           user_rating: 4.3,
@@ -14,6 +15,7 @@ exports.seed = function(knex, Promise) {
           helpfulness: 16
         },
         {
+          user_id: 2,
           auth_id: 2,
           username: "tristen",
           user_rating: 4.7,
@@ -22,6 +24,7 @@ exports.seed = function(knex, Promise) {
           helpfulness: 10
         },
         {
+          user_id: 3,
           auth_id: 3,
           username: "david",
           user_rating: 3.9,

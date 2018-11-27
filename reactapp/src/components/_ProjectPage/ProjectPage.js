@@ -75,7 +75,6 @@ class ProjectPage extends Component {
 			}
 		});
 	};
-<<<<<<< HEAD
 	
 	// Returns true if user is author
 	owner = () => this.props.project.user_id === this.props.userInfo.user_id;
@@ -89,15 +88,11 @@ class ProjectPage extends Component {
 		!this.state.newImage;
 
 	// If this is a new project, set up the state with an empty form.
-=======
-
->>>>>>> dev
 	componentDidMount() {
 		this.props.getProject(this.props.match.params.id);
 	}
 
 	render() {
-<<<<<<< HEAD
 		return (
 			<ProjectPageContainer>
 				{this.state.newProject ? (
@@ -166,30 +161,6 @@ class ProjectPage extends Component {
 							value={this.state.text}
 							onChange={this.changeHandler}
 							required
-=======
-		// Redirect
-		if (this.props.redirect) {
-			return <Redirect push to={this.props.redirect} />;
-		} else {
-			// Evaluates to true if user is author
-			const owner = this.props.project.user_id === this.props.userInfo.user_id;
-
-			// Disable other buttons if there is an active form
-			const disabled =
-				this.props.projectToUpdate ||
-				this.props.postToAdd ||
-				this.props.postToUpdate ||
-				this.props.postToDelete;
-
-			return (
-				<ProjectPageContainer>
-					{/* Might be a good idea to replace these with a switch */}
-					{this.props.projectToUpdate ? (
-						<EditProject
-							user_id={this.props.userInfo.user_id}
-							project={this.props.project}
-							willUpdateProject={this.props.willUpdateProject}
->>>>>>> dev
 						/>
 					) : this.props.gettingProject ? (
 						<React.Fragment>

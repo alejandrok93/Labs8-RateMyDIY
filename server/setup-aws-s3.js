@@ -28,6 +28,9 @@ const upload = multer({
     // you can check all the available types here:
     // https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl 
     acl: 'public-read',
+    key: function (req, file, cb) {
+			cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
+		},
     // metadata stored on asw s3
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });

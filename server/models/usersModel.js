@@ -1,14 +1,11 @@
 const db = require('../config/dbConfig');
 
 module.exports = {
-	getUsers,
 	checkUsernames,
-	addUser
+	addUser,
+	getUserProjects,
+	getUserReviews
 };
-
-function getUsers() {
-	return db('users');
-}
 
 function checkUsernames(username) {
 	return db('users')
@@ -20,4 +17,14 @@ function addUser(user) {
 	return db('users')
 		.insert(user)
 		.into('users');
+}
+
+function getUserProjects(user_id) {
+	return db('projects')
+		.where({ user_id: user_id });
+}
+
+function getUserReviews(user_id) {
+	return db('reviews')
+		.where({ user_id: user_id });
 }

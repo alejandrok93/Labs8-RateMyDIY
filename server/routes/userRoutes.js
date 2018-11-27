@@ -48,4 +48,50 @@ router.post('/change', function (req, res, next) {
 			});
 });
 
+router.get('/myprojects', function (req, res, next) {
+	const sub = req.user.profile._json.sub;
+	const auth_id = sub.split('|')[1];
+	authDB
+		.loggedIn(auth_id)
+		.then(userInfo => {
+			const { user_id } = userInfo;
+			usersDB
+				.getUserProjects(user_id)
+				.then(projectsList => {
+					console.log('projectsList', projectsList)
+					res.status(200).json(projectsList);
+				})
+				.catch(projectsError => {
+					console.log('projectsError', projectsError);
+					res.status(400).json(projectsError);
+				})
+		})
+		.catch(userError => {
+			res.status(500).json(userError);
+		});
+});
+
+router.get('/myreviews', function (req, res, next) {
+	const sub = req.user.profile._json.sub;
+	const auth_id = sub.split('|')[1];
+	authDB
+		.loggedIn(auth_id)
+		.then(userInfo => {
+			const { user_id } = userInfo;
+			usersDB
+				.getUserReviews(user_id)
+				.then(reviewsList => {
+					console.log('reviewsList', reviewsList)
+					res.status(200).json(reviewsList);
+				})
+				.catch(reviewsError => {
+					console.log('reviewsError', reviewsError);
+					res.status(400).json(reviewsError);
+				})
+		})
+		.catch(userError => {
+			res.status(500).json(userError);
+		});
+});
+
 module.exports = router;

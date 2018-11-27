@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Components
-import {} from '../../components';
+import {Fileupload} from '../../components';
 
 // Styles
 import styled from 'styled-components';

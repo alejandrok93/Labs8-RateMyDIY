@@ -71,13 +71,15 @@ router.get("/:project_id/reviews", function(req, res, next) {
 });
 
 // add project
-router.post("/", ensureLoggedIn, authenticate, function(req, res, next) {
+router.post("/",  ensureLoggedIn, authenticate ,function(req, res, next) {
   const { user_id, project_name, img_url, text } = req.body;
+
 
   if (!project_name || !img_url || !text) {
     return res.status(422).json({ error: "Missing parameters." });
   } else {
     const project = { user_id, project_name, img_url, text };
+    console.log('addProject:', project)
     db.addProject(project)
       .then(project_id => {
         res.status(201).json(project_id);

@@ -22,22 +22,13 @@ class Auth extends Component {
 	render() {
 		if (this.props.redirect) {
 			return <Redirect push to={this.props.redirect} />;
-		} else if (this.props.error) {
-			return (
-				<div>
-					<h2>{this.props.error.error}</h2>
-					<input 
-						type='text'
-						value={this.state.username}
-						name='username'
-						onChange={this.changeHandler}
-					/>
-					<button onClick={this.changeName}>Submit</button>
-				</div>
-			);
 		} else {
 			return (
 				<div>
+					{this.props.error ? 
+						<h2>{this.props.error.error}</h2> 
+						: 
+						<h2>Please choose a username</h2> }
 					<input 
 						type='text'
 						value={this.state.username}

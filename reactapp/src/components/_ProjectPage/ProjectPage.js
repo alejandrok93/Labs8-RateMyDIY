@@ -75,92 +75,34 @@ class ProjectPage extends Component {
 			}
 		});
 	};
-	
-	// Returns true if user is author
-	owner = () => this.props.project.user_id === this.props.userInfo.user_id;
-	// owner = () => true;
 
-	// Disable other buttons when there is an active form
-	disabled = () =>
-		!this.state.editProject ||
-		!this.state.editPost ||
-		!this.state.newText ||
-		!this.state.newImage;
-
-	// If this is a new project, set up the state with an empty form.
 	componentDidMount() {
 		this.props.getProject(this.props.match.params.id);
 	}
 
 	render() {
-		return (
-			<ProjectPageContainer>
-				{this.state.newProject ? (
-					<ProjectForm>
-						<ProjectHeader>
-							<ProjectNameInput
-								name="project_name"
-								type="text"
-								placeholder="project title"
-								value={this.state.project_name}
-								onChange={this.changeHandler}
-								required
-							/>
-						</ProjectHeader>
-						<ImgUrlInput
-							// allow uploads to aws later
-							name="img_url"
-							type="file"
-							placeholder="image url for finished project"
-							value={this.state.img_url}
-							onChange={this.changeHandler}
-							required
-						/>
-						<TextInput
-							name="text"
-							type="text"
-							placeholder="project description"
-							value={this.state.text}
-							onChange={this.changeHandler}
-							required
-						/>
-						<CancelButton
-							name="cancel"
-							value="Cancel"
-							onClick={this.clickHandler}
-						/>
-						<SubmitInput type="submit" value="Add New Project" />
-					</ProjectForm>
-				) : this.state.editProject ? (
-					<ProjectForm>
-						<ProjectHeader>
-							<ProjectNameInput
-								name="project_name"
-								type="text"
-								placeholder="project title"
-								value={this.state.project_name}
-								onChange={this.changeHandler}
-								required
-							/>
-							<StarCount rating={this.props.project.rating} />
-							<ReviewsButton disabled />
-						</ProjectHeader>
-						<ImgUrlInput
-							// allow uploads to aws later
-							name="img_url"
-							type="text"
-							placeholder="image url for finished project"
-							value={this.state.img_url}
-							onChange={this.changeHandler}
-							required
-						/>
-						<TextInput
-							name="text"
-							type="text"
-							placeholder="project description"
-							value={this.state.text}
-							onChange={this.changeHandler}
-							required
+		// Redirect
+		if (this.props.redirect) {
+			return <Redirect push to={this.props.redirect} />;
+		} else {
+			// Evaluates to true if user is author
+			const owner = this.props.project.user_id === this.props.userInfo.user_id;
+
+			// Disable other buttons if there is an active form
+			const disabled =
+				this.props.projectToUpdate ||
+				this.props.postToAdd ||
+				this.props.postToUpdate ||
+				this.props.postToDelete;
+
+			return (
+				<ProjectPageContainer>
+					{/* Might be a good idea to replace these with a switch */}
+					{this.props.projectToUpdate ? (
+						<EditProject
+							user_id={this.props.userInfo.user_id}
+							project={this.props.project}
+							willUpdateProject={this.props.willUpdateProject}
 						/>
 					) : this.props.gettingProject ? (
 						<React.Fragment>

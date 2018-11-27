@@ -5,7 +5,8 @@ exports.up = function(knex, Promise) {
 			.integer('project_id') // project's primary key
 			.unsigned()
 			.notNullable()
-			.references('projects.project_id');
+			.references('projects.project_id')
+			.onDelete('CASCADE');
 		table
 			.integer('user_id') // reviewer's primary key
 			.unsigned()
@@ -16,7 +17,7 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.unsigned();
 		table.string('img_url');
-		table.string('text', 1024); // review text (not nullable? minimum length?)
+		table.string('text', 1024).notNullable(); // review text (not nullable? minimum length?)
 		table
 			.integer('likes') // count of all likes received
 			.unsigned()

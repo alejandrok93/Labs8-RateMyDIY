@@ -62,7 +62,7 @@ class MakerTile extends React.Component {
         <ImageHolder>
           <ProjectImage
             alt="PLACEHOLDER! alt text"
-            src={this.props.maker.photo_url} />
+            src={this.props.maker.img_url} />
         </ImageHolder>
         <Details>
           <div className="star-rating">
@@ -73,7 +73,7 @@ class MakerTile extends React.Component {
             <span className="fa fa-star checked" />
           </div>
 
-          <p className="project-name">{this.props.maker.name}</p>
+          <p className="project-name">{this.props.maker.username}</p>
           {/* React strap Modal */}
           <Button color="danger" onClick={this.toggle}>
             {" "}
@@ -87,7 +87,7 @@ class MakerTile extends React.Component {
             dialogClassName="my-modal"
           >
             <ModalHeader toggle={this.toggle}>
-              {this.props.maker.name}
+              {this.props.maker.username}
             </ModalHeader>
             <ModalBody>
               <span className="fa fa-star checked" />

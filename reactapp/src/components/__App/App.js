@@ -1,6 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'; // removed Link from import (unused)
+import { Route, withRouter } from 'react-router-dom'; // removed Link from import (unused)
 import styled from 'styled-components';
 import Auth from '../../components/Auth/Auth';
 import { connect } from 'react-redux';
@@ -21,33 +21,35 @@ import {
 	UserSettingSkills,
 	UserSettingResumes,
 	UserSettingSettings,
+	fileupload,
 	//  SearchBar, // not used
 	SearchPage,
-	ProjectPage
+	ProjectPage,
+	NewProject
 } from '../../components';
 
 //Styles
 const AppContainer = styled.div`
-	display: flex;
-	max-width: 1280px;
-	min-width: 600px;
-	height: auto;
-	background: #eff;
-	margin: 10px auto;
+  display: flex;
+  max-width: 1280px;
+  min-width: 600px;
+  height: auto;
+  background: #eff;
+  margin: 10px auto;
 `;
 
 class App extends Component {
-	state = {};
+  state = {};
 
-	componentDidMount() {
-		this.props.loggedIn();
-	}
+  componentDidMount() {
+    this.props.loggedIn();
+  }
 
-	render() {
-		return (
-			<AppContainer>
-				{/* <h1>Navigation</h1> */}
-				{/* <ul>
+  render() {
+    return (
+      <AppContainer>
+        {/* <h1>Navigation</h1> */}
+        {/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -80,19 +82,23 @@ class App extends Component {
 				<Route path="/settings/settings" component={UserSettingSettings} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/signin" component={Auth} />
+				<Route path="/fileupload" component={fileupload} />
 				<Route path="/project/:id" component={ProjectPage} />
+				<Route path="/newproject" component={NewProject} />
 			</AppContainer>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
-	userInfo: state.loggedInReducer.userInfo,
-	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
-	error: state.loggedInReducer.userInfo
+  userInfo: state.loggedInReducer.userInfo,
+  gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+  error: state.loggedInReducer.userInfo
 });
 
-export default connect(
-	mapStateToProps,
-	{ loggedIn }
-)(App);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ loggedIn }
+	)(App)
+);

@@ -16,13 +16,6 @@ class fileupload extends Component {
     });
   };
 
-  multipleFileChangedHandler = event => {
-    this.setState({
-      selectedFiles: event.target.files
-    });
-    console.log(event.target.files);
-  };
-
   singleFileUploadHandler = event => {
     event.preventDefault();
     const data = new FormData();
@@ -57,11 +50,9 @@ class fileupload extends Component {
               let fileName = response.data;
 
               let photo = response.data.location;
-
               this.setState({
                 imgSrc: photo
               });
-              
               console.log("filedata", fileName);
 
               console.log("photo", photo);

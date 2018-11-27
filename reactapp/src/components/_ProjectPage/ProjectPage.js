@@ -10,7 +10,7 @@ import {
 	Post,
 	NewPost,
 	EditPost,
-	ConfirmModal
+	ConfirmModal,
 } from '../../components';
 
 // Actions

@@ -3,7 +3,7 @@ const authDB = require('../models/authModel')
 function authenticate(req, res, next) {
   const { user_id } = req.body;
   //get user_id from user object
-  console.log(req.body);
+  console.log('Authenticate middleware - req.user:', req.user, 'rew.body', req.body);
   let sub = req.user._json.sub.split("|");
   let auth_id = sub[1];
 

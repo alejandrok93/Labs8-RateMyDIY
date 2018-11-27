@@ -57,9 +57,11 @@ class fileupload extends Component {
               let fileName = response.data;
 
               let photo = response.data.location;
+
               this.setState({
                 imgSrc: photo
               });
+              
               console.log("filedata", fileName);
 
               console.log("photo", photo);

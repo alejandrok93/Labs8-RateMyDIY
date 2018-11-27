@@ -4,6 +4,7 @@ const passport = require('passport');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 	'/signin'
 );
+const authDB = require('../models/authModel');
 const usersDB = require('../models/usersModel');
 
 // const authenticate = require('../config/authMiddleware');

@@ -112,7 +112,7 @@ class ProjectPage extends Component {
 	changeHandler = event => {
 		this.setState({ [event.target.name]: event.target.value });
 	};
-
+	
 	// Returns true if user is author
 	owner = () => this.props.project.user_id === this.props.userInfo.user_id;
 	// owner = () => true;
@@ -156,7 +156,7 @@ class ProjectPage extends Component {
 						<ImgUrlInput
 							// allow uploads to aws later
 							name="img_url"
-							type="text"
+							type="file"
 							placeholder="image url for finished project"
 							value={this.state.img_url}
 							onChange={this.changeHandler}

@@ -55,3 +55,4 @@ export { default as Post } from './_ProjectPage/Post';
 export { default as ConfirmModal } from './_ProjectPage/ConfirmModal';
 export { default as StarCount } from './StarCount/StarCount';
 export { default as DeleteModal } from './_ProjectPage/DeleteModal';
+export { default as fileupload } from './fileupload/fileupload';

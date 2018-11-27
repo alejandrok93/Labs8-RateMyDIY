@@ -98,8 +98,8 @@ class Post extends Component {
 						<ImgUrlInput
 							// allow uploads to aws later
 							name="img_url"
-							type="text"
-							placeholder="new image url"
+							type="file"
+							placeholder="choose a file"
 							value={this.state.img_url}
 							onChange={this.changeHandler}
 							required

@@ -21,6 +21,7 @@ import {
 	UserSettingSkills,
 	UserSettingResumes,
 	UserSettingSettings,
+	fileupload,
 	//  SearchBar, // not used
 	SearchPage,
 	ProjectPage
@@ -80,6 +81,7 @@ class App extends Component {
 				<Route path="/settings/settings" component={UserSettingSettings} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/signin" component={Auth} />
+				<Route path="/fileupload" component={fileupload} />
 				<Route path="/project/:id" component={ProjectPage} />
 			</AppContainer>
 		);

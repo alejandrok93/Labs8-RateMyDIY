@@ -1,13 +1,13 @@
 import {
-	GETTING_POST,
-	GOT_POST,
-	GET_POST_ERROR,
+	WILL_ADD_POST,
 	ADDING_POST,
 	ADDED_POST,
 	ADD_POST_ERROR,
+	WILL_UPDATE_POST,
 	UPDATING_POST,
 	UPDATED_POST,
 	UPDATE_POST_ERROR,
+	WILL_DELETE_POST,
 	DELETING_POST,
 	DELETED_POST,
 	DELETE_POST_ERROR
@@ -15,33 +15,27 @@ import {
 
 const initialState = {
 	post: {},
-	gettingPosts: false,
-	gettingPost: false,
+
+	postToAdd: false,
 	addingPost: false,
-	deletingPost: false,
+	addingPostError: false,
+
+	postToUpdate: null,
 	updatingPost: false,
-	error: null,
-	redirect: null
+	updatingPostError: false,
+
+	postToDelete: null,
+	deletingPost: false,
+	deletingPostError: false
 };
 
 const postReducer = (state = initialState, action) => {
 	switch (action.type) {
-		// getPost
-		case GETTING_POST:
-			return { ...state, gettingPost: true };
-
-		case GOT_POST:
+		// willAddPost
+		case WILL_ADD_POST:
 			return {
 				...state,
-				post: action.payload,
-				gettingPost: false
-			};
-
-		case GET_POST_ERROR:
-			return {
-				...state,
-				gettingPost: false,
-				error: `${action.payload}`
+				postToAdd: action.payload
 			};
 
 		// addPost
@@ -51,14 +45,22 @@ const postReducer = (state = initialState, action) => {
 		case ADDED_POST:
 			return {
 				...state,
-				addingPost: false
+				addingPost: false,
+				postToAdd: false
 			};
 
 		case ADD_POST_ERROR:
 			return {
 				...state,
 				addingPost: false,
-				error: `${action.payload}`
+				addingPostError: `${action.payload}`
+			};
+
+		// willUpdatePost
+		case WILL_UPDATE_POST:
+			return {
+				...state,
+				postToUpdate: action.payload
 			};
 
 		// updatePost
@@ -68,14 +70,22 @@ const postReducer = (state = initialState, action) => {
 		case UPDATED_POST:
 			return {
 				...state,
-				updatingPost: false
+				updatingPost: false,
+				postToUpdate: false
 			};
 
 		case UPDATE_POST_ERROR:
 			return {
 				...state,
 				updatingPost: false,
-				error: `${action.payload}`
+				updatingPostError: `${action.payload}`
+			};
+
+		// willDeletePost
+		case WILL_DELETE_POST:
+			return {
+				...state,
+				postToDelete: action.payload
 			};
 
 		// deletePost
@@ -85,14 +95,15 @@ const postReducer = (state = initialState, action) => {
 		case DELETED_POST:
 			return {
 				...state,
-				deletingPost: false
+				deletingPost: false,
+				postToDelete: null
 			};
 
 		case DELETE_POST_ERROR:
 			return {
 				...state,
 				deletingPost: false,
-				error: `${action.payload}`
+				deletingPostError: `${action.payload}`
 			};
 
 		default:

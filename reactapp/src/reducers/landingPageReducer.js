@@ -13,63 +13,84 @@ import {
 const initialState = {
 	featuredProjects: [],
 	popularMakers: [],
-	popularReviewers: []
+	popularReviewers: [],
+
+	gettingFeaturedProjects: false,
+	featuredProjectsError: null,
+
+	gettingPopularMakers: false,
+	popularMakersError: null,
+
+	gettingPopularReviewers: false,
+	popularReviewersError: null,
 };
 
 const landingPageReducer = (state = initialState, action) => {
 	switch (action.type) {
-		// example action
+
+		// getFeaturedProjects
 		case GETTING_FEATURED_PROJECTS:
 			return {
 				...state,
-				fetching: true
+				gettingFeaturedProjects: true
 			};
+
 		case GOT_FEATURED_PROJECTS:
 			return {
 				...state,
-				fetching: false,
+				gettingFeaturedProjects: false,
 				featuredProjects: action.payload
 			};
+
 		case GETTING_FEATURED_PROJECTS_ERROR:
 			return {
 				...state,
-				fetching: false,
-				error: `${action.payload}`
+				gettingFeaturedProjects: false,
+				featuredProjectsError: `${action.payload}`
 			};
+
+		// getPopularMakers
 		case GETTING_POPULAR_MAKERS:
 			return {
 				...state,
-				fetching: true
+				gettingPopularMakers: true
 			};
+
 		case GOT_POPULAR_MAKERS:
 			return {
 				...state,
-				fetching: false,
+				gettingPopularMakers: false,
 				popularMakers: action.payload
 			};
+
 		case GETTING_POPULAR_MAKERS_ERROR:
 			return {
 				...state,
-				fetching: false,
-				error: `${action.payload}`
+				gettingPopularMakers: false,
+				popularMakersError: `${action.payload}`
 			};
+
+		// getPopularReviewers
 		case GETTING_POPULAR_REVIEWERS:
 			return {
 				...state,
-				fetching: true
+				gettingPopularReviewers: true
 			};
+
 		case GOT_POPULAR_REVIEWERS:
 			return {
 				...state,
-				fetching: false,
+				gettingPopularReviewers: false,
 				popularReviewers: action.payload
 			};
+
 		case GETTING_POPULAR_REVIEWERS_ERROR:
 			return {
 				...state,
-				fetching: false,
-				error: `${action.payload}`
+				gettingPopularReviewers: false,
+				popularReviewersError: `${action.payload}`
 			};
+
 		default:
 			return state;
 	}

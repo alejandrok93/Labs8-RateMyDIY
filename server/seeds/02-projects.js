@@ -6,7 +6,6 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex("projects").insert([
         {
-          project_id: 1,
           user_id: 1,
           project_name: "Front-End",
           text: "front-end application",
@@ -15,7 +14,6 @@ exports.seed = function(knex, Promise) {
           rating_count: 7
         },
         {
-          project_id: 2,
           user_id: 2,
           project_name: "Back-End",
           text: "back-end application",
@@ -24,7 +22,6 @@ exports.seed = function(knex, Promise) {
           rating_count: 10
         },
         {
-          project_id: 3,
           user_id: 3,
           project_name: "Full-Stack",
           text: "full-stack application",

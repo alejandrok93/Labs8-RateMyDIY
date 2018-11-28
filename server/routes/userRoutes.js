@@ -49,7 +49,7 @@ router.post('/change', function (req, res, next) {
 			});
 });
 
-router.get('/myprojects', authenticate, function (req, res, next) {
+router.post('/myprojects', authenticate, function (req, res, next) {
 	const { user_id } = req.body;
 	usersDB
 		.getUserProjects(user_id)
@@ -63,7 +63,7 @@ router.get('/myprojects', authenticate, function (req, res, next) {
 		});
 });
 
-router.get('/myreviews', function (req, res, next) {
+router.post('/myreviews', function (req, res, next) {
 	const { user_id } = req.body;
 	usersDB
 		.getUserReviews(user_id)

@@ -7,6 +7,7 @@ import searchReducer from './searchReducer';
 import settingsReducer from './settingsReducer';
 import sendgridReducer from './sendgridReducer';
 import usernameReducer from './usernameReducer';
+import myProjectReducer from './myProjectReducer'
 
 export default combineReducers({
 	loggedInReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
 	searchReducer,
 	settingsReducer,
 	sendgridReducer,
-	usernameReducer
+	usernameReducer,
+	myProjectReducer
 });

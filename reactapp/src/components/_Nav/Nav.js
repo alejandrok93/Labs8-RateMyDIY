@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {
 	DropDown
 } from '../../components';
+import { Button } from "reactstrap";
 import { sendEmail } from '../../actions';
 
 // date check for welcome message
@@ -64,11 +65,19 @@ class Nav extends React.Component {
 								{this.clientGreeting()} {this.props.userInfo.username}
 							</WelcomeMessage>
 							<DropDown />
-							<AuthButton href={logoutURL}>Signout</AuthButton>
+							<a href={logoutURL}>
+								<Button color="danger">
+									<h3>Signout</h3>
+								</Button>
+							</a>
 						</Fragment>
 					) : (
 							<Fragment>
-								<AuthButton href={loginURL}>Login</AuthButton>
+								<a href={loginURL}>
+									<Button color="danger">
+										<h3>Login</h3>
+									</Button>
+								</a>
 							</Fragment>
 						)}
 
@@ -98,7 +107,7 @@ const NavWrapper = styled.div`
 	min-width: 10%;
 `;
 const AuthWrapper = styled.div`
-		display: flex;
+	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 	border: 1px solid black;
@@ -106,27 +115,6 @@ const AuthWrapper = styled.div`
 	padding: 4px 8px;
   padding: 10px;
 	/* overflow: hidden; */
-`;
-
-const AuthButton = styled.a`
-	color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
-	display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 1px solid transparent;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: .25rem;
-  cursor: pointer;
 `;
 
 const WelcomeMessage = styled.p`

@@ -56,7 +56,6 @@ class ProjectTile extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.project);
 		return (
 			<ProjectTileWrapper>
 				{/* removed src="${https://someAWS.S3.URL}" */}

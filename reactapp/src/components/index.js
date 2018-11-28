@@ -1,9 +1,6 @@
 export { default as App } from './__App/App';
 export { default as SearchBar } from './SearchBar/SearchBar';
 export {
-	default as ExampleComponent
-} from './_ExampleComponent/ExampleComponent';
-export {
 	default as FeaturedProjects
 } from './_LandingPage/FeaturedProjects/FeaturedProjects';
 export {
@@ -48,7 +45,8 @@ export {
 	default as UserSettingSkills
 } from './_UserSettingsPage/Skills/Skills';
 export { default as SearchPage } from './_SearchPage/SearchPage';
-export { default as DropDown } from './DropDown/DropDown';
+export { default as Nav } from './_Nav/Nav';
+export { default as DropDown } from './_Nav/DropDown/DropDown';
 export { default as Twillio } from './_Twillio/Twillio';
 export { default as ProjectPage } from './_ProjectPage/ProjectPage';
 export { default as Project } from './_ProjectPage/Project';

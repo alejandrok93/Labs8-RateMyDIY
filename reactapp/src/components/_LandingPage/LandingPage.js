@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 //Import components
 import {
-	DropDown,
+	Nav,
 	FeaturedProjects,
 	PopularMakers,
 	PopularReviewers,
@@ -24,9 +24,6 @@ const LandingPageContentWrapper = styled.div`
 	width: 80%;
 `;
 const LandingPageWrapper = styled.div`
-	width: 100%;
-`;
-const DropdownMenu = styled.div`
 	width: 100%;
 `;
 
@@ -53,9 +50,7 @@ class LandingPage extends Component {
 		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
-				<DropdownMenu>
-					<DropDown />
-				</DropdownMenu>
+				<Nav />
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}

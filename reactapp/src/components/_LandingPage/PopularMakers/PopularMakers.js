@@ -36,7 +36,11 @@ class PopularMakers extends Component {
 				<PopularMakerListTiles>
 					<PopularMakersTitle>Popular Makers</PopularMakersTitle>
 					{this.props.popularMakers.map(maker => (
-						<MakerTile maker={maker} key={maker.user_id} />
+						<MakerTile
+							fetchSearchResults={this.props.fetchSearchResults}
+							maker={maker}
+							key={maker.user_id}
+						/>
 					))}
 				</PopularMakerListTiles>
 			</PopularMakersWrapper>
@@ -46,8 +50,8 @@ class PopularMakers extends Component {
 
 const mapStateToProps = state => ({
 	popularMakers: state.landingPageReducer.popularMakers,
-	fetching: state.landingPageReducer.fetching,
-	error: state.landingPageReducer.error
+	gettingPopularMakers: state.landingPageReducer.gettingPopularMakers,
+	popularMakersError: state.landingPageReducer.popularMakersError
 });
 
 export default connect(

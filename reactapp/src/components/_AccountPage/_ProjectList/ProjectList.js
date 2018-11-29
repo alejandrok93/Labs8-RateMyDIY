@@ -7,8 +7,11 @@ import "./ProjectList.css";
 
 
 class ProjectList extends Component {
-  componentDidMount() {
-    this.props.fetchMyProjects();
+  componentDidUpdate(prevProps) {
+    if (prevProps.userInfo !== this.props.userInfo) {
+      console.log('USERINFO', this.props.userInfo)
+      this.props.fetchMyProjects(this.props.userInfo.user_id);
+    }
     console.log(this.props.myProjects);
   }
 
@@ -22,10 +25,10 @@ class ProjectList extends Component {
         <div className="myProjectDisplay">
           {this.props.myProjects.map(myProjects => {
             return (
-              <div className="myProjectsDisplay" key={myProjects.id}>
-                <h2>{myProjects.name}</h2>
-                <p>{myProjects.star_count}</p>
-                <p>{myProjects.photo_url}</p>
+              <div className="myProjectsDisplay" key={myProjects.project_id}>
+                <h2>{myProjects.project_name}</h2>
+                <p>{myProjects.project_rating}</p>
+                <img src={myProjects.img_url} />
               </div>
             );
           })}
@@ -43,7 +46,8 @@ class ProjectList extends Component {
 
 const mapStateToProps = state => {
   return {
-    myProjects: state.myProjectReducer.myProjects
+    myProjects: state.myProjectReducer.myProjects,
+    userInfo: state.loggedInReducer.userInfo
   };
 };
 

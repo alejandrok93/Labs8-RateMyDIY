@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 //Import components
 import {
-	DropDown,
+	Nav,
 	FeaturedProjects,
 	PopularMakers,
 	PopularReviewers,
@@ -26,9 +26,6 @@ const LandingPageContentWrapper = styled.div`
 const LandingPageWrapper = styled.div`
 	width: 100%;
 `;
-const DropdownMenu = styled.div`
-	width: 100%;
-`;
 
 class LandingPage extends Component {
 	constructor() {
@@ -42,20 +39,29 @@ class LandingPage extends Component {
 	};
 
 	handleSearch = e => {
+		const searchTerm = this.state.input;
 		//call featch search results action
 		this.props.fetchSearchResults(this.state.input);
 
 		//push to search page
-		this.props.history.push('/search');
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
+
+	searchClick = input => {
+		console.log('search for this maker: ' + input);
+
+		//call featch search results action
+		this.props.fetchSearchResults(input);
+
+		//push to search page
+		this.props.history.push(`/search?query=${input}`);
 	};
 
 	render() {
 		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
-				<DropdownMenu>
-					<DropDown />
-				</DropdownMenu>
+				<Nav />
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}
@@ -63,7 +69,7 @@ class LandingPage extends Component {
 					/>
 					<Twillio />
 					<FeaturedProjects />
-					<PopularMakers />
+					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>

@@ -20,11 +20,13 @@ class SearchPage extends Component {
 	};
 
 	handleSearch = e => {
+		const searchTerm = this.state.input;
+		console.log(searchTerm);
 		//call featch search results action
-		this.props.fetchSearchResults(this.state.input);
+		this.props.fetchSearchResults(searchTerm);
 
 		//push to search page
-		this.props.history.push('/search');
+		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 
 	render() {

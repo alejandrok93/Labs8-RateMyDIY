@@ -15,11 +15,6 @@ import {
 	Billing,
 	UserSettingsSideBar,
 	UserSettingsSummaries,
-	UserSettingBilling,
-	UserSettingEducation,
-	UserSettingPositions,
-	UserSettingSkills,
-	UserSettingResumes,
 	UserSettingSettings,
 	//  SearchBar, // not used
 	SearchPage,
@@ -38,17 +33,17 @@ const AppContainer = styled.div`
 `;
 
 class App extends Component {
-  state = {};
+	state = {};
 
-  componentDidMount() {
-    this.props.loggedIn();
-  }
+	componentDidMount() {
+		this.props.loggedIn();
+	}
 
-  render() {
-    return (
-      <AppContainer>
-        {/* <h1>Navigation</h1> */}
-        {/* <ul>
+	render() {
+		return (
+			<AppContainer>
+				{/* <h1>Navigation</h1> */}
+				{/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -71,13 +66,7 @@ class App extends Component {
 				<Route path="/settings/summaries" component={UserSettingsSummaries} />
 				<Route exact path="/ReviewList" component={ReviewList} />
 				<Route exact path="/ProjectList" component={ProjectList} />
-				<Route exact path="/Billing" component={Billing} />
 				<Route exact path="/CreateEditPage" component={CreateEditPage} />
-				<Route path="/settings/positions" component={UserSettingEducation} />
-				<Route path="/settings/education" component={UserSettingPositions} />
-				<Route path="/settings/skills" component={UserSettingSkills} />
-				<Route path="/settings/resumes" component={UserSettingResumes} />
-				<Route path="/settings/billing" component={UserSettingBilling} />
 				<Route path="/settings/settings" component={UserSettingSettings} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/signin" component={Auth} />
@@ -89,9 +78,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.loggedInReducer.userInfo,
-  gettingUserInfo: state.loggedInReducer.gettingUserInfo,
-  error: state.loggedInReducer.userInfo
+	userInfo: state.loggedInReducer.userInfo,
+	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+	error: state.loggedInReducer.userInfo
 });
 
 export default withRouter(

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import styled from 'styled-components';
-
+import StarRatings from 'react-star-ratings';
 // styled-components
 const ProjectTileWrapper = styled.div`
 	display: flex;
@@ -61,7 +61,6 @@ class ProjectTile extends React.Component {
 		this.state = {
 			modal: false
 		};
-
 		this.toggle = this.toggle.bind(this);
 	}
 
@@ -83,13 +82,12 @@ class ProjectTile extends React.Component {
 					/>
 				</ImageHolder>
 				<Details>
-					<div className="star-rating">
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-					</div>
+					<StarRatings
+						rating={Math.round(this.props.project.project_rating)}
+						starDimension="14px"
+						starSpacing="4px"
+						starRatedColor="black"
+					/>
 					<a
 						href={`/project/${this.props.project.project_id}`}
 						className="project-name"
@@ -115,11 +113,12 @@ class ProjectTile extends React.Component {
 							{this.props.project.project_name}
 						</ModalHeader>
 						<ModalBody>
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
+							<StarRatings
+								rating={Math.round(this.props.project.project_rating)}
+								starDimension="14px"
+								starSpacing="4px"
+								starRatedColor="black"
+							/>
 						</ModalBody>
 						<ModalBody>{this.props.project.user_id}</ModalBody>
 						<ModalFooter>

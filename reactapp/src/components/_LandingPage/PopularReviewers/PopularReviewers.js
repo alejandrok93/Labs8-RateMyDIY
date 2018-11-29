@@ -54,7 +54,11 @@ class PopularReviewers extends Component {
 				<PopularMakersTitle>Popular Reviewers</PopularMakersTitle>
 				<PopularReviewersListTiles>
 					{this.props.popularReviewers.map(reviewer => (
-						<ReviewerTile reviewer={reviewer} key={reviewer.user_id} />
+						<ReviewerTile
+							getProjectsByReviewer={this.props.getProjectsByReviewer}
+							reviewer={reviewer}
+							key={reviewer.user_id}
+						/>
 					))}
 				</PopularReviewersListTiles>
 			</PopularReviewersWrapper>

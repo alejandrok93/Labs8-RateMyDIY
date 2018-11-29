@@ -39,7 +39,9 @@ class LogInPopUp extends React.Component {
 					</ModalBody>
 					<ModalFooter>
 						<Button color="primary">
-							<a href={this.state.loginUrl}>Login</a>
+							<a style={{ color: 'white' }} href={this.state.loginUrl}>
+								Login
+							</a>
 						</Button>{' '}
 						<Button color="secondary" onClick={this.toggle}>
 							No thanks

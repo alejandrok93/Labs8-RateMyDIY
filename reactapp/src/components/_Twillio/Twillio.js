@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
+const TwillioContainer = styled.div`
+	display: flex;
+	justify-content: center;
+`;
 
 class Twillio extends Component {
 	state = {
@@ -27,7 +33,7 @@ class Twillio extends Component {
 		};
 
 		return (
-			<div className="App">
+			<TwillioContainer>
 				<header className="App-header" />
 				<div style={{ marginTop: 10 }}>
 					<h2> Send Text Message </h2>
@@ -54,7 +60,7 @@ class Twillio extends Component {
 					<div style={spacer} />
 					<button onClick={this.sendText}> Send Text </button>
 				</div>
-			</div>
+			</TwillioContainer>
 		);
 	}
 }

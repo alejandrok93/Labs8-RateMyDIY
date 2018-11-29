@@ -12,12 +12,24 @@ const MakerTileWrapper = styled.div`
 	overflow: hidden;
 	width: 200px;
 	height: 200px;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		height: 200px;
+		margin: 10% auto;
+	}
 `;
 
 const ImageHolder = styled.div`
 	max-width: 200px;
 	/* this needs to be changed if there are more or less lines on the tile */
 	max-height: 70%;
+
+	@media (max-width: 500px) {
+		width: 60%;
+		height: 30vh;
+		margin: 0 auto;
+	}
 `;
 
 const ProjectImage = styled.img`
@@ -27,6 +39,11 @@ const ProjectImage = styled.img`
 	width: auto;
 	height: auto;
 	background: #fee;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 const Details = styled.div`

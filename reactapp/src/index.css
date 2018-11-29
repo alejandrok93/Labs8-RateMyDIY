@@ -74,3 +74,9 @@ body {
 .modal-dialog{
 top: 35%;
 }
+
+@media (max-width: 500px) {
+	body {
+		overflow-x: hidden;
+	}
+}

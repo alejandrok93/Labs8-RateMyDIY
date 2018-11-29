@@ -38,7 +38,6 @@ router.post("/image-upload", function(req, res) {
 // get project by id
 router.get("/:project_id", function(req, res, next) {
   const { project_id } = req.params;
-
   db.getProjectByID(project_id)
     .then(project => {
       if (project) {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../models/searchModel');
+const categoryDb = require('../models/filterModel');
 
 //Search API endpoint
 router.get('/', (req, res) => {
@@ -12,13 +12,16 @@ router.get('/', (req, res) => {
   if (!query) {
     res.status(400).json({ message: 'Bad request' });
   }
+
   if (query) {
-    db.getSearchResults(query)
+    categoryDb
+      .getProjectsCategory(query)
       .then(results => {
-        console.log(results);
-        res.status(200).json(results);
+        res.send(results);
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => {
+        console.log(err);
+      });
   }
 });
 

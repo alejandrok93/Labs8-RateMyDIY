@@ -1,7 +1,10 @@
 import {
   FETCH_SEARCH_RESULTS,
   FETCH_SEARCH_RESULTS_SUCCESS,
-  FETCH_SEARCH_RESULTS_ERROR
+  FETCH_SEARCH_RESULTS_ERROR,
+  FETCH_CATEGORY_RESULTS,
+  FETCH_CATEGORY_RESULTS_SUCCESS,
+  FETCH_CATEGORY_RESULTS_ERROR
 } from "../actions";
 
 const initialState = {
@@ -39,6 +42,12 @@ const searchReducer = (state = initialState, action) => {
       return { ...state, projects: action.payload };
     case FETCH_SEARCH_RESULTS_ERROR:
       return { ...state, error: "There was an error" };
+      case FETCH_CATEGORY_RESULTS:
+        return { ...state };
+      case FETCH_CATEGORY_RESULTS_SUCCESS:
+        return { ...state, projects: action.payload };
+      case FETCH_CATEGORY_RESULTS_ERROR:
+        return { ...state, error: "There was an error" };
     default:
       return state;
   }

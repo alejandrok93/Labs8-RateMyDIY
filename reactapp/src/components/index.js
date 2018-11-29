@@ -1,5 +1,6 @@
 export { default as App } from './__App/App';
 export { default as SearchBar } from './SearchBar/SearchBar';
+export { default as SearchPageSearchBar } from './SearchPageSearchBar/SearchPageSearchBar';
 export {
 	default as FeaturedProjects
 } from './_LandingPage/FeaturedProjects/FeaturedProjects';

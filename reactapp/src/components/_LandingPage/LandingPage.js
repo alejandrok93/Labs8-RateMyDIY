@@ -45,6 +45,8 @@ class LandingPage extends Component {
 	handleChange = e => {
 		console.log(e.target.value);
 		this.setState({ ...this.state, input: e.target.value });
+
+		console.log(this.props);
 	};
 
 	handleSearch = e => {
@@ -54,6 +56,9 @@ class LandingPage extends Component {
 
 		//push to search page
 		this.props.history.push(`/search?query=${searchTerm}`);
+
+		//if not signed in,
+		//toggle signinpopup on
 	};
 
 	searchClick = input => {
@@ -89,8 +94,7 @@ class LandingPage extends Component {
 					<PopularReviewers
 						getProjectsByReviewer={this.getProjectsByReviewer}
 					/>
-      <Footer />
-
+					<Footer />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
@@ -98,7 +102,8 @@ class LandingPage extends Component {
 }
 
 const mapStateToProps = state => ({
-	projects: state.searchReducer.projects
+	projects: state.searchReducer.projects,
+	loggedIn: state.loggedInReducer.loggedIn
 });
 
 export default connect(

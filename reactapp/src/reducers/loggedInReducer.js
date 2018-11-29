@@ -1,39 +1,39 @@
 import {
-  GETTING_USER_INFO,
-  GOT_USER_INFO,
-  GET_USER_INFO_ERROR
-} from "../actions";
+	GETTING_USER_INFO,
+	GOT_USER_INFO,
+	GET_USER_INFO_ERROR
+} from '../actions';
 
 const initialState = {
-  userInfo: {},
-  gettingUserInfo: false,
-  error: null,
-  loggedIn: false
+	userInfo: {},
+	gettingUserInfo: false,
+	error: null,
+	loggedIn: false
 };
 
 const loggedInReducer = (state = initialState, action) => {
-  switch (action.type) {
-    // get userInfo
-    case GETTING_USER_INFO:
-      return { ...state, gettingUserInfo: true };
+	switch (action.type) {
+		// get userInfo
+		case GETTING_USER_INFO:
+			return { ...state, gettingUserInfo: true };
 
-    case GOT_USER_INFO:
-      return {
-        ...state,
-        userInfo: action.payload,
-        gettingUserInfo: false
-      };
+		case GOT_USER_INFO:
+			return {
+				...state,
+				userInfo: action.payload,
+				gettingUserInfo: false
+			};
 
-    case GET_USER_INFO_ERROR:
-      return {
-        ...state,
-        gettingUserInfo: false,
-        error: `${action.payload}`
-      };
+		case GET_USER_INFO_ERROR:
+			return {
+				...state,
+				gettingUserInfo: false,
+				error: `${action.payload}`
+			};
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 };
 
 export default loggedInReducer;

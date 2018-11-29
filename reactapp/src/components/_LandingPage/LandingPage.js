@@ -10,6 +10,9 @@ import {
 import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
+// ReactStrap
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 //Import components
 import {
 	Nav,
@@ -18,7 +21,8 @@ import {
 	PopularReviewers,
 	SearchBar,
 	Twillio,
-	Footer
+	Footer,
+	LogInPopUp
 } from '../../components';
 
 // styled-components
@@ -39,26 +43,39 @@ const LandingPageWrapper = styled.div`
 class LandingPage extends Component {
 	constructor() {
 		super();
-		this.state = { input: '' };
+		this.state = { input: '', modal: false, toggleLogInPopUp: false };
+		this.toggle = this.toggle.bind(this);
+	}
+
+	toggle() {
+		this.setState({
+			modal: !this.state.modal
+		});
 	}
 
 	handleChange = e => {
 		console.log(e.target.value);
 		this.setState({ ...this.state, input: e.target.value });
-
-		console.log(this.props);
 	};
 
 	handleSearch = e => {
 		const searchTerm = this.state.input;
-		//call featch search results action
-		this.props.fetchSearchResults(this.state.input);
-
-		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
-
+		e.preventDefault();
 		//if not signed in,
-		//toggle signinpopup on
+		if (!this.props.loggedInObject.userInfo.user_id) {
+			this.toggle();
+			//toggle loginpopup on
+			this.setState({
+				...this.state,
+				toggleLogInPopUp: !this.state.toggleLogInPopUp
+			});
+		} else {
+			//call featch search results action
+			this.props.fetchSearchResults(this.state.input);
+
+			//push to search page
+			this.props.history.push(`/search?query=${searchTerm}`);
+		}
 	};
 
 	searchClick = input => {
@@ -80,6 +97,7 @@ class LandingPage extends Component {
 	};
 
 	render() {
+		console.log(this.state.modal);
 		return (
 			<LandingPageWrapper>
 				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
@@ -88,6 +106,10 @@ class LandingPage extends Component {
 						handleChange={this.handleChange}
 						handleSearch={this.handleSearch}
 					/>
+					{this.state.toggleLogInPopUp
+						? // <LogInPopUp toggleLogInPopUp={this.state.toggleLogInPopUp} />
+						  'heyy please log in'
+						: ''}
 					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
@@ -103,7 +125,7 @@ class LandingPage extends Component {
 
 const mapStateToProps = state => ({
 	projects: state.searchReducer.projects,
-	loggedIn: state.loggedInReducer.loggedIn
+	loggedInObject: state.loggedInReducer
 });
 
 export default connect(

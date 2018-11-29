@@ -38,9 +38,7 @@ class ReviewList extends Component {
     } else {
       return (
         <div className="reviewPage">
-          <div className="sideBar">
-            <AccountSideBar />
-          </div>
+          <AccountSideBar />
 
           <div className="myReviewDisplay">
             {this.props.myReviews.map(myReviews => {

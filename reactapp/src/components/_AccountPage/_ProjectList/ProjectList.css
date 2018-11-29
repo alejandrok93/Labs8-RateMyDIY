@@ -39,5 +39,18 @@
   flex-wrap: wrap;
   width: 100%;
   align-content: flex-start;
-  
+}
+
+@media (max-width: 500px) {
+  .projectPage {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .myProjectsDisplay {
+    width: 40%;
+    padding: 3%;
+    margin: 3%;
+  }
 }

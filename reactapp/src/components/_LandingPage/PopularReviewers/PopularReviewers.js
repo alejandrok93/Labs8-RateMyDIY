@@ -37,7 +37,7 @@ const PopularMakersTitle = styled.h1`
 	margin: 10px 25px;
 
 	@media (max-width: 500px) {
-		width: 50%;
+		width: 80%;
 		margin: 15px auto;
 		text-align: center;
 		font-weight: bold;

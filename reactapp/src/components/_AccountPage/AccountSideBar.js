@@ -1,12 +1,15 @@
 // Dependencies
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import "./AccountSideBar.css";
+import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 
 class AccountSideBar extends Component {
   render() {
     return (
+      <Fragment>
+        {window.innerWidth <= 500 ? <MenuDrawer sidebar /> : (
       <div className="accountSideBar">
         <NavLink
           to={"/Search"}
@@ -59,6 +62,8 @@ class AccountSideBar extends Component {
           <h1>Settings</h1>
         </NavLink>
       </div>
+        )}
+      </Fragment>
     );
   }
 }

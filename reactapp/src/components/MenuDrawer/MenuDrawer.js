@@ -15,6 +15,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+const loginURL =
+	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`;
+
 const logoutURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
 
@@ -37,9 +40,12 @@ const ButtonContainer = styled.div`
 `;
 
 class MenuDrawer extends React.Component {
-  state = {
-    top: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      top: false
+    };
+  }
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -49,28 +55,73 @@ class MenuDrawer extends React.Component {
 
   render() {
     const { classes } = this.props;
+    let menuList;
 
-    const fullList = (
-      <div className={classes.fullList}>
-        <List>
-            <ListItem className={classes.center}>
-                <Link to={`/users/${this.props.userInfo.user_id}`}>
-                    My Profile
-                </Link>
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to={`/users/${this.props.userInfo.user_id}/settings`}>
-                    Profile Settings
-                </Link >
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to={logoutURL}>
-                    Signout
-                </Link>
-            </ListItem>
-        </List>
-      </div>
-    );
+    if (!this.props.userInfo.user_id) {
+      menuList = (
+        <div className={classes.fullList}>
+          <List>
+              <ListItem className={classes.center}>
+                  <a href={loginURL}>Signin</a>
+              </ListItem>
+          </List>
+        </div>
+      );
+    } else {
+      if (this.props.sidebar) {
+        menuList = (
+          <div className={classes.fullList}>
+            <List>
+                <ListItem className={classes.center}>
+                    <Link to='/search'>
+                        Search
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.center}>
+                    <Link to='/ProjectList'>
+                        My Projects
+                    </Link >
+                </ListItem>
+                <ListItem className={classes.center}>
+                    <Link to='/ReviewList'>
+                        My Reviews
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.center}>
+                    <Link to='/Billing'>
+                        Billing
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.center}>
+                    <Link to='/settings'>
+                        Settings
+                    </Link>
+                </ListItem>
+            </List>
+          </div>
+        );
+      } else {
+        menuList = (
+          <div className={classes.fullList}>
+            <List>
+                <ListItem className={classes.center}>
+                    <Link to={`/users/${this.props.userInfo.user_id}`}>
+                        My Profile
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.center}>
+                    <Link to={`/users/${this.props.userInfo.user_id}/settings`}>
+                        Profile Settings
+                    </Link >
+                </ListItem>
+                <ListItem className={classes.center}>
+                    <a href={logoutURL}>Signout</a>
+                </ListItem>
+            </List>
+          </div>
+        );
+      }
+    }
 
     return (
       <div>
@@ -86,7 +137,7 @@ class MenuDrawer extends React.Component {
             onClick={this.toggleDrawer('top', false)}
             onKeyDown={this.toggleDrawer('top', false)}
           >
-            {fullList}
+            {menuList}
           </div>
         </Drawer>
       </div>

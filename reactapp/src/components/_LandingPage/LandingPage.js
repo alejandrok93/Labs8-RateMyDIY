@@ -63,7 +63,7 @@ class LandingPage extends Component {
 		e.preventDefault();
 		//if not signed in,
 		if (!this.props.loggedInObject.userInfo.user_id) {
-			this.toggle();
+			//this.toggle();
 			//toggle loginpopup on
 			this.setState({
 				...this.state,
@@ -76,6 +76,15 @@ class LandingPage extends Component {
 			//push to search page
 			this.props.history.push(`/search?query=${searchTerm}`);
 		}
+	};
+
+	searchWithoutLogin = () => {
+		//call featch search results action
+		const searchTerm = this.state.input;
+		this.props.fetchSearchResults(this.state.input);
+
+		//push to search page
+		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 
 	searchClick = input => {
@@ -106,10 +115,15 @@ class LandingPage extends Component {
 						handleChange={this.handleChange}
 						handleSearch={this.handleSearch}
 					/>
-					{this.state.toggleLogInPopUp
-						? // <LogInPopUp toggleLogInPopUp={this.state.toggleLogInPopUp} />
-						  'heyy please log in'
-						: ''}
+					{this.state.toggleLogInPopUp ? (
+						<LogInPopUp
+							searchWithoutLogin={this.searchWithoutLogin}
+							toggleLogInPopUp={this.state.toggleLogInPopUp}
+						/>
+					) : (
+						//  'hey please log in'
+						''
+					)}
 					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />

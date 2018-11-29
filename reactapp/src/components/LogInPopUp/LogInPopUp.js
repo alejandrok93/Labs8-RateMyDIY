@@ -5,25 +5,28 @@ class LogInPopUp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modal: false
+			modal: this.props.toggleLogInPopUp,
+			loginUrl:
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`
 		};
 
 		// this.toggle = this.props.toggleLogInPopUp;
 	}
 
-	toggle() {
+	toggle = () => {
 		this.setState({
 			modal: !this.state.modal
 		});
-	}
+		this.props.searchWithoutLogin();
+	};
 
 	render() {
 		console.log(this.props);
 		return (
 			<div>
-				<Button color="primary" onClick={this.toggle}>
+				{/* <Button color="primary" onClick={this.toggle}>
 					{this.props.buttonLabel}
-				</Button>
+				</Button> */}
 				<Modal
 					isOpen={this.state.modal}
 					toggle={this.toggle}
@@ -35,8 +38,8 @@ class LogInPopUp extends React.Component {
 						log in page below.
 					</ModalBody>
 					<ModalFooter>
-						<Button color="primary" onClick={this.toggle}>
-							Login
+						<Button color="primary">
+							<a href={this.state.loginUrl}>Login</a>
 						</Button>{' '}
 						<Button color="secondary" onClick={this.toggle}>
 							No thanks

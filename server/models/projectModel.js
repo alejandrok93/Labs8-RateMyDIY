@@ -36,7 +36,7 @@ function addProject(project) {
 	return db('projects')
 		.returning('project_id')
 		.insert(project)
-		.then(([id]) => id);
+		.then(([project_id]) => project_id);
 }
 
 function editProject(user_id, project_id, changes) {

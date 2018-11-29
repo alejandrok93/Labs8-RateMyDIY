@@ -13,7 +13,7 @@ const ProjectHeader = styled.div`
 	margin-bottom: 20px;
 `;
 
-const ProjectName = styled.header``;
+const ProjectName = styled.h2``;
 
 const ReviewsButton = styled.button``;
 

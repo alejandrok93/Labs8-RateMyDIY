@@ -7,7 +7,7 @@ import {
 const initialState = {
 	userInfo: {},
 	gettingUserInfo: false,
-	error: null,
+	gettingUserInfoError: null,
 	loggedIn: false
 };
 
@@ -28,7 +28,7 @@ const loggedInReducer = (state = initialState, action) => {
 			return {
 				...state,
 				gettingUserInfo: false,
-				error: `${action.payload}`
+				gettingUserInfoError: `${action.payload}`
 			};
 
 		default:

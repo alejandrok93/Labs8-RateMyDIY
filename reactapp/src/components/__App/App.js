@@ -25,12 +25,12 @@ import {
 
 //Styles
 const AppContainer = styled.div`
-  display: flex;
-  max-width: 1280px;
-  min-width: 600px;
-  height: auto;
-  background: #eff;
-  margin: 10px auto;
+	display: flex;
+	max-width: 1280px;
+	min-width: 600px;
+	height: auto;
+	background: #eff;
+	margin: 10px auto;
 `;
 
 class App extends Component {
@@ -81,8 +81,9 @@ class App extends Component {
 
 const mapStateToProps = state => ({
 	userInfo: state.loggedInReducer.userInfo,
+
 	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
-	error: state.loggedInReducer.userInfo
+	gettingUserInfoError: state.loggedInReducer.gettingUserInfoError
 });
 
 export default withRouter(

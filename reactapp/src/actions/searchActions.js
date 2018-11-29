@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const FETCH_MYPROJECT = 'FETCH_MYPROJECT';
 export const FETCH_MYPROJECT_SUCCESS = 'FETCH_MYPROJECT_SUCCESS';
 export const FETCH_MYPROJECT_ERROR = 'FETCH_MYPROJECT_ERROR';
@@ -11,6 +12,9 @@ export const FETCH_SEARCH_RESULTS = 'FETCH_SEARCH_RESULTS';
 export const FETCH_SEARCH_RESULTS_SUCCESS = 'FETCH_SEARCH_RESULTS_SUCCESS';
 export const FETCH_SEARCH_RESULTS_ERROR = 'FETCH_SEARCH_RESULTS_ERROR';
 
+export const FETCH_CATEGORY_RESULTS = 'FETCH_CATEGORY_RESULTS';
+export const FETCH_CATEGORY_RESULTS_SUCCESS = 'FETCH_CATEGORY_RESULTS_SUCCESS';
+export const FETCH_CATEGORY_RESULTS_ERROR = 'FETCH_CATEGORY_RESULTS_ERROR';
 
 export const FETCH_PROJECTS_BY_REVIEWER = 'FETCH_PROJECTS_BY_REVIEWER';
 export const FETCH_PROJECTS_BY_REVIEWER_SUCCESS =
@@ -35,32 +39,6 @@ export const fetchMyProjects = user_id => {
 				dispatch({ type: FETCH_MYPROJECT_ERROR });
 			});
 	};
-
-
-
-export const FETCH_CATEGORY_RESULTS = "FETCH_CATEGORY_RESULTS";
-export const FETCH_CATEGORY_RESULTS_SUCCESS = "FETCH_CATEGORY_RESULTS_SUCCESS";
-export const FETCH_CATEGORY_RESULTS_ERROR = "FETCH_CATEGORY_RESULTS_ERROR";
-
-
-export const fetchMyProjects = (user_id) => {
-
-  return dispatch => {
-    dispatch({ type: FETCH_MYPROJECT });
-    axios
-      .post(
-        (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-          "/api/users/myprojects", { user_id: user_id }
-      )
-      .then(response => {
-        dispatch({ type: FETCH_MYPROJECT_SUCCESS, payload: response.data });
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: FETCH_MYPROJECT_ERROR });
-      });
-  };
-
 };
 
 export const fetchMyReviews = user_id => {
@@ -128,26 +106,25 @@ export const fetchProjectsByReviewer = username => {
 	};
 };
 
-
 export const fetchCategoryResults = query => {
-    return dispatch => {
-      console.log("query: " + query);
-      const url =
-        (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-        "/api/filter?query=" +
-        query;
-      dispatch({ type: FETCH_CATEGORY_RESULTS });
-      axios
-        .get(url)
-        .then(response => {
-          dispatch({
-            type: FETCH_CATEGORY_RESULTS_SUCCESS,
-            payload: response.data
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          dispatch({ type: FETCH_CATEGORY_RESULTS_ERROR });
-        });
-    };
-  };
+	return dispatch => {
+		console.log('query: ' + query);
+		const url =
+			(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+			'/api/filter?query=' +
+			query;
+		dispatch({ type: FETCH_CATEGORY_RESULTS });
+		axios
+			.get(url)
+			.then(response => {
+				dispatch({
+					type: FETCH_CATEGORY_RESULTS_SUCCESS,
+					payload: response.data
+				});
+			})
+			.catch(err => {
+				console.log(err);
+				dispatch({ type: FETCH_CATEGORY_RESULTS_ERROR });
+			});
+	};
+};

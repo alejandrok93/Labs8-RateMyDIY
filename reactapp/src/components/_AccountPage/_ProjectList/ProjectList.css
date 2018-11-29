@@ -1,7 +1,9 @@
 .addNew img {
   height: 50px;
 }
-
+img {
+  height: 80%;
+}
 .addNew {
   border: 1px solid black;
   display: flex;

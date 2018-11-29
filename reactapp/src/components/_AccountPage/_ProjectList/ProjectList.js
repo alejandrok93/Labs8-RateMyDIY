@@ -18,15 +18,13 @@ class ProjectList extends Component {
   render() {
     return (
       <div className="projectPage">
-        <div className="sideBar">
-          <AccountSideBar />
-        </div>
+        <AccountSideBar/>
 
         <div className="myProjectDisplay">
           {this.props.myProjects.map(myProjects => {
             return (
               <div className="myProjectsDisplay" key={myProjects.project_id}>
-                <h2>{myProjects.project_name}</h2>
+                <Link to={`project/${myProjects.project_id}`}><h2>{myProjects.project_name}</h2></Link>
                 <p>{myProjects.project_rating}</p>
                 <img src={myProjects.img_url} />
               </div>

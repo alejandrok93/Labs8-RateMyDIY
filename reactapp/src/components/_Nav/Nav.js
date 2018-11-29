@@ -65,11 +65,11 @@ class Nav extends React.Component {
 								{this.clientGreeting()} {this.props.userInfo.username}
 							</WelcomeMessage>
 							<DropDown />
-							<a href={logoutURL}>
+							<SignoutLink href={logoutURL}>
 								<Button color="danger">
 									<h3>Signout</h3>
 								</Button>
-							</a>
+							</SignoutLink>
 						</Fragment>
 					) : (
 							<Fragment>
@@ -105,6 +105,12 @@ const NavWrapper = styled.div`
 	margin: 0 8px 0 auto;
 	max-width: 20%;
 	min-width: 10%;
+
+	@media (max-width: 800px) {
+		display: flex;
+		justify-content: center;
+		margin: 0 auto;
+	}
 `;
 const AuthWrapper = styled.div`
 	display: flex;
@@ -115,10 +121,27 @@ const AuthWrapper = styled.div`
 	padding: 4px 8px;
   padding: 10px;
 	/* overflow: hidden; */
+
+	@media (max-width: 500px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		border: none;
+	}
 `;
 
 const WelcomeMessage = styled.p`
 	font-size: 14px;
 	margin-right: 8px;
 	white-space: nowrap;
+
+	@media (max-width: 500px) {
+		display: none;
+	}
+`;
+
+const SignoutLink = styled.a`
+	@media (max-width: 500px) {
+		display: none;
+	}
 `;

@@ -3,8 +3,15 @@ import React, { Component } from 'react';
 // import { NavLink, Link, Route } from "react-router-dom";
 import styled from 'styled-components';
 //Added Redux imports
-import { fetchSearchResults } from '../../actions/index';
+import {
+	fetchSearchResults,
+	fetchProjectsByReviewer
+} from '../../actions/index';
 import { connect } from 'react-redux';
+import MenuDrawer from '../MenuDrawer/MenuDrawer';
+
+// ReactStrap
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 //Import components
 import {
@@ -13,7 +20,9 @@ import {
 	PopularMakers,
 	PopularReviewers,
 	SearchBar,
-	Twillio
+	Twillio,
+	Footer,
+	LogInPopUp
 } from '../../components';
 
 // styled-components
@@ -25,12 +34,23 @@ const LandingPageContentWrapper = styled.div`
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
+
+	@media (max-width: 500px) {
+		width: 100vw;
+	}
 `;
 
 class LandingPage extends Component {
 	constructor() {
 		super();
-		this.state = { input: '' };
+		this.state = { input: '', modal: false, toggleLogInPopUp: false };
+		this.toggle = this.toggle.bind(this);
+	}
+
+	toggle() {
+		this.setState({
+			modal: !this.state.modal
+		});
 	}
 
 	handleChange = e => {
@@ -40,7 +60,27 @@ class LandingPage extends Component {
 
 	handleSearch = e => {
 		const searchTerm = this.state.input;
+		e.preventDefault();
+		//if not signed in,
+		if (!this.props.loggedInObject.userInfo.user_id) {
+			//this.toggle();
+			//toggle loginpopup on
+			this.setState({
+				...this.state,
+				toggleLogInPopUp: !this.state.toggleLogInPopUp
+			});
+		} else {
+			//call featch search results action
+			this.props.fetchSearchResults(this.state.input);
+
+			//push to search page
+			this.props.history.push(`/search?query=${searchTerm}`);
+		}
+	};
+
+	searchWithoutLogin = () => {
 		//call featch search results action
+		const searchTerm = this.state.input;
 		this.props.fetchSearchResults(this.state.input);
 
 		//push to search page
@@ -57,20 +97,40 @@ class LandingPage extends Component {
 		this.props.history.push(`/search?query=${input}`);
 	};
 
+	getProjectsByReviewer = username => {
+		console.log('search for this reviewer : ' + username);
+		this.props.fetchProjectsByReviewer(username);
+
+		//push to search page
+		this.props.history.push(`/search?user=${username}`);
+	};
+
 	render() {
-		// console.log(SearchBar);
+		console.log(this.state.modal);
 		return (
 			<LandingPageWrapper>
-				<Nav />
+				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}
 						handleSearch={this.handleSearch}
 					/>
+					{this.state.toggleLogInPopUp ? (
+						<LogInPopUp
+							searchWithoutLogin={this.searchWithoutLogin}
+							toggleLogInPopUp={this.state.toggleLogInPopUp}
+						/>
+					) : (
+						//  'hey please log in'
+						''
+					)}
 					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
-					<PopularReviewers />
+					<PopularReviewers
+						getProjectsByReviewer={this.getProjectsByReviewer}
+					/>
+					<Footer />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
@@ -78,10 +138,11 @@ class LandingPage extends Component {
 }
 
 const mapStateToProps = state => ({
-	projects: state.searchReducer.projects
+	projects: state.searchReducer.projects,
+	loggedInObject: state.loggedInReducer
 });
 
 export default connect(
 	mapStateToProps,
-	{ fetchSearchResults }
+	{ fetchSearchResults, fetchProjectsByReviewer }
 )(LandingPage);

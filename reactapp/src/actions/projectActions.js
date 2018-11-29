@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// Actions
+import { getReviewId } from '../actions';
+
 // getProject
 export const GETTING_PROJECT = 'GETTING_PROJECT';
 export const GOT_PROJECT = 'GOT_PROJECT';
@@ -30,7 +33,7 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// get project by project_id
+// // get project by project_id
 export const getProject = project_id => {
 	return dispatch => {
 		dispatch({ type: GETTING_PROJECT });
@@ -61,6 +64,31 @@ export const getProjectLite = project_id => {
 			.then(async ({ data }) => {
 				await sleep(500);
 				dispatch({ type: GOT_PROJECT, payload: data });
+			})
+
+			.catch(error => dispatch({ type: GET_PROJECT_ERROR, payload: error }));
+	};
+};
+
+// I don't know how to chain actions properly. This is a mess.
+// got userInfo, get project, then reviewId
+export const project_ReviewId_Chain = (project_id, user_id) => {
+	return dispatch => {
+		dispatch({ type: GETTING_PROJECT });
+
+		axios
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/projects/${project_id}`
+			)
+
+			.then(({ data }) => {
+				dispatch({ type: GOT_PROJECT, payload: data });
+				return data;
+			})
+
+			.then(project => {
+				if (user_id) dispatch(getReviewId(project.project_id, user_id));
 			})
 
 			.catch(error => dispatch({ type: GET_PROJECT_ERROR, payload: error }));

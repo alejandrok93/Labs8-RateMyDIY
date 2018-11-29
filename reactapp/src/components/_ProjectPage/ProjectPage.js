@@ -10,12 +10,16 @@ import {
 	Post,
 	NewPost,
 	EditPost,
-	ConfirmModal,
+	ReviewModal,
+	ConfirmModal
 } from '../../components';
 
 // Actions
 import {
+	loggedIn,
 	getProject,
+	loggedIn_Project_ReviewId_Chain,
+	getReviewId,
 	willUpdateProject,
 	deleteProject,
 	willAddPost,
@@ -76,8 +80,31 @@ class ProjectPage extends Component {
 		});
 	};
 
+	// Redirect to signup (this doesn't work yet)
+	notLoggedInHandler = () => {
+		this.setState({
+			confirm: {
+				text: [
+					`You aren't logged in! todo: add a redirect to signup to this modal`,
+					'Cancel',
+					'Cancel'
+				],
+				cancel: event => {
+					event.preventDefault();
+					this.setState({ confirm: undefined });
+				},
+				submit: event => {
+					event.preventDefault();
+					this.setState({ confirm: undefined });
+				}
+			}
+		});
+	};
+
+	// Visiting this page calls loggedIn() twice. Will fix later.
 	componentDidMount() {
-		this.props.getProject(this.props.match.params.id);
+		// Trying out this awkward action chain
+		this.props.loggedIn_Project_ReviewId_Chain(this.props.match.params.id);
 	}
 
 	render() {
@@ -104,7 +131,9 @@ class ProjectPage extends Component {
 							project={this.props.project}
 							willUpdateProject={this.props.willUpdateProject}
 						/>
-					) : this.props.gettingProject ? (
+					) : this.props.gettingUserInfo ||
+					  this.props.gettingProject ||
+					  this.props.gettingReviewId ? (
 						<React.Fragment>
 							<StatusMessage>Loading project...</StatusMessage>
 						</React.Fragment>
@@ -172,7 +201,9 @@ class ProjectPage extends Component {
 					)}
 
 					{/* Bottom buttons */}
-					{!this.props.gettingProject &&
+					{!this.props.gettingUserInfo &&
+						!this.props.gettingReviewId &&
+						!this.props.gettingProject &&
 						!this.props.gettingProjectError &&
 						!this.props.deletingProject &&
 						!this.props.deletingProjectError &&
@@ -192,8 +223,40 @@ class ProjectPage extends Component {
 									Add Picture
 								</ProjectButton>
 							</ButtonContainer>
+						) : this.props.reviewId ? (
+							<ReviewButton
+								onClick={() => this.setState({ review: true })}
+								disabled={this.props.gettingReviewId}
+							>
+								View Your Review
+							</ReviewButton>
 						) : (
-							<ReviewButton>Review Project</ReviewButton>
+							<ReviewButton
+								onClick={() =>
+									this.props.userInfo.user_id
+										? this.setState({ review: 'new' })
+										: this.notLoggedInHandler()
+								}
+								disabled={this.props.gettingReviewId}
+							>
+								Review Project
+							</ReviewButton>
+						))}
+
+					{this.state.review &&
+						(this.props.reviewId ? (
+							<ReviewModal
+								review_id={this.props.reviewId}
+								closeModal={() => this.setState({ review: undefined })}
+							/>
+						) : (
+							<ReviewModal
+								project_id={this.props.project.project_id}
+								project_name={this.props.project.project_name}
+								maker_name={this.props.project.username}
+								img_url={this.props.project.img_url}
+								closeModal={() => this.setState({ review: undefined })}
+							/>
 						))}
 
 					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
@@ -207,10 +270,18 @@ const mapStateToProps = state => {
 	return {
 		userInfo: state.loggedInReducer.userInfo,
 
+		gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+		gettingUserInfoError: state.loggedInReducer.gettingUserInfoError,
+
 		project: state.projectReducer.project,
 
 		gettingProject: state.projectReducer.gettingProject,
 		gettingProjectError: state.projectReducer.gettingProjectError,
+
+		reviewId: state.reviewReducer.reviewId,
+
+		gettingReviewId: state.reviewReducer.gettingReviewId,
+		gettingReviewIdError: state.reviewReducer.gettingReviewIdError,
 
 		projectToUpdate: state.projectReducer.projectToUpdate,
 
@@ -228,7 +299,10 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
+		loggedIn,
+		loggedIn_Project_ReviewId_Chain,
 		getProject,
+		getReviewId,
 		willUpdateProject,
 		deleteProject,
 		willAddPost,

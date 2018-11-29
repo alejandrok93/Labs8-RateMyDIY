@@ -43,7 +43,7 @@ const ButtonContainer = styled.div`
 	width: 100%;
 `;
 
-export const SubmitButton = styled.button`
+const SubmitButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;

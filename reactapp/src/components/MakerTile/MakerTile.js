@@ -3,7 +3,7 @@ import React from 'react';
 // import { Link } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import styled from 'styled-components';
-
+import StarRatings from 'react-star-ratings';
 // styled-components
 const MakerTileWrapper = styled.div`
 	display: flex;
@@ -12,12 +12,24 @@ const MakerTileWrapper = styled.div`
 	overflow: hidden;
 	width: 200px;
 	height: 200px;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		height: 200px;
+		margin: 10% auto;
+	}
 `;
 
 const ImageHolder = styled.div`
 	max-width: 200px;
 	/* this needs to be changed if there are more or less lines on the tile */
 	max-height: 70%;
+
+	@media (max-width: 500px) {
+		width: 60%;
+		height: 30vh;
+		margin: 0 auto;
+	}
 `;
 
 const ProjectImage = styled.img`
@@ -27,6 +39,11 @@ const ProjectImage = styled.img`
 	width: auto;
 	height: auto;
 	background: #fee;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 const Details = styled.div`
@@ -73,11 +90,12 @@ class MakerTile extends React.Component {
 				</ImageHolder>
 				<Details>
 					<div className="star-rating">
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
-						<span className="fa fa-star checked" />
+						<StarRatings
+							rating={Math.round(this.props.maker.user_rating)}
+							starDimension="14px"
+							starSpacing="4px"
+							starRatedColor="black"
+						/>
 					</div>
 
 					<p onClick={this.showMakerProjects} className="project-name">
@@ -104,11 +122,12 @@ class MakerTile extends React.Component {
 							{this.props.maker.username}
 						</ModalHeader>
 						<ModalBody>
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
+							<StarRatings
+								rating={Math.round(this.props.maker.user_rating)}
+								starDimension="14px"
+								starSpacing="4px"
+								starRatedColor="black"
+							/>
 						</ModalBody>
 						<ModalFooter>
 							<Button color="primary" onClick={this.toggle}>

@@ -12,18 +12,34 @@ const PopularMakersWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: #fff;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const PopularMakerListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-content: space-between;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		align-self: center;
+	}
 `;
 
 const PopularMakersTitle = styled.h1`
 	font-size: 18px;
 	width: 100%;
 	margin: 10px 25px;
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 15px auto;
+		text-align: center;
+		font-weight: bold;
+	}
 `;
 
 class PopularMakers extends Component {

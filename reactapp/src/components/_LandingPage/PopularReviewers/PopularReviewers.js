@@ -14,18 +14,34 @@ const PopularReviewersWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: #fff;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const PopularReviewersListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-content: space-between;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		align-self: center;
+	}
 `;
 
 const PopularMakersTitle = styled.h1`
 	font-size: 18px;
 	width: 100%;
 	margin: 10px 25px;
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 15px auto;
+		text-align: center;
+		font-weight: bold;
+	}
 `;
 
 class PopularReviewers extends Component {
@@ -38,7 +54,11 @@ class PopularReviewers extends Component {
 				<PopularMakersTitle>Popular Reviewers</PopularMakersTitle>
 				<PopularReviewersListTiles>
 					{this.props.popularReviewers.map(reviewer => (
-						<ReviewerTile reviewer={reviewer} key={reviewer.user_id} />
+						<ReviewerTile
+							getProjectsByReviewer={this.props.getProjectsByReviewer}
+							reviewer={reviewer}
+							key={reviewer.user_id}
+						/>
 					))}
 				</PopularReviewersListTiles>
 			</PopularReviewersWrapper>

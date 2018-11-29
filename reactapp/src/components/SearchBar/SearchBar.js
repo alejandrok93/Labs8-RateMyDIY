@@ -9,6 +9,10 @@ const SearchWrapper = styled.div`
 	margin: 25px auto;
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const SelectWrapper = styled.div`
@@ -21,6 +25,11 @@ const SelectStyle = styled.select`
 	width: 20%;
 	transform: 1s;
 	/* border-radius: 5px; */
+
+	@media (max-width: 500px) {
+		text-align-last: center;
+		padding-left: 10px;
+	}
 `;
 
 const SearchBarWrapper = styled.form`
@@ -28,11 +37,19 @@ const SearchBarWrapper = styled.form`
 	width: 100%;
 	height: 35px;
 	align-items: baseline;
+
+	@media (max-width: 500px) {
+		position: relative;
+	}
 `;
 const SearchBarSearchButtonWrapper = styled.div`
 	display: flex;
 	height: 100px;
 	align-items: flex-end;
+
+	@media (max-width: 500px) {
+		position: relative;
+	}
 `;
 const SearchBarInput = styled.input`
 	width: 100%;
@@ -52,6 +69,16 @@ const SearchBarButton = styled.button`
 	border: none;
 	border: 2px solid black;
 	box-shadow: 5px 5px 0px;
+
+	@media (max-width: 500px) {
+		position: absolute;
+		right: 0;
+		margin: 5px 0px 0px 0px;
+		text-align: right;
+		border: none;
+		box-shadow: none;
+		z-index: 1;
+	}
 `;
 
 const SearchBar = props => {
@@ -61,9 +88,9 @@ const SearchBar = props => {
 				<SelectStyle name="Maker" id="maker">
 					{/* Need to poll DB for list of makers */}
 					<option value="">Maker</option>
-					<option value="">Maker</option>
-					<option value="">Maker</option>
-					<option value="">Maker</option>
+					<option value="">Reviewer</option>
+					<option value="">Category</option>
+					<option value="">Stars</option>
 				</SelectStyle>
 				<SelectStyle name="Reviewer" id="reviewer">
 					<option value="">Reviewer</option>
@@ -88,13 +115,17 @@ const SearchBar = props => {
 				<SearchBarWrapper>
 					<SearchBarInput
 						onChange={e => props.handleChange(e)}
-						placeholder="Find a DIY project"
+						placeholder="Find a DIY project or Author"
 					/>
 					<SearchBarButton
 						onClick={e => props.handleSearch(e)}
 						className="search-button"
-					>
-						Search
+					>{window.innerWidth <= 500?  
+						<img 
+							src='https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png' 
+							style={{ width: '20px', height: '20px' }}
+							/> 
+							: 'Search' }
 					</SearchBarButton>
 				</SearchBarWrapper>
 			</SearchBarSearchButtonWrapper>

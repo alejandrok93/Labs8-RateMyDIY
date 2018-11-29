@@ -63,7 +63,8 @@ class NewProject extends Component {
   state = {
     project_name: '',
     img_url: null,
-    text: ''
+    text: '',
+    category:''
   };
 
   singleFileChangedHandler = event => {
@@ -138,7 +139,8 @@ class NewProject extends Component {
       user_id: this.props.userInfo.user_id,
       project_name: this.state.project_name,
       img_url: this.state.img_url,
-      text: this.state.text
+      text: this.state.text,
+      category: this.state.category
     });
   };
 
@@ -146,7 +148,7 @@ class NewProject extends Component {
   cancelHandler = event => {
     event.preventDefault();
 
-    if (this.state.project_name || this.state.img_url || this.state.text) {
+    if (this.state.project_name || this.state.img_url || this.state.text || this.state.category) {
       this.setState({
         confirm: {
           text: ['Do you want to discard these changes?'],
@@ -211,6 +213,14 @@ class NewProject extends Component {
               type="text"
               placeholder="project description"
               value={this.state.text}
+              onChange={this.changeHandler}
+              required
+            />
+              <TextInput
+              name="category"
+              type="text"
+              placeholder="Category"
+              value={this.state.category}
               onChange={this.changeHandler}
               required
             />

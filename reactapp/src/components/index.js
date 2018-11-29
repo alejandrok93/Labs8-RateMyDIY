@@ -1,6 +1,9 @@
 export { default as App } from './__App/App';
 export { default as SearchBar } from './SearchBar/SearchBar';
 export {
+	default as SearchPageSearchBar
+} from './SearchPageSearchBar/SearchPageSearchBar';
+export {
 	default as FeaturedProjects
 } from './_LandingPage/FeaturedProjects/FeaturedProjects';
 export {
@@ -23,27 +26,11 @@ export {
 	default as ProjectList
 } from './_AccountPage/_ProjectList/ProjectList';
 export { default as ReviewList } from './_AccountPage/_ReviewList/ReviewList';
-export { default as Billing } from './_AccountPage/_Billing/Billing';
 export { default as CreateEditPage } from './_CreateEditPage/CreateEditPage';
 export { default as AccountSideBar } from './_AccountPage/AccountSideBar';
 export {
-	default as UserSettingBilling
-} from './_UserSettingsPage/Billing/Billing';
-export {
-	default as UserSettingEducation
-} from './_UserSettingsPage/Education/Education';
-export {
-	default as UserSettingPositions
-} from './_UserSettingsPage/Positions/Positions';
-export {
-	default as UserSettingResumes
-} from './_UserSettingsPage/Resumes/Resumes';
-export {
 	default as UserSettingSettings
 } from './_UserSettingsPage/Settings/Settings';
-export {
-	default as UserSettingSkills
-} from './_UserSettingsPage/Skills/Skills';
 export { default as SearchPage } from './_SearchPage/SearchPage';
 export { default as Nav } from './_Nav/Nav';
 export { default as DropDown } from './_Nav/DropDown/DropDown';
@@ -57,5 +44,10 @@ export { default as NewPost } from './_ProjectPage/Post/NewPost';
 export { default as EditPost } from './_ProjectPage/Post/EditPost';
 export { default as ConfirmModal } from './_ProjectPage/ConfirmModal';
 export { default as StarCount } from './StarCount/StarCount';
-export { default as DeleteModal } from './_ProjectPage/DeleteModal';
+export { default as ReviewModal } from './ReviewModal/ReviewModal';
+export { default as NewReview } from './ReviewModal/NewReview';
 export { default as Fileupload } from './fileupload/fileupload';
+export { default as MenuDrawer } from './MenuDrawer/MenuDrawer';
+export { default as AboutTheTeam } from './AboutTheTeam/AboutTheTeam';
+export { default as Footer } from './Footer/Footer';
+export { default as LogInPopUp } from './LogInPopUp/LogInPopUp';

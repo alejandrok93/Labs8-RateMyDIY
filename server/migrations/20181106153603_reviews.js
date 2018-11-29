@@ -12,6 +12,7 @@ exports.up = function(knex, Promise) {
 			.unsigned()
 			.notNullable()
 			.references('users.user_id');
+		table.unique(['project_id', 'user_id']); // composite unique constraint
 		table
 			.integer('rating') // rating submitted by reviewer
 			.notNullable()

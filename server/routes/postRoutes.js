@@ -4,10 +4,12 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 	'/signin'
 );
 
+const authorize = require('../config/authMiddleware');
+
 const db = require('../models/postModel');
 
 // add post to project by id
-router.post('/', ensureLoggedIn, function(req, res, next) {
+router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_id, img_url, text } = req.body;
 
 	if (!img_url && !text) {
@@ -31,7 +33,7 @@ router.post('/', ensureLoggedIn, function(req, res, next) {
 });
 
 // update post by id
-router.put('/:post_id', ensureLoggedIn, function(req, res, next) {
+router.put('/:post_id', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_id, img_url, text } = req.body;
 	const { post_id } = req.params;
 
@@ -56,7 +58,7 @@ router.put('/:post_id', ensureLoggedIn, function(req, res, next) {
 });
 
 // delete post by id
-router.delete('/:post_id', ensureLoggedIn, function(req, res, next) {
+router.delete('/:post_id', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_id } = req.body;
 	const { post_id } = req.params;
 
@@ -74,9 +76,5 @@ router.delete('/:post_id', ensureLoggedIn, function(req, res, next) {
 			res.status(500).json(err);
 		});
 });
-
-
-
-
 
 module.exports = router;

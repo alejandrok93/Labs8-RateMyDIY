@@ -19,7 +19,8 @@ import {
 	//  SearchBar, // not used
 	SearchPage,
 	ProjectPage,
-	NewProject
+	NewProject,
+	AboutTheTeam
 } from '../../components';
 
 //Styles
@@ -72,6 +73,7 @@ class App extends Component {
 				<Route path="/signin" component={Auth} />
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />
+				<Route path="/about" component={AboutTheTeam} />
 			</AppContainer>
 		);
 	}

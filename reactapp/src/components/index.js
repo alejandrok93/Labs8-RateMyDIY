@@ -31,3 +31,5 @@ export { default as StarCount } from './StarCount/StarCount';
 export { default as DeleteModal } from './_ProjectPage/DeleteModal';
 export { default as Fileupload } from './fileupload/fileupload';
 export { default as MenuDrawer } from './MenuDrawer/MenuDrawer';
+export { default as AboutTheTeam } from './AboutTheTeam/AboutTheTeam';
+export { default as Footer } from './Footer/Footer';

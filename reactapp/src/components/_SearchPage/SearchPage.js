@@ -39,7 +39,7 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
+		
 	};
 
 	handleFilterCategoryTech = e => {
@@ -49,7 +49,7 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
+		
 	};
 
 
@@ -60,7 +60,7 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
+		
 	};
 
 

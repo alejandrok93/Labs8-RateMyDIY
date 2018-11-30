@@ -6,7 +6,12 @@ import { connect } from 'react-redux';
 import './SearchPage.css';
 
 //Import components
-import { SearchBar, ProjectTile , SearchPageSearchBar } from '../../components';
+import {
+	SearchBar,
+	ProjectTile,
+	SearchPageSearchBar,
+	Nav
+} from '../../components';
 
 class SearchPage extends Component {
 	constructor() {
@@ -15,7 +20,7 @@ class SearchPage extends Component {
 	} // useless constructor
 
 	componentDidMount() {}
-	
+
 	handleChange = e => {
 		this.setState({ ...this.state, input: e.target.value });
 		
@@ -31,7 +36,6 @@ class SearchPage extends Component {
 		//push to search page
 		this.props.history.push(`/search?query=${searchTerm}`);
 	};
-
 
 	handleFilterCategoryFood = e => {
 		e.preventDefault();
@@ -53,7 +57,6 @@ class SearchPage extends Component {
 		
 	};
 
-
 	handleFilterCategoryHome = e => {
 		e.preventDefault();
 		const searchTerm = 'Home Improvement';
@@ -64,12 +67,11 @@ class SearchPage extends Component {
 		
 	};
 
-
-
 	render() {
 		console.log(this.props.projects);
 		return (
 			<div className="search-page-container">
+				<Nav />
 				<SearchBar
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
@@ -77,12 +79,12 @@ class SearchPage extends Component {
 				<div className="search-options" />
 				<div className="search-results">
 					<h1>Search results</h1>
-      {this.props.projects.length === 0 ? <p>No projects found</p> : ''}
-					<SearchPageSearchBar 
-					handleFilterCategoryFood={this.handleFilterCategoryFood}
-					handleFilterCategoryTech={this.handleFilterCategoryTech}
-					handleFilterCategoryHome={this.handleFilterCategoryHome}
-					handleChange={this.handleChange}
+					{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
+					<SearchPageSearchBar
+						handleFilterCategoryFood={this.handleFilterCategoryFood}
+						handleFilterCategoryTech={this.handleFilterCategoryTech}
+						handleFilterCategoryHome={this.handleFilterCategoryHome}
+						handleChange={this.handleChange}
 					/>
 
 					{this.props.projects.map(project => (
@@ -103,5 +105,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ fetchSearchResults , fetchCategoryResults }
+	{ fetchSearchResults, fetchCategoryResults }
 )(SearchPage);

@@ -14,26 +14,27 @@ router.get(
 	passport.authenticate('auth0', {
 		scope: 'openid email profile'
 	}),
-	function(req, res) {
+	function (req, res) {
 		res.redirect('/');
 	}
 );
 
-router.get('/callback', function(req, res, next) {
-	passport.authenticate('auth0', function(err, user, info) {
+router.get('/callback', function (req, res, next) {
+	passport.authenticate('auth0', function (err, user, info) {
 		if (err) {
 			return next(err);
 		}
 		if (!user) {
 			return res.redirect('/signin');
 		}
-		req.logIn(user, function(err) {
+		req.logIn(user, function (err) {
 			if (err) {
 				return next(err);
 			}
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
-			const role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
+			const role =
+				req.user.profile._json['https://ratemydiy.herokuapp.com/roles'];
 			if (role[0] === 'new') {
 				res.redirect(
 					(process.env.FRONTEND_URL || `http://localhost:3000`) + `/signin`
@@ -47,12 +48,12 @@ router.get('/callback', function(req, res, next) {
 	})(req, res, next);
 });
 
-router.get('/loggedIn', function(req, res, next) {
+router.get('/loggedIn', function (req, res, next) {
 	// console.log('cookies:', req.cookies);
 	// console.log('user:', req.user);
 
 	if (req.user) {
-		const auth_id = req.user._json.sub.split('|')[1];
+		const auth_id = req.user.profile._json.sub.split('|')[1];
 		console.log('User connected with auth_id', auth_id);
 
 		authDB
@@ -73,7 +74,7 @@ router.get('/signout', (req, res) => {
 	res.redirect(process.env.FRONTEND_URL || `http://localhost:3000`);
 });
 
-router.post('/test', ensureLoggedIn, function(req, res, next) {
+router.post('/test', ensureLoggedIn, function (req, res, next) {
 	console.log('cookies:', req.cookies);
 	console.log('user:', req.user);
 
@@ -82,7 +83,7 @@ router.post('/test', ensureLoggedIn, function(req, res, next) {
 	res.status(200).json({ message: 'it works' });
 });
 
-router.get('/cookie', function(req, res, next) {
+router.get('/cookie', function (req, res, next) {
 	console.log(req.cookies);
 	res.status(200).json(req.cookies);
 });

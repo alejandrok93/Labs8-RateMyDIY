@@ -64,7 +64,6 @@ class NewProject extends Component {
     project_name: '',
     img_url: null,
     text: '',
-    
   };
 
   singleFileChangedHandler = event => {
@@ -91,6 +90,7 @@ class NewProject extends Component {
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`
           }
         })
+        
         .then(response => {
           if (200 === response.status) {
             // If file size is larger than expected.

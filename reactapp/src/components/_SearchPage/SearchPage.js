@@ -18,6 +18,7 @@ class SearchPage extends Component {
 	
 	handleChange = e => {
 		this.setState({ ...this.state, input: e.target.value });
+		
 	};
 
 	handleSearch = e => {

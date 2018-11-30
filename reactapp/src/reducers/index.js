@@ -20,6 +20,5 @@ export default combineReducers({
 	settingsReducer,
 	sendgridReducer,
 	usernameReducer,
-	myProjectReducer,
-	searchReducer
+	myProjectReducer
 });

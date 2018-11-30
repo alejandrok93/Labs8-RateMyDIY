@@ -11,7 +11,8 @@ import {
 	NewPost,
 	EditPost,
 	ReviewModal,
-	ConfirmModal
+	ConfirmModal,
+	Nav
 } from '../../components';
 
 // Actions
@@ -124,6 +125,7 @@ class ProjectPage extends Component {
 
 			return (
 				<ProjectPageContainer>
+					<Nav />
 					{/* Might be a good idea to replace these with a switch */}
 					{this.props.projectToUpdate ? (
 						<EditProject

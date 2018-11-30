@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 // ReactStrap
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 //Import components
 import {

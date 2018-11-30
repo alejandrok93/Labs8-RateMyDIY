@@ -13,11 +13,12 @@ router.get('/user', function (req, res, next) {
 	res.status(200).json(req.cookies);
 });
 
-router.post('/change', function (req, res, next) {
-	const sub = req.user._json.sub;
+router.post('/change', function(req, res, next) {
+	console.log(req.user.profile)
+	const sub = req.user.profile._json.sub;
 	const auth_id = sub.split('|')[1];
 	const { username } = req.body;
-	const img_url = req.user._json.picture;
+	const img_url = req.user.profile._json.picture;
 	const user = {
 		auth_id,
 		username,
@@ -32,7 +33,7 @@ router.post('/change', function (req, res, next) {
 				usersDB
 					.addUser(user)
 					.then(dbRes => {
-						console.log('DB SUCCESS')
+						console.log('DB SUCCESS');
 						res.status(200).json({ message: 'Username has been set' });
 					})
 					.catch(dbErr => {
@@ -49,12 +50,12 @@ router.post('/change', function (req, res, next) {
 		});
 });
 
-router.post('/myprojects', authenticate, function (req, res, next) {
+router.post('/myprojects', authenticate, function(req, res, next) {
 	const { user_id } = req.body;
 	usersDB
 		.getUserProjects(user_id)
 		.then(projectsList => {
-			console.log('projectsList', projectsList)
+			console.log('projectsList', projectsList);
 			res.status(200).json(projectsList);
 		})
 		.catch(projectsError => {
@@ -63,12 +64,12 @@ router.post('/myprojects', authenticate, function (req, res, next) {
 		});
 });
 
-router.post('/myreviews', function (req, res, next) {
+router.post('/myreviews', function(req, res, next) {
 	const { user_id } = req.body;
 	usersDB
 		.getUserReviews(user_id)
 		.then(reviewsList => {
-			console.log('reviewsList', reviewsList)
+			console.log('reviewsList', reviewsList);
 			res.status(200).json(reviewsList);
 		})
 		.catch(reviewsError => {

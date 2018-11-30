@@ -6,12 +6,11 @@ function authorize(req, res, next) {
 	if (!user_id) {
 		res.status(403).json({ error: 'Not logged in.' });
 	}
-
-	if (!req.user._json) {
+	if (!req.user) {
 		res.status(403).json({ error: 'No login cookie.' });
 	}
 
-	let sub = req.user._json.sub.split('|');
+	let sub = req.user.profile._json.sub.split('|');
 	let auth_id = sub[1];
 
 	authDB.getAuthID(user_id).then(db_auth_id => {

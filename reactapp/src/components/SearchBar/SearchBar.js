@@ -34,7 +34,7 @@ const SelectStyle = styled.select`
 
 const SearchBarWrapper = styled.form`
 	display: flex;
-	width: 100%;
+	width: 80%;
 	height: 35px;
 	//align-items: baseline;
 
@@ -76,27 +76,28 @@ const SearchBarButton = styled.button`
 
 const SearchBar = props => {
 	return (
-		<SearchWrapper>
-			<SelectWrapper />
-			<SearchBarSearchButtonWrapper>
-				<SearchBarWrapper>
-					<SearchBarInput
-						onChange={e => props.handleChange(e)}
-						placeholder="Find a DIY project or Author"
-					/>
-					<SearchBarButton
-						onClick={e => props.handleSearch(e)}
-						className="search-button"
-					>
-						<img
-							src="https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png"
-							alt="Search icon"
-							style={{ width: '20px', height: '20px' }}
-						/>
-					</SearchBarButton>
-				</SearchBarWrapper>
-			</SearchBarSearchButtonWrapper>
-		</SearchWrapper>
+		// <SearchWrapper>
+		// 	<SelectWrapper />
+		// 	<SearchBarSearchButtonWrapper>
+		// 	</SearchBarSearchButtonWrapper>
+		// </SearchWrapper>
+
+		<SearchBarWrapper>
+			<SearchBarInput
+				onChange={e => props.handleChange(e)}
+				placeholder="Find a DIY project or Author"
+			/>
+			<SearchBarButton
+				onClick={e => props.handleSearch(e)}
+				className="search-button"
+			>
+				<img
+					src="https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png"
+					alt="Search icon"
+					style={{ width: '20px', height: '20px' }}
+				/>
+			</SearchBarButton>
+		</SearchBarWrapper>
 	);
 };
 

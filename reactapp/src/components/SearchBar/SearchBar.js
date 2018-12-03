@@ -53,22 +53,22 @@ const SearchBarSearchButtonWrapper = styled.div`
 `;
 const SearchBarInput = styled.input`
 	width: 100%;
-	height: 35px;
+	height: 45px;
 	color: black;
 	outline: none;
 	border: 2px solid black;
-	border-radius: 5px;
+
 	font-size: 14px;
 `;
 
 const SearchBarButton = styled.button`
 	width: 80px;
-	height: 25px;
-	margin: 0px 15px;
+	height: 45px;
 	background: 0;
 	border: none;
 	border: 2px solid black;
-	box-shadow: 5px 5px 0px;
+
+	border-left: 0;
 
 	@media (max-width: 500px) {
 		position: absolute;

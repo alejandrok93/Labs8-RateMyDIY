@@ -46,12 +46,14 @@ const LandingPageWrapper = styled.div`
 
 const imgUrl =
 	'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
+
 const HeroImageContainer = styled.div`
 	  width: 100%;
 	  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url(${imgUrl});
 	  height: 570px;
 	  background-size: cover;
+	background-attachment: fixed;
 	  background-repeat: no-repeat;
 	  background-position: bottom;
 `;
@@ -68,6 +70,7 @@ const HeroSearchContainer = styled.div`
 `;
 
 const HeroTitle = styled.h1`
+	font-weight: bolder;
 	color: white;
 	font-size: 32px;
 `;

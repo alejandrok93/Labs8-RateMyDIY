@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom'; // removed Link from import (unused)
 import styled from 'styled-components';
-import Auth from '../../components/Auth/Auth';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../actions/index';
 
@@ -69,7 +68,6 @@ class App extends Component {
 				<Route exact path="/CreateEditPage" component={CreateEditPage} />
 				<Route path="/settings/settings" component={UserSettingSettings} />
 				<Route path="/search" component={SearchPage} />
-				<Route path="/signin" component={Auth} />
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />
 				<Route path="/about" component={AboutTheTeam} />

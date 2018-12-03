@@ -85,14 +85,14 @@ const SearchBar = props => {
 	return (
 		<SearchWrapper>
 			<SelectWrapper>
-				<SelectStyle name="Maker" id="maker">
-					{/* Need to poll DB for list of makers */}
-					<option value="">Maker</option>
+				{/* <SelectStyle name="Maker" id="maker"> */}
+				{/* Need to poll DB for list of makers */}
+				{/* <option value="">Maker</option>
 					<option value="">Reviewer</option>
 					<option value="">Category</option>
 					<option value="">Stars</option>
-				</SelectStyle>
-				<SelectStyle name="Reviewer" id="reviewer">
+				</SelectStyle> */}
+				{/* <SelectStyle name="Reviewer" id="reviewer">
 					<option value="">Reviewer</option>
 					<option value="">Reviewer</option>
 					<option value="">Reviewer</option>
@@ -103,13 +103,13 @@ const SearchBar = props => {
 					<option value="">Category</option>
 					<option value="">Category</option>
 					<option value="">Category</option>
-				</SelectStyle>
-				<SelectStyle name="Stars" id="stars">
+				</SelectStyle> */}
+				{/* <SelectStyle name="Stars" id="stars">
 					<option value="">Stars</option>
 					<option value="">Stars</option>
 					<option value="">Stars</option>
 					<option value="">Stars</option>
-				</SelectStyle>
+				</SelectStyle> */}
 			</SelectWrapper>
 			<SearchBarSearchButtonWrapper>
 				<SearchBarWrapper>

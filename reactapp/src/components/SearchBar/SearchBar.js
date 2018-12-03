@@ -64,7 +64,7 @@ const SearchBarInput = styled.input`
 const SearchBarButton = styled.button`
 	position: absolute;
 	right: 0;
-	width: 55px;
+	width: 11%;
 	height: 45px;
 	border: none;
 	border: 2px solid black;

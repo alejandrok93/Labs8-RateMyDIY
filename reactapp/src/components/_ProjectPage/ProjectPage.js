@@ -12,7 +12,8 @@ import {
 	EditPost,
 	ReviewModal,
 	ConfirmModal,
-	Nav
+	Nav,
+	Header
 } from '../../components';
 
 // Actions

@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 // import { Route } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import {
-	DropDown
-} from '../../components';
-import { Button } from "reactstrap";
+import { DropDown } from '../../components';
+import { Button } from 'reactstrap';
 import { sendEmail } from '../../actions';
 
 // date check for welcome message
@@ -30,11 +28,11 @@ class Nav extends React.Component {
 	clientGreeting() {
 		let clientHourTime = new Date().getHours();
 		if (clientHourTime < 10) {
-			return "Good morning";
+			return 'Good morning';
 		} else if (clientHourTime <= 16 && clientHourTime >= 10) {
-			return "Good afternoon";
+			return 'Good afternoon';
 		} else if (clientHourTime <= 24 && clientHourTime > 16) {
-			return "Good evening";
+			return 'Good evening';
 		}
 	}
 	// Sets state for the reactstrap modal
@@ -72,14 +70,14 @@ class Nav extends React.Component {
 							</SignoutLink>
 						</Fragment>
 					) : (
-							<Fragment>
-								<a href={loginURL}>
-									<Button color="danger">
-										<h3>Login</h3>
-									</Button>
-								</a>
-							</Fragment>
-						)}
+						<Fragment>
+							<a href={loginURL}>
+								<Button color="danger">
+									<h3>Login/Signup</h3>
+								</Button>
+							</a>
+						</Fragment>
+					)}
 
 					{/* if logged in, show component that says "Hello NAME then have a signout button" */}
 				</AuthWrapper>
@@ -119,7 +117,7 @@ const AuthWrapper = styled.div`
 	border: 1px solid black;
 	margin: 0 8px 0 auto;
 	padding: 4px 8px;
-  padding: 10px;
+	padding: 10px;
 	/* overflow: hidden; */
 
 	@media (max-width: 500px) {

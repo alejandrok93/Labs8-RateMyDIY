@@ -24,11 +24,11 @@ import {
 //Styles
 const AppContainer = styled.div`
 	display: flex;
-	max-width: 1280px;
+	max-width: 1480px;
 	min-width: 600px;
 	height: auto;
 	background: #eff;
-	margin: 10px auto;
+	margin: 0 auto;
 `;
 
 class App extends Component {

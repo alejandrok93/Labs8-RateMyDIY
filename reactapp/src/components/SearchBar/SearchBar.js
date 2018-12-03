@@ -62,20 +62,19 @@ const SearchBarInput = styled.input`
 `;
 
 const SearchBarButton = styled.button`
-	width: 80px;
+	position: absolute;
+	right: 0;
+	width: 55px;
 	height: 45px;
-	background: 0;
 	border: none;
 	border: 2px solid black;
 
 	border-left: 0;
 
 	@media (max-width: 500px) {
-		position: absolute;
-		right: 0;
-		margin: 5px 0px 0px 0px;
+		// margin: 5px 0px 0px 0px;
 		text-align: right;
-		border: none;
+		sborder: none;
 		box-shadow: none;
 		z-index: 1;
 	}
@@ -121,15 +120,11 @@ const SearchBar = props => {
 						onClick={e => props.handleSearch(e)}
 						className="search-button"
 					>
-						{window.innerWidth <= 500 ? (
-							<img
-								src="https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png"
-								alt=""
-								style={{ width: '20px', height: '20px' }}
-							/>
-						) : (
-							'Search'
-						)}
+						<img
+							src="https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png"
+							alt=""
+							style={{ width: '20px', height: '20px' }}
+						/>
 					</SearchBarButton>
 				</SearchBarWrapper>
 			</SearchBarSearchButtonWrapper>

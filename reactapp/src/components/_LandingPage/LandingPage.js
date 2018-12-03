@@ -56,7 +56,7 @@ const HeroImageContainer = styled.div`
 
 const HeroSearchContainer = styled.div`
 	width: 60%;
-	 text-align: center;
+	text-align: center;
 	position: absolute;
 	top: 30%;
 	left: 50%;

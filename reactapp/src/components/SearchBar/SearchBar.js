@@ -5,8 +5,8 @@ import styled from 'styled-components';
 //Apply styles
 const SearchWrapper = styled.div`
 	width: 80%;
-	height: 100px;
-	margin: 25px auto;
+	height: 0px;
+	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 
@@ -36,17 +36,13 @@ const SearchBarWrapper = styled.form`
 	display: flex;
 	width: 100%;
 	height: 35px;
-	align-items: baseline;
+	//align-items: baseline;
 
 	@media (max-width: 500px) {
 		position: relative;
 	}
 `;
 const SearchBarSearchButtonWrapper = styled.div`
-	display: flex;
-	height: 100px;
-	align-items: flex-end;
-
 	@media (max-width: 500px) {
 		position: relative;
 	}
@@ -57,12 +53,13 @@ const SearchBarInput = styled.input`
 	color: black;
 	outline: none;
 	border: 2px solid black;
+	border-right: 0;
 
 	font-size: 14px;
 `;
 
 const SearchBarButton = styled.button`
-	position: absolute;
+	position: relative;
 	right: 0;
 	width: 11%;
 	height: 45px;
@@ -81,33 +78,7 @@ const SearchBarButton = styled.button`
 const SearchBar = props => {
 	return (
 		<SearchWrapper>
-			<SelectWrapper>
-				{/* <SelectStyle name="Maker" id="maker"> */}
-				{/* Need to poll DB for list of makers */}
-				{/* <option value="">Maker</option>
-					<option value="">Reviewer</option>
-					<option value="">Category</option>
-					<option value="">Stars</option>
-				</SelectStyle> */}
-				{/* <SelectStyle name="Reviewer" id="reviewer">
-					<option value="">Reviewer</option>
-					<option value="">Reviewer</option>
-					<option value="">Reviewer</option>
-					<option value="">Reviewer</option>
-				</SelectStyle>
-				<SelectStyle name="Category" id="category">
-					<option value="">Category</option>
-					<option value="">Category</option>
-					<option value="">Category</option>
-					<option value="">Category</option>
-				</SelectStyle> */}
-				{/* <SelectStyle name="Stars" id="stars">
-					<option value="">Stars</option>
-					<option value="">Stars</option>
-					<option value="">Stars</option>
-					<option value="">Stars</option>
-				</SelectStyle> */}
-			</SelectWrapper>
+			<SelectWrapper />
 			<SearchBarSearchButtonWrapper>
 				<SearchBarWrapper>
 					<SearchBarInput

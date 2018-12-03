@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { fetchSearchResults, fetchCategoryResults } from '../../actions';
 import { connect } from 'react-redux';
 import './SearchPage.css';
+import styled from 'styled-components';
 
 //Import components
 import {
@@ -13,6 +14,10 @@ import {
 	Nav,
 	Header
 } from '../../components';
+
+const SearchPageWrapper = styled.div`
+	width: 100%;
+`;
 
 class SearchPage extends Component {
 	constructor() {
@@ -67,29 +72,29 @@ class SearchPage extends Component {
 	render() {
 		console.log(this.props.projects);
 		return (
-			<div className="search-page-container">
-				<Header />
-				<Nav />
-				<SearchBar
+			<SearchPageWrapper>
+				<Header
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
 				/>
-				<div className="search-options" />
-				<div className="search-results">
-					<h1>Search results</h1>
-					{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
-					<SearchPageSearchBar
-						handleFilterCategoryFood={this.handleFilterCategoryFood}
-						handleFilterCategoryTech={this.handleFilterCategoryTech}
-						handleFilterCategoryHome={this.handleFilterCategoryHome}
-						handleChange={this.handleChange}
-					/>
+				<div className="search-page-container">
+					<div className="search-options" />
+					<div className="search-results">
+						<h1>Search results</h1>
+						{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
+						<SearchPageSearchBar
+							handleFilterCategoryFood={this.handleFilterCategoryFood}
+							handleFilterCategoryTech={this.handleFilterCategoryTech}
+							handleFilterCategoryHome={this.handleFilterCategoryHome}
+							handleChange={this.handleChange}
+						/>
 
-					{this.props.projects.map(project => (
-						<ProjectTile project={project} />
-					))}
+						{this.props.projects.map(project => (
+							<ProjectTile project={project} />
+						))}
+					</div>
 				</div>
-			</div>
+			</SearchPageWrapper>
 		);
 	}
 }

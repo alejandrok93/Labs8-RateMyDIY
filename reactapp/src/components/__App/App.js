@@ -24,7 +24,7 @@ import {
 //Styles
 const AppContainer = styled.div`
 	display: flex;
-	max-width: 1480px;
+	max-width: 100%;
 	min-width: 600px;
 	height: auto;
 	background: #eff;

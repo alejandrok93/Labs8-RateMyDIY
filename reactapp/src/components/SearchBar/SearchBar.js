@@ -66,15 +66,12 @@ const SearchBarButton = styled.button`
 	right: 0;
 	width: 11%;
 	height: 45px;
-	border: none;
 	border: 2px solid black;
-
 	border-left: 0;
 
 	@media (max-width: 500px) {
 		// margin: 5px 0px 0px 0px;
 		text-align: right;
-		sborder: none;
 		box-shadow: none;
 		z-index: 1;
 	}

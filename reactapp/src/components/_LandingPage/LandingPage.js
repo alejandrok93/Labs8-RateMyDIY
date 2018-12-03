@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 // ReactStrap
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 //Import components
 import {
@@ -106,7 +106,6 @@ class LandingPage extends Component {
 	};
 
 	render() {
-		console.log(this.state.modal);
 		return (
 			<LandingPageWrapper>
 				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
@@ -124,7 +123,6 @@ class LandingPage extends Component {
 						//  'hey please log in'
 						''
 					)}
-					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers

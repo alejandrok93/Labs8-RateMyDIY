@@ -22,6 +22,6 @@ function loggedIn(auth_id) {
 			.where({ auth_id })
 			.first()
 			// .select('user_id', 'username', 'img_url', 'user_rating', 'rating_sum', 'rating_count', 'helpfulness')
-			.then(({ auth_id, ...userInfo }) => userInfo)
+			.then(userInfo => userInfo || {})
 	);
 }

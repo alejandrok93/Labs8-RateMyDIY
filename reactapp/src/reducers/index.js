@@ -7,7 +7,6 @@ import reviewReducer from './reviewReducer';
 import searchReducer from './searchReducer';
 import settingsReducer from './settingsReducer';
 import sendgridReducer from './sendgridReducer';
-import usernameReducer from './usernameReducer';
 import myProjectReducer from './myProjectReducer';
 
 export default combineReducers({
@@ -19,6 +18,5 @@ export default combineReducers({
 	searchReducer,
 	settingsReducer,
 	sendgridReducer,
-	usernameReducer,
 	myProjectReducer
 });

@@ -9,8 +9,7 @@ const HeaderContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	position: fixed;
-
-	background-color: yellow;
+	background-color: #232a34;
 `;
 
 const HeaderSearchContainer = styled.div`
@@ -22,7 +21,13 @@ const HeaderSearchContainer = styled.div`
 const Header = props => {
 	return (
 		<HeaderContainer>
-			<img src="" alt="LOGO" />
+			<a href="/">
+				<img
+					style={{ width: '60px', height: '60px', margin: '0 20px' }}
+					src="https://ratemydiy.s3.amazonaws.com/1543872216210"
+					alt="LOGO"
+				/>
+			</a>
 			<HeaderSearchContainer>
 				<SearchBar
 					handleChange={props.handleChange}

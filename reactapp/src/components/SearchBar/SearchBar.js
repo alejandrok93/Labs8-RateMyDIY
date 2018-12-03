@@ -54,7 +54,6 @@ const SearchBarInput = styled.input`
 	outline: none;
 	border: 2px solid black;
 	border-right: 0;
-
 	font-size: 14px;
 `;
 

@@ -15,8 +15,6 @@ const HeaderContainerWraper = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	margin: 10px 0;
-
-	border: 1px solid red;
 `;
 
 const HeaderSearchContainer = styled.div`

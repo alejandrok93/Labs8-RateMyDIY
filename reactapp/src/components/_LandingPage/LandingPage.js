@@ -34,7 +34,6 @@ const LandingPageContentWrapper = styled.div`
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
-
 	@media (max-width: 500px) {
 		width: 100vw;
 	}
@@ -45,29 +44,32 @@ const imgUrl =
 
 const HeroImageContainer = styled.div`
 	  width: 100%;
+	height: 560px;
 	  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url(${imgUrl});
-	  height: 570px;
 	  background-size: cover;
-	background-attachment: fixed;
 	  background-repeat: no-repeat;
 	  background-position: bottom;
 `;
 
 const HeroSearchContainer = styled.div`
 	width: 60%;
-	text-align: center;
 	position: absolute;
 	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 const HeroTitle = styled.h1`
+	text-align: center;
 	font-weight: bolder;
 	color: white;
 	font-size: 32px;
+	margin-bottom: 30px;
 `;
 class LandingPage extends Component {
 	constructor() {

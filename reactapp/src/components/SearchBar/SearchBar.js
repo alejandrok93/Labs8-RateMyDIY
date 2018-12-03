@@ -34,11 +34,12 @@ const SelectStyle = styled.select`
 
 const SearchBarWrapper = styled.form`
 	display: flex;
-	width: 80%;
+	width: 70%;
 	height: 35px;
 	//align-items: baseline;
 
 	@media (max-width: 500px) {
+		width: 85%;
 		position: relative;
 	}
 `;
@@ -50,10 +51,12 @@ const SearchBarSearchButtonWrapper = styled.div`
 const SearchBarInput = styled.input`
 	width: 100%;
 	height: 45px;
-	color: black;
+	//color: #a6aaad;
 	outline: none;
 	border: 2px solid black;
 	border-right: 0;
+	font-size: 14px;
+
 	font-size: 14px;
 `;
 
@@ -67,10 +70,10 @@ const SearchBarButton = styled.button`
 	background-color: white;
 
 	@media (max-width: 500px) {
-		// margin: 5px 0px 0px 0px;
 		text-align: right;
 		box-shadow: none;
 		z-index: 1;
+		width: 20%;
 	}
 `;
 

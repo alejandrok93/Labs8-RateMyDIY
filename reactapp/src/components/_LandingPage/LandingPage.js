@@ -31,6 +31,8 @@ const LandingPageContentWrapper = styled.div`
 	flex-direction: column;
 	margin: auto;
 	width: 80%;
+
+	border: 1px solid red;
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
@@ -38,6 +40,8 @@ const LandingPageWrapper = styled.div`
 	@media (max-width: 500px) {
 		width: 100vw;
 	}
+
+	border: 1px solid blue;
 `;
 
 class LandingPage extends Component {
@@ -109,6 +113,7 @@ class LandingPage extends Component {
 		return (
 			<LandingPageWrapper>
 				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
+
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}

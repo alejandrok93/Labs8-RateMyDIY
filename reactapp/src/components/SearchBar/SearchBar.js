@@ -122,7 +122,7 @@ const SearchBar = props => {
 					>
 						<img
 							src="https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png"
-							alt=""
+							alt="Search icon"
 							style={{ width: '20px', height: '20px' }}
 						/>
 					</SearchBarButton>

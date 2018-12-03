@@ -31,8 +31,6 @@ const LandingPageContentWrapper = styled.div`
 	flex-direction: column;
 	margin: auto;
 	width: 80%;
-
-	border: 1px solid red;
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
@@ -40,8 +38,6 @@ const LandingPageWrapper = styled.div`
 	@media (max-width: 500px) {
 		width: 100vw;
 	}
-
-	border: 1px solid blue;
 `;
 
 const imgUrl =
@@ -66,7 +62,6 @@ const HeroSearchContainer = styled.div`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
-	border: 1px solid gray;
 `;
 
 const HeroTitle = styled.h1`

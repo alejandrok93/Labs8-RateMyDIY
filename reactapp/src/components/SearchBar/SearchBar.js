@@ -68,6 +68,7 @@ const SearchBarButton = styled.button`
 	height: 45px;
 	border: 2px solid black;
 	border-left: 0;
+	background-color: white;
 
 	@media (max-width: 500px) {
 		// margin: 5px 0px 0px 0px;

@@ -10,7 +10,8 @@ import {
 	SearchBar,
 	ProjectTile,
 	SearchPageSearchBar,
-	Nav
+	Nav,
+	Header
 } from '../../components';
 
 class SearchPage extends Component {
@@ -23,7 +24,6 @@ class SearchPage extends Component {
 
 	handleChange = e => {
 		this.setState({ ...this.state, input: e.target.value });
-		
 	};
 
 	handleSearch = e => {
@@ -44,7 +44,6 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		
 	};
 
 	handleFilterCategoryTech = e => {
@@ -54,7 +53,6 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		
 	};
 
 	handleFilterCategoryHome = e => {
@@ -64,13 +62,13 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		
 	};
 
 	render() {
 		console.log(this.props.projects);
 		return (
 			<div className="search-page-container">
+				<Header />
 				<Nav />
 				<SearchBar
 					handleChange={this.handleChange}

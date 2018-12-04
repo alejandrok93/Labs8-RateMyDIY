@@ -14,7 +14,7 @@ function getPopularProjects() {
 			'projects.user_id',
 			'projects.project_name',
 			'users.username',
-			'users.img_url',
+			'users.img_url as maker_photo_url',
 			'projects.project_id',
 			'projects.project_rating'
 		)

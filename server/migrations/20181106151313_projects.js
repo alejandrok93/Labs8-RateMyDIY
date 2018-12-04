@@ -4,8 +4,9 @@ exports.up = function(knex, Promise) {
 		table
 			.integer('user_id') // author's primary key
 			.unsigned()
-			.notNullable();
-		// .references('users.user_id');
+			.notNullable()
+			.references('users.user_id')
+			.onDelete('CASCADE');
 		table
 			.string('project_name', 48) // project title
 			.notNullable();

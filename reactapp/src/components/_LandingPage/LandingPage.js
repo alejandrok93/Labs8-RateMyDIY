@@ -119,8 +119,6 @@ class LandingPage extends Component {
 	};
 
 	searchClick = input => {
-		console.log('search for this maker: ' + input);
-
 		//call featch search results action
 		this.props.fetchSearchResults(input);
 

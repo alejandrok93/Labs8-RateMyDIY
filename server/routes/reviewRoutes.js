@@ -44,47 +44,36 @@ router.get('/getid/:user_id/:project_id', function(req, res, next) {
 // add review
 router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_id, rating, text } = req.body;
-
 	if (!rating || !text) {
 		res.status(422).json({ error: 'Missing parameters.' });
-	} else if (rating < 1 || rating > 5) {
-		res.status(422).json({ error: 'Nice try.' });
+	} else if (rating < 1 || 5 < rating || !Number.isInteger(rating)) {
+		res.status(403).json({ error: 'Nice try.' });
 	} else {
 		const review = { user_id, project_id, rating, text };
+		console.log(
+			`\nUser ${user_id} attempting to add a review to project ${project_id} with rating = ${rating}, text = "${text}"\n...`
+		);
 		db.addReview(review)
-			.then(review_id => review_id)
-			.then(review_id => {
-				if (review_id === 'ownProject') {
+			.then(({ review_id, ownProject, alreadyReviewed, projectNotFound }) => {
+				if (ownProject) {
 					res.status(403).json({ error: `You can't review your own project.` });
-				} else if (review_id === 'alreadyReviewed') {
+					console.log(
+						`Rejected with error: "You can't review your own project.\n`
+					);
+				} else if (alreadyReviewed) {
 					res
-						.status(422)
+						.status(403)
 						.json({ error: `You've already reviewed this project.` });
+					console.log(
+						`Rejected with error: "You've already reviewed this project.\n`
+					);
+				} else if (projectNotFound) {
+					res.status(404).json({ error: `Project not found.` });
+					console.log(`Rejected with error: "Project not found.\n`);
 				} else {
 					res.status(201).json(review_id);
 				}
 			})
-
-			// BROKEN DON'T USE
-			// 		db.updateProjectRating(project_id, rating).then(maker_id => {
-			// 			if (maker_id) {
-			// 				db.updateUserRating(maker_id, rating).then(user_updated => {
-			// 					if (user_updated) {
-			// 						res.status(201).json(review_id);
-			// 					} else {
-			// 						res.status(500).json({
-			// 							error: `Failed to update user rating. You're getting this error because something went wrong and the database queries aren't using transactions yet.`
-			// 						}); // Todo: refactor reviewModel
-			// 					}
-			// 				});
-			// 			} else {
-			// 				res.status(500).json({
-			// 					error: `Failed to update user rating. You're getting this error because something went wrong and the database queries aren't using transactions yet.`
-			// 				}); // Todo: refactor reviewModel
-			// 			}
-			// 		});
-			// 	}
-			// })
 			.catch(err => {
 				res.status(500).json(err);
 			});

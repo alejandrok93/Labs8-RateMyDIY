@@ -58,6 +58,7 @@ class ProjectCard extends React.Component {
 
 	render() {
 		const { classes } = this.props;
+		console.log(this.props.project);
 		return (
 			<CardLink
 				className="project-card"
@@ -66,9 +67,10 @@ class ProjectCard extends React.Component {
 				<Card style={{}} className={classes.card}>
 					<CardHeader
 						avatar={
-							<Avatar aria-label="Rrecipe" className={classes.avatar}>
-								{/* <img src={ this.props.userInfo.img_url ? this.props.userInfo.img_url : 'https://previews.123rf.com/images/alekseyvanin/alekseyvanin1801/alekseyvanin180100897/93405661-user-account-avatar-line-icon-outline-vector-sign-linear-style-pictogram-isolated-on-white-admin-pro.jpg'} alt="user profile pic" /> */}
-							</Avatar>
+							<Avatar
+								src={this.props.project.maker_photo_url}
+								className={classes.avatar}
+							/>
 						}
 						action={null}
 						title={this.props.project.project_name}

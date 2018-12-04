@@ -18,7 +18,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
-
+import StarRatings from 'react-star-ratings';
 
 const styles = theme => ({
   card: {
@@ -47,9 +47,8 @@ class ProjectCard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-<Link to={`project/${this.props.project.user_id}`}>
-        <Card style={{}}className={classes.card}>
-         
+      <Link to={`project/${this.props.project.user_id}`}>
+        <Card style={{}} className={classes.card}>
           <CardHeader
             avatar={
               <Avatar aria-label="Rrecipe" className={classes.avatar}>
@@ -60,13 +59,20 @@ class ProjectCard extends React.Component {
             title={this.props.project.project_name}
             subheader={<a href="#helloWorld">{this.props.project.username} </a>}
           />
-           
+
           <CardMedia
             className={classes.media}
             image={this.props.project.img_url}
             title={this.props.project.project_name}
           />
-        
+          <CardContent>
+            <StarRatings
+              rating={Math.round(this.props.project.project_rating)}
+              starDimension="14px"
+              starSpacing="4px"
+              starRatedColor="black"
+            />
+          </CardContent>
           <CardContent>
             <Typography component="p">
               This impressive paella is a perfect party dish and a fun meal to
@@ -75,10 +81,8 @@ class ProjectCard extends React.Component {
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing />
-         
         </Card>
-        </Link>
-    
+      </Link>
     );
   }
 }

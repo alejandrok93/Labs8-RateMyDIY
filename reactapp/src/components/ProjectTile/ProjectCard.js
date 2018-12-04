@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from "styled-components"
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -20,10 +21,14 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 
+
 const styles = theme => ({
   card: {
-    maxWidth: 300,
-    margin: '25px'
+    width: 300,
+    margin: '25px',
+    '&:hover' : {
+      backgroundColor : '0'
+    }
   },
   media: {
     height: 0,
@@ -37,6 +42,18 @@ const styles = theme => ({
   }
 });
 
+const CardLink = styled.a`
+text-decoration: none;
+color:black
+
+&:hover {
+  text-decoration:none;
+  color:black
+}
+`;
+
+
+
 class ProjectCard extends React.Component {
   state = { expanded: false };
 
@@ -47,7 +64,7 @@ class ProjectCard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Link to={`project/${this.props.project.user_id}`}>
+      <CardLink className="project-card" href={`project/${this.props.project.user_id}`}>
         <Card style={{}} className={classes.card}>
           <CardHeader
             avatar={
@@ -68,6 +85,7 @@ class ProjectCard extends React.Component {
           <CardContent>
             <StarRatings
               rating={Math.round(this.props.project.project_rating)}
+              starRatedColor="yellow"
               starDimension="14px"
               starSpacing="4px"
               starRatedColor="black"
@@ -75,14 +93,12 @@ class ProjectCard extends React.Component {
           </CardContent>
           <CardContent>
             <Typography component="p">
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
+              [THIS IS THE PROJECT DESCRIPTION]
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing />
         </Card>
-      </Link>
+      </CardLink>
     );
   }
 }

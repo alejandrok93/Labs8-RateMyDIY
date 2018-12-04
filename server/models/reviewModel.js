@@ -1,4 +1,5 @@
 const db = require('../config/dbConfig');
+// const Promise = require('bluebird');
 
 module.exports = {
 	getReview,
@@ -40,87 +41,127 @@ function getReviewID(project_id, user_id) {
 		.then(review => (review ? review.review_id : undefined));
 }
 
-// Currently, project ratings and user ratings get recalculated whenever a review is added, updated, or deleted. Instead of telling the database to select all the relevant reviews, sum them up, and return an average every time this happens, we just hold onto a rating_sum and a rating_count for each user and project. This ought to put less strain on the database but the results are susceptible to inaccuracy: If a review is modified or deleted without going through the reviewModel (due to a bug or some other issue), the average rating might not get updated. Perhaps we can schedule periodic exhaustive recalculations to maintain accuracy.
-
-// SOON TO BE REPLACED WITH SQL TRANSACTIONS
+// This is big and ugly but it works. It would be easier to read with async/await
 function addReview({ user_id, project_id, rating, text }) {
 	return db('projects')
-		.where(user_id, project_id)
+		.where({ project_id })
 		.first()
 		.then(project => {
-			// Are you the author of this project?
+			// Does this project exist?
 			if (!project) {
+				// Project not found
+				return { projectNotFound: true };
+			}
+			// Are you the author of this project?
+			else if (project.user_id === user_id) {
+				// Can't review your own project
+				return { ownProject: true };
+			} else {
 				return db('reviews')
 					.where({ user_id, project_id })
 					.first()
 					.then(review => {
 						// Have you already reviewed this project?
-						if (!review) {
-							return db('reviews')
-								.returning('review_id')
-								.insert({ user_id, project_id, rating, text })
-								.then(([review_id]) => review_id);
-						} else return 'alreadyReviewed'; // You've already reviewed this project
+						if (review) {
+							// Can't leave multiple reviews for the same project
+							return { alreadyReviewed: true };
+						} else {
+							return db.transaction(trx => {
+								return trx('reviews')
+									.insert({ user_id, project_id, rating, text }, 'review_id')
+									.then(([review_id]) => {
+										if (!review_id) {
+											trx.rollback;
+										} else {
+											return trx('projects')
+												.where({ project_id })
+												.select(
+													'user_id as maker_id',
+													'rating_sum as project_rating_sum',
+													'rating_count as project_rating_count'
+												)
+												.first()
+												.then(
+													({
+														maker_id,
+														project_rating_sum,
+														project_rating_count
+													}) => {
+														project_rating_sum += rating;
+														project_rating_count++;
+														return trx('projects')
+															.where({ project_id })
+															.update(
+																{
+																	// This only returns whole numbers. Has to be modified for half stars.
+																	project_rating: Math.round(
+																		project_rating_sum / project_rating_count
+																	),
+																	rating_sum: project_rating_sum,
+																	rating_count: project_rating_count
+																},
+																'project_id'
+															)
+															.then(([project_updated]) => {
+																if (!project_updated) {
+																	trx.rollback;
+																} else {
+																	return trx('users')
+																		.where({ user_id: maker_id })
+																		.select(
+																			'rating_sum as user_rating_sum',
+																			'rating_count as user_rating_count'
+																		)
+																		.first()
+																		.then(
+																			({
+																				user_rating_sum,
+																				user_rating_count
+																			}) => {
+																				user_rating_sum += rating;
+																				user_rating_count++;
+																				return db('users')
+																					.where({ user_id: maker_id })
+																					.update(
+																						{
+																							// This only returns whole numbers. Has to be modified for half stars.
+																							user_rating: Math.round(
+																								user_rating_sum /
+																									user_rating_count
+																							),
+																							rating_sum: user_rating_sum,
+																							rating_count: user_rating_count
+																						},
+																						'user_id'
+																					);
+																			}
+																		);
+																}
+															});
+													}
+												)
+												.then(([user_updated]) => {
+													if (!user_updated) {
+														trx.rollback;
+													} else {
+														console.log(
+															`Average ratings updated for project ${project_id} and user ${user_updated}`
+														);
+														return { review_id };
+													}
+												})
+												.catch(error => {
+													console.error(error);
+													return {};
+												});
+										}
+									});
+							});
+						}
 					});
-			} else return 'ownProject'; // Can't review your own project
+			}
 		});
 }
-
-// // Update the project's rating - BROKEN DON'T USE
-// function updateProjectRating(project_id, rating) {
-// 	return db('projects')
-// 		.where(project_id)
-// 		.select(
-// 			'user_id as maker_id',
-// 			'project_rating',
-// 			'rating_sum',
-// 			'rating_count'
-// 		)
-// 		.first()
-// 		.then(({ maker_id, rating_sum, rating_count }) => {
-// 			rating_sum += rating;
-// 			rating_count++;
-// 			return db('projects')
-// 				.where(project_id)
-// 				.returning('project_id')
-// 				.update({
-// 					project_rating: Math.round(rating_sum / rating_count),
-// 					rating_sum,
-// 					rating_count
-// 				})
-// 				.then(([project_updated]) => {
-// 					if (project_updated) {
-// 						return maker_id;
-// 					} else {
-// 						return undefined;
-// 					}
-// 				});
-// 		});
-// }
-
-// // Update the user's rating - BROKEN DON'T USE
-// function updateUserRating(maker_id, rating) {
-// 	return db('users')
-// 		.where({ user_id: maker_id })
-// 		.select(
-// 			'rating_sum as user_rating_sum',
-// 			'rating_count as user_rating_count'
-// 		)
-// 		.first()
-// 		.then(({ user_rating_sum, user_rating_count }) => {
-// 			user_rating_sum += rating;
-// 			user_rating_count++;
-// 			return db('users')
-// 				.where({ user_id: maker_id })
-// 				.returning('user_id')
-// 				.update({
-// 					user_rating: Math.round(user_rating_sum / user_rating_count),
-// 					user_rating_sum,
-// 					user_rating_count
-// 				})
-// 				.then(([user_updated]) => user_updated);
-// 		});
-// }
 
 // function editReview(user_id, review_id, changes) {
 // 	return db('reviews')

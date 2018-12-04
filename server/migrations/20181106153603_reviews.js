@@ -11,7 +11,8 @@ exports.up = function(knex, Promise) {
 			.integer('user_id') // reviewer's primary key
 			.unsigned()
 			.notNullable()
-			.references('users.user_id');
+			.references('users.user_id')
+			.onDelete('CASCADE');
 		table.unique(['project_id', 'user_id']); // composite unique constraint
 		table
 			.integer('rating') // rating submitted by reviewer

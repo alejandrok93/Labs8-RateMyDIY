@@ -72,6 +72,12 @@ class ProjectTile extends React.Component {
 		});
 	}
 
+	//Search for projects by that user
+	// searchUser = (e, username) => {
+	// 	e.preventDefault();
+	// 	this.props.fetchSearchResults(username);
+	// };
+
 	render() {
 		return (
 			<ProjectTileWrapper>
@@ -95,9 +101,12 @@ class ProjectTile extends React.Component {
 					>
 						{this.props.project.project_name}
 					</a>
-					<Link to={`/${this.props.project.user_id}`}>
+					<a
+					// onClick={e => this.searchMaker(e, this.props.project.username)}
+					// href={`/search?query=${this.props.project.username}`}
+					>
 						{this.props.project.username}
-					</Link>
+					</a>
 					{/* React strap Modal */}
 					<Button color="danger" onClick={this.toggle}>
 						{' '}

@@ -63,11 +63,6 @@ class Nav extends React.Component {
 								{this.clientGreeting()} {this.props.userInfo.username}
 							</WelcomeMessage>
 							<DropDown />
-							<SignoutLink href={logoutURL}>
-								<Button color="danger">
-									<h3>Signout</h3>
-								</Button>
-							</SignoutLink>
 						</Fragment>
 					) : (
 						<Fragment>
@@ -133,12 +128,6 @@ const WelcomeMessage = styled.p`
 	margin-right: 8px;
 	white-space: nowrap;
 
-	@media (max-width: 500px) {
-		display: none;
-	}
-`;
-
-const SignoutLink = styled.a`
 	@media (max-width: 500px) {
 		display: none;
 	}

@@ -70,7 +70,6 @@ class SearchPage extends Component {
 	};
 
 	render() {
-		console.log(this.props.projects);
 		return (
 			<SearchPageWrapper>
 				<Header

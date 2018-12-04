@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
 import { SearchBar, Nav } from '../index';
 
 const HeaderContainer = styled.div`

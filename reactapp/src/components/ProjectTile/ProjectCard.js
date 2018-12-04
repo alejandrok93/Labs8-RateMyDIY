@@ -19,6 +19,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 
+
 const styles = theme => ({
   card: {
     maxWidth: 300,
@@ -45,7 +46,6 @@ class ProjectCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(classes);
     return (
 <Link to={`project/${this.props.project.user_id}`}>
         <Card style={{}}className={classes.card}>

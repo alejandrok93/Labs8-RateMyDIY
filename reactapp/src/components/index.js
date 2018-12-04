@@ -13,7 +13,9 @@ export {
 	default as PopularReviewers
 } from './_LandingPage/PopularReviewers/PopularReviewers';
 export { default as LandingPage } from './_LandingPage/LandingPage';
-export { default as ProjectTile } from './ProjectTile/ProjectTile';
+//export { default as ProjectTile } from './ProjectTile/ProjectTile';
+// ----- > Need to update, for debug -----
+export { default as ProjectTile } from './ProjectTile/ProjectCard';
 export { default as MakerTile } from './MakerTile/MakerTile';
 export { default as ReviewerTile } from './ReviewerTile/ReviewerTile';
 export {

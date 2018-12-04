@@ -4,79 +4,84 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 //Added Redux imports
 import {
-	fetchSearchResults,
-	fetchProjectsByReviewer
+  fetchSearchResults,
+  fetchProjectsByReviewer
 } from '../../actions/index';
 import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
+
 
 // ReactStrap
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 //Import components
 import {
-	Nav,
-	FeaturedProjects,
-	PopularMakers,
-	PopularReviewers,
-	SearchBar,
-	Twillio,
-	Footer,
-	LogInPopUp
+  Nav,
+  FeaturedProjects,
+  PopularMakers,
+  PopularReviewers,
+  SearchBar,
+  Twillio,
+  Footer,
+  LogInPopUp
 } from '../../components';
 
 // styled-components
 const LandingPageContentWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	margin: auto;
-	width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 80%;
 `;
 const LandingPageWrapper = styled.div`
-	width: 100%;
-	@media (max-width: 500px) {
-		width: 100vw;
-	}
+  width: 100%;
+  @media (max-width: 500px) {
+    width: 100vw;
+  }
 `;
 
 const imgUrl =
-	'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
+  'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
 
 const HeroImageContainer = styled.div`
-	  width: 100%;
-	height: 560px;
-	  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url(${imgUrl});
-	  background-size: cover;
-	  background-repeat: no-repeat;
-	  background-position: bottom;
+    width: 100%;
+  height: 560px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${imgUrl});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
 `;
 
 const HeroSearchContainer = styled.div`
-	width: 60%;
-	position: absolute;
-	top: 30%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  width: 60%;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const HeroTitle = styled.h1`
-	text-align: center;
-	font-weight: bolder;
-	color: white;
-	font-size: 32px;
-	margin-bottom: 30px;
+  text-align: center;
+  font-weight: bolder;
+  color: white;
+  font-size: 32px;
+  margin-bottom: 30px;
 `;
 class LandingPage extends Component {
 	constructor() {
 		super();
 		this.state = { input: '', modal: false, toggleLogInPopUp: false };
 		this.toggle = this.toggle.bind(this);
-	}
+  }
+  
+  componentDidMount() {
+    
+  }
 
 	toggle() {
 		this.setState({
@@ -135,6 +140,7 @@ class LandingPage extends Component {
 	};
 
 	render() {
+    console.log(this.props)
 		return (
 			<LandingPageWrapper>
 				<HeroImageContainer>
@@ -170,11 +176,11 @@ class LandingPage extends Component {
 }
 
 const mapStateToProps = state => ({
-	projects: state.searchReducer.projects,
-	loggedInObject: state.loggedInReducer
+  projects: state.searchReducer.projects,
+  loggedInObject: state.loggedInReducer
 });
 
 export default connect(
-	mapStateToProps,
-	{ fetchSearchResults, fetchProjectsByReviewer }
+  mapStateToProps,
+  { fetchSearchResults, fetchProjectsByReviewer }
 )(LandingPage);

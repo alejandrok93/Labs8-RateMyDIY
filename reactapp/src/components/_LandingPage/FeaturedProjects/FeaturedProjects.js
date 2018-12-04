@@ -46,7 +46,9 @@ class FeaturedProjects extends Component {
 	componentDidMount() {
 		this.props.getFeaturedProjects();
 	}
+
 	render() {
+
 		return (
 			<FeaturedProjectsWrapper>
 				<FeaturedProjectTitle>Featured Projects</FeaturedProjectTitle>
@@ -63,7 +65,7 @@ class FeaturedProjects extends Component {
 const mapStateToProps = state => ({
 	featuredProjects: state.landingPageReducer.featuredProjects,
 	gettingFeaturedProjects: state.landingPageReducer.fetchingFeaturedProjects,
-	featuredProjectsError: state.landingPageReducer.featuredProjectsError
+	featuredProjectsError: state.landingPageReducer.featuredProjectsError,
 });
 
 export default connect(

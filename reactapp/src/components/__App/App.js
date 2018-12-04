@@ -27,7 +27,7 @@ const AppContainer = styled.div`
 	max-width: 100%;
 	min-width: 600px;
 	height: auto;
-	background: #eff;
+
 	margin: 0 auto;
 `;
 

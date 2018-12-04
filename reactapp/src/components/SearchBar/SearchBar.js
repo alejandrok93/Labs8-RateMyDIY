@@ -79,6 +79,7 @@ const SearchBarButton = styled.button`
 
 const SearchBar = props => {
 	return (
+		
 		// <SearchWrapper>
 		// 	<SelectWrapper />
 		// 	<SearchBarSearchButtonWrapper>
@@ -93,6 +94,7 @@ const SearchBar = props => {
 			<SearchBarButton
 				onClick={e => props.handleSearch(e)}
 				className="search-button"
+				
 			>
 				<img
 					src="https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png"

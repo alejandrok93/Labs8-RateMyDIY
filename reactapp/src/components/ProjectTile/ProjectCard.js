@@ -24,7 +24,7 @@ import StarRatings from 'react-star-ratings';
 
 const styles = theme => ({
   card: {
-    width: 300,
+    width: '300px',
     margin: '25px',
     '&:hover' : {
       backgroundColor : '0'

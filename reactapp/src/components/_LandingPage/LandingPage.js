@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
+
 // ReactStrap
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -76,7 +77,11 @@ class LandingPage extends Component {
 		super();
 		this.state = { input: '', modal: false, toggleLogInPopUp: false };
 		this.toggle = this.toggle.bind(this);
-	}
+  }
+  
+  componentDidMount() {
+    
+  }
 
 	toggle() {
 		this.setState({
@@ -135,6 +140,7 @@ class LandingPage extends Component {
 	};
 
 	render() {
+    console.log(this.props)
 		return (
 			<LandingPageWrapper>
 				<HeroImageContainer>

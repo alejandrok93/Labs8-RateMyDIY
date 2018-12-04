@@ -29,7 +29,7 @@ export const getFeaturedProjects = () => {
 			)
 
 			.then(async ({ data }) => {
-				await sleep(500);
+				//await sleep(500);
 				dispatch({ type: GOT_FEATURED_PROJECTS, payload: data });
 			})
 
@@ -49,7 +49,7 @@ export const getPopularMakers = () => {
 			)
 
 			.then(async ({ data }) => {
-				await sleep(500);
+				//await sleep(500);
 				dispatch({ type: GOT_POPULAR_MAKERS, payload: data });
 			})
 
@@ -69,7 +69,7 @@ export const getPopularReviewers = () => {
 			)
 
 			.then(async ({ data }) => {
-				await sleep(500);
+				//await sleep(500);
 				dispatch({ type: GOT_POPULAR_REVIEWERS, payload: data });
 			})
 

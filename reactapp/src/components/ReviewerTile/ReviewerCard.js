@@ -21,36 +21,39 @@ import StarRatings from 'react-star-ratings';
 const styles = theme => ({
   card: {
     width: 300,
-    margin: '25px'
+    margin: '25px',
+    fontSize: 24,
   },
   media: {
     height: 0,
     paddingTop: '56.25%' // 16:9
   },
   actions: {
-    display: 'flex'
+    display: 'flex',
   },
+
   avatar: {
     backgroundColor: red[500]
   }
 });
 
-class MakerCard extends React.Component {
+class ReviewerCard extends React.Component {
   state = { expanded: false };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
-	searchMaker = (e, username) => {
-		e.preventDefault();
-		console.log(username);
-		this.props.fetchSearchResults(username);
-	};
+
+  searchReviewer = (e, username) => {
+    e.preventDefault();
+    console.log(username);
+    this.props.getProjectsByReviewer(username);
+};
+
   render() {
     const { classes } = this.props;
 
     return (
-      //To do: add info about maker to this card
       <Card className={classes.card}>
         <CardHeader
           avatar={
@@ -60,13 +63,15 @@ class MakerCard extends React.Component {
           }
           action={null}
           title={<a
-          onClick={e => this.searchMaker(e, this.props.maker.username)}
-          href={`/search?query=${this.props.maker.username}`}
-        >
-          {this.props.maker.username}
-        </a>}
+            onClick={e =>
+              this.searchReviewer(e, this.props.reviewer.username)
+            }
+            href={`/search?query=${this.props.reviewer.username}`}
+          >
+            {this.props.reviewer.username}
+          </a>}
         />
-        <CardMedia className={classes.media} image={this.props.maker.img_url} />
+        <CardMedia className={classes.media} image={this.props.reviewer.img_url} />
        
         <CardActions className={classes.actions} disableActionSpacing />
       </Card>
@@ -74,8 +79,8 @@ class MakerCard extends React.Component {
   }
 }
 
-MakerCard.propTypes = {
+ReviewerCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MakerCard);
+export default withStyles(styles)(ReviewerCard);

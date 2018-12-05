@@ -72,25 +72,24 @@ class SearchPage extends Component {
     this.props.fetchCategoryResults(searchTerm);
     //push to search page
   };
-
-  render() {
-    return (
-      <SearchPageWrapper>
-        <Header
-          handleChange={this.handleChange}
-          handleSearch={this.handleSearch}
-        />
-        <div className="search-page-container">
-          <div className="search-options" />
-          <div className="search-results">
-            <h1>Search results</h1>
-            {this.props.projects.length === 0 ? <p>No projects found</p> : ''}
-            <SearchPageSearchBar
-              handleFilterCategoryFood={this.handleFilterCategoryFood}
-              handleFilterCategoryTech={this.handleFilterCategoryTech}
-              handleFilterCategoryHome={this.handleFilterCategoryHome}
-              handleChange={this.handleChange}
-            />
+	render() {
+		return (
+			<SearchPageWrapper>
+				<Header
+					handleChange={this.handleChange}
+					handleSearch={this.handleSearch}
+				/>
+				<div className="search-page-container">
+					<div className="search-options" />
+					<div className="search-results">
+						<h1>Search results</h1>
+						{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
+						<SearchPageSearchBar
+							handleFilterCategoryFood={this.handleFilterCategoryFood}
+							handleFilterCategoryTech={this.handleFilterCategoryTech}
+							handleFilterCategoryHome={this.handleFilterCategoryHome}
+							handleChange={this.handleChange}
+						/>
 
             {this.props.projects.map(project => (
               <ProjectTile project={project} />

@@ -90,9 +90,9 @@ function addReview({ user_id, project_id, rating, text }) {
 															.update(
 																{
 																	// This returns whole stars
-																	project_rating: Math.round(
-																		project_rating_sum / project_rating_count
-																	),
+																	// project_rating: Math.round(
+																	// 	project_rating_sum / project_rating_count
+																	// ),
 																	// This returns half stars
 																	project_rating: (
 																		Math.round(

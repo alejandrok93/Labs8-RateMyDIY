@@ -117,12 +117,13 @@ export const updateReview = (review_id, changes) => {
 				changes
 			)
 
-			.then(() => dispatch(getReview(review_id)))
-
 			.then(async () => {
 				await sleep(500);
 				dispatch({ type: UPDATED_REVIEW });
 			})
+
+			// I hate this. Preferred behavior: update the state in the parent component to {review: null} and fetch the reviews again
+			.then(window.location.reload())
 
 			.catch(error => dispatch({ type: UPDATE_REVIEW_ERROR, payload: error }));
 	};
@@ -136,7 +137,7 @@ export const willDeleteReview = value => {
 };
 
 // delete review
-export const deleteReview = (review_id, user_id) => {
+export const deleteReview = (user_id, review_id) => {
 	return dispatch => {
 		dispatch({ type: DELETING_REVIEW });
 
@@ -151,6 +152,9 @@ export const deleteReview = (review_id, user_id) => {
 				await sleep(500);
 				dispatch({ type: DELETED_REVIEW });
 			})
+
+			// I hate this. Preferred behavior: update the state in the parent component to {review: null} and fetch the reviews again
+			.then(window.location.reload())
 
 			.catch(error => dispatch({ type: DELETE_REVIEW_ERROR, payload: error }));
 	};

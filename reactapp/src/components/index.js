@@ -48,6 +48,7 @@ export { default as ConfirmModal } from './_ProjectPage/ConfirmModal';
 export { default as StarCount } from './StarCount/StarCount';
 export { default as ReviewModal } from './ReviewModal/ReviewModal';
 export { default as NewReview } from './ReviewModal/NewReview';
+export { default as EditReview } from './ReviewModal/EditReview';
 export { default as Fileupload } from './fileupload/fileupload';
 export { default as MenuDrawer } from './MenuDrawer/MenuDrawer';
 export { default as AboutTheTeam } from './AboutTheTeam/AboutTheTeam';

@@ -218,13 +218,6 @@ function editReview({ user_id, review_id, project_id, rating, text }) {
 												project_rating_sum,
 												project_rating_count
 											}) => {
-												console.log('before math', {
-													previous_rating,
-													rating,
-													maker_id,
-													project_rating_sum,
-													project_rating_count
-												});
 												project_rating_sum += rating - previous_rating;
 												return trx('projects')
 													.where({ project_id })

@@ -74,7 +74,6 @@ class SearchPage extends Component {
   };
 
   render() {
-    console.log(this.props.location.search);
     return (
       <SearchPageWrapper>
         <Header

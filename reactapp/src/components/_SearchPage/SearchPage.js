@@ -89,7 +89,7 @@ class SearchPage extends Component {
 						/>
 
 						{this.props.projects.map(project => (
-							<ProjectTile project={project} />
+							<ProjectTile key={project.project_id} project={project} />
 						))}
 					</div>
 				</div>

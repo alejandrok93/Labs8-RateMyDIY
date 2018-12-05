@@ -171,17 +171,17 @@ class NewReview extends Component {
 						autoFocus
 					/>
 
-					<ButtonContainer>
-						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-						<SubmitInput type="submit" value="Submit Review" />
-					</ButtonContainer>
-
 					{this.props.addingReview && (
 						<StatusMessage>Adding review...</StatusMessage>
 					)}
 					{this.props.addingReviewError && (
 						<StatusMessage>{this.props.addingReviewError}</StatusMessage>
 					)}
+
+					<ButtonContainer>
+						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
+						<SubmitInput type="submit" value="Submit Review" />
+					</ButtonContainer>
 
 					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
 				</ReviewForm>
@@ -192,8 +192,8 @@ class NewReview extends Component {
 
 const mapStateToProps = state => {
 	return {
-		gettingReview: state.reviewReducer.gettingReview,
-		gettingReviewError: state.reviewReducer.gettingReviewError
+		addingReview: state.reviewReducer.gettingReview,
+		addingReviewError: state.reviewReducer.gettingReviewError
 	};
 };
 

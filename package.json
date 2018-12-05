@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "husky": "^1.2.0"
+  }
+}

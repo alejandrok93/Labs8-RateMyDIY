@@ -352,11 +352,15 @@ function removeReview(user_id, review_id) {
 														// 	project_rating_sum / project_rating_count
 														// ),
 														// This returns half stars
-														project_rating: (
-															Math.round(
-																(project_rating_sum / project_rating_count) * 2
-															) / 2
-														).toFixed(1),
+														project_rating: project_rating_count
+															? (
+																	Math.round(
+																		(project_rating_sum /
+																			project_rating_count) *
+																			2
+																	) / 2
+															  ).toFixed(1)
+															: null,
 														rating_sum: project_rating_sum,
 														rating_count: project_rating_count
 													},
@@ -387,13 +391,15 @@ function removeReview(user_id, review_id) {
 																				// 	user_rating_sum / user_rating_count
 																				// ),
 																				// This returns half stars
-																				user_rating: (
-																					Math.round(
-																						(user_rating_sum /
-																							user_rating_count) *
-																							2
-																					) / 2
-																				).toFixed(1),
+																				user_rating: user_rating_count
+																					? (
+																							Math.round(
+																								(user_rating_sum /
+																									user_rating_count) *
+																									2
+																							) / 2
+																					  ).toFixed(1)
+																					: null,
 																				rating_sum: user_rating_sum,
 																				rating_count: user_rating_count
 																			},

@@ -74,7 +74,7 @@ class ProjectCard extends React.Component {
             }
             action={null}
             title={this.props.project.project_name}
-            subheader={<a href="#helloWorld">{this.props.project.username} </a>}
+            subheader={this.props.project.username}
           />
 
           <CardMedia

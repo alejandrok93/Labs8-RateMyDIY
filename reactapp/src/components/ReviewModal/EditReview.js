@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { addReview } from '../../actions';
+import { updateReview } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -59,7 +59,7 @@ const CancelButton = styled.button``;
 
 const SubmitInput = styled.input``;
 
-class NewReview extends Component {
+class EditReview extends Component {
 	state = {
 		rating: null,
 		text: ''
@@ -74,9 +74,9 @@ class NewReview extends Component {
 	submitHandler = event => {
 		event.preventDefault();
 
-		this.props.addReview({
+		this.props.updateReview(this.props.review.review_id, {
 			user_id: this.props.user_id,
-			project_id: this.props.project_id,
+			project_id: this.props.review.project_id,
 			rating: this.state.rating,
 			text: this.state.text
 		});
@@ -86,7 +86,10 @@ class NewReview extends Component {
 	cancelHandler = event => {
 		event.preventDefault();
 
-		if (this.state.rating || this.state.text) {
+		if (
+			this.state.rating !== this.props.review.rating ||
+			this.state.text !== this.props.review.text
+		) {
 			this.setState({
 				confirm: {
 					text: ['Do you want to discard these changes?'],
@@ -96,6 +99,33 @@ class NewReview extends Component {
 					},
 					submit: event => {
 						event.preventDefault();
+						this.props.willUpdateReview(false);
+					}
+				}
+			});
+		} else {
+			this.props.willUpdateReview(false);
+		}
+	};
+
+	// Close review modal (with confirmation prompt)
+	closeHandler = event => {
+		event.preventDefault();
+
+		if (
+			this.state.rating !== this.props.review.rating ||
+			this.state.text !== this.props.review.text
+		) {
+			this.setState({
+				confirm: {
+					text: ['Do you want to discard these changes?'],
+					cancel: event => {
+						event.preventDefault();
+						this.setState({ confirm: undefined });
+					},
+					submit: event => {
+						event.preventDefault();
+						this.props.willUpdateReview(false);
 						this.props.closeModal();
 					}
 				}
@@ -105,10 +135,17 @@ class NewReview extends Component {
 		}
 	};
 
+	componentDidMount() {
+		this.setState({
+			rating: this.props.review.rating,
+			text: this.props.review.text
+		});
+	}
+
 	render() {
 		return (
 			<React.Fragment>
-				<CloseModalButton onClick={this.cancelHandler}>x</CloseModalButton>
+				<CloseModalButton onClick={this.closeHandler}>x</CloseModalButton>
 
 				{/* todo: click outside modal to trigger cancelHandler */}
 				<ReviewForm onSubmit={this.submitHandler}>
@@ -128,6 +165,7 @@ class NewReview extends Component {
 							type="radio"
 							name="rating"
 							value="1"
+							// checked={this.state.checked == 1 ? 'checked' : false}
 							onChange={this.changeHandler}
 							required
 						/>
@@ -135,6 +173,7 @@ class NewReview extends Component {
 							type="radio"
 							name="rating"
 							value="2"
+							// checked={this.state.checked == 2 ? 'checked' : false}
 							onChange={this.changeHandler}
 							required
 						/>
@@ -142,6 +181,7 @@ class NewReview extends Component {
 							type="radio"
 							name="rating"
 							value="3"
+							// checked={this.state.checked == 3 ? 'checked' : false}
 							onChange={this.changeHandler}
 							required
 						/>
@@ -149,6 +189,7 @@ class NewReview extends Component {
 							type="radio"
 							name="rating"
 							value="4"
+							// checked={this.state.checked == 4 ? 'checked' : false}
 							onChange={this.changeHandler}
 							required
 						/>
@@ -156,6 +197,7 @@ class NewReview extends Component {
 							type="radio"
 							name="rating"
 							value="5"
+							// checked={this.state.checked == 5 ? 'checked' : false}
 							onChange={this.changeHandler}
 							required
 						/>
@@ -171,16 +213,16 @@ class NewReview extends Component {
 						autoFocus
 					/>
 
-					{this.props.addingReview && (
+					{this.props.updatingReview && (
 						<StatusMessage>Adding review...</StatusMessage>
 					)}
-					{this.props.addingReviewError && (
-						<StatusMessage>{this.props.addingReviewError}</StatusMessage>
+					{this.props.updatingReviewError && (
+						<StatusMessage>{this.props.updatingReviewError}</StatusMessage>
 					)}
 
 					<ButtonContainer>
 						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-						<SubmitInput type="submit" value="Submit Review" />
+						<SubmitInput type="submit" value="Submit Changes" />
 					</ButtonContainer>
 
 					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
@@ -192,14 +234,14 @@ class NewReview extends Component {
 
 const mapStateToProps = state => {
 	return {
-		addingReview: state.reviewReducer.gettingReview,
-		addingReviewError: state.reviewReducer.gettingReviewError
+		updatingReview: state.reviewReducer.updatingReview,
+		updatingReviewError: state.reviewReducer.updatingReviewError
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{
-		addReview
+		updateReview
 	}
-)(NewReview);
+)(EditReview);

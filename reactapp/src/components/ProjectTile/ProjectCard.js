@@ -58,7 +58,7 @@ class ProjectCard extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-		console.log(this.props.project);
+
 		return (
 			<CardLink
 				className="project-card"

@@ -37,7 +37,7 @@ const initialState = {
 
 	reviewToDelete: false,
 	deletingReview: false,
-	DeletingReviewError: null
+	deletingReviewError: null
 };
 
 const reviewReducer = (state = initialState, action) => {
@@ -142,7 +142,7 @@ const reviewReducer = (state = initialState, action) => {
 			return {
 				...state,
 				deletingReview: false,
-				DeletingReviewError: `${action.payload}`
+				deletingReviewError: `${action.payload}`
 			};
 
 		default:

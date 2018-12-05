@@ -91,14 +91,14 @@ class SearchPage extends Component {
 							handleChange={this.handleChange}
 						/>
 
-            {this.props.projects.map(project => (
-              <ProjectTile project={project} />
-            ))}
-          </div>
-        </div>
-      </SearchPageWrapper>
-    );
-  }
+						{this.props.projects.map(project => (
+							<ProjectTile key={project.project_id} project={project} />
+						))}
+					</div>
+				</div>
+			</SearchPageWrapper>
+		);
+	}
 }
 
 const mapStateToProps = state => {

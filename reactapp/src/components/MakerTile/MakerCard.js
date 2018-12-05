@@ -21,7 +21,10 @@ import StarRatings from 'react-star-ratings';
 const styles = theme => ({
   card: {
     width: 300,
-    margin: '25px'
+    margin: '25px',
+    backgroundColor: theme.palette.secondary.light,
+    borderRadius: '35px',
+    color: theme.palette.secondary.main
   },
   media: {
     height: 0,

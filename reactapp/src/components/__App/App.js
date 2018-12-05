@@ -4,6 +4,7 @@ import { Route, withRouter } from 'react-router-dom'; // removed Link from impor
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../actions/index';
+import WithTheme from '../WithTheme/WithTheme';
 
 // Components
 import {
@@ -40,6 +41,7 @@ class App extends Component {
 
 	render() {
 		return (
+			<WithTheme>
 			<AppContainer>
 				{/* <h1>Navigation</h1> */}
 				{/* <ul>
@@ -72,6 +74,7 @@ class App extends Component {
 				<Route path="/newproject" component={NewProject} />
 				<Route path="/about" component={AboutTheTeam} />
 			</AppContainer>
+			</WithTheme>
 		);
 	}
 }

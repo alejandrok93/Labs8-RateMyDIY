@@ -4,16 +4,12 @@ const db = require('../config/dbConfig');
 module.exports = {
 	getReview,
 	getReviewID,
-	addReview
-	// editReview,
-	// removeReview,
-	// updateProjectRating,
-	// updateUserRating
+	addReview,
+	editReview,
+	removeReview
 };
 
 function getReview(review_id) {
-	console.log('reviewModel review_id:', review_id);
-
 	return db('reviews')
 		.where({ review_id })
 		.join('users as reviewers', 'reviewers.user_id', 'reviews.user_id')
@@ -93,10 +89,18 @@ function addReview({ user_id, project_id, rating, text }) {
 															.where({ project_id })
 															.update(
 																{
-																	// This only returns whole numbers. Has to be modified for half stars.
+																	// This returns whole stars
 																	project_rating: Math.round(
 																		project_rating_sum / project_rating_count
 																	),
+																	// This returns half stars
+																	project_rating: (
+																		Math.round(
+																			(project_rating_sum /
+																				project_rating_count) *
+																				2
+																		) / 2
+																	).toFixed(1),
 																	rating_sum: project_rating_sum,
 																	rating_count: project_rating_count
 																},
@@ -124,11 +128,19 @@ function addReview({ user_id, project_id, rating, text }) {
 																					.where({ user_id: maker_id })
 																					.update(
 																						{
-																							// This only returns whole numbers. Has to be modified for half stars.
-																							user_rating: Math.round(
-																								user_rating_sum /
-																									user_rating_count
-																							),
+																							// // This returns whole stars
+																							// user_rating: Math.round(
+																							// 	user_rating_sum /
+																							// 		user_rating_count
+																							// ),
+																							// This returns half stars
+																							user_rating: (
+																								Math.round(
+																									(user_rating_sum /
+																										user_rating_count) *
+																										2
+																								) / 2
+																							).toFixed(1),
 																							rating_sum: user_rating_sum,
 																							rating_count: user_rating_count
 																						},
@@ -163,16 +175,261 @@ function addReview({ user_id, project_id, rating, text }) {
 		});
 }
 
-// function editReview(user_id, review_id, changes) {
-// 	return db('reviews')
-// 		.where({ user_id, review_id })
-// 		.returning('review_id')
-// 		.update(changes)
-// 		.then(ids => ids.length);
-// }
+// This is big and ugly but it works. It would be easier to read with async/await
+function editReview({ user_id, review_id, project_id, rating, text }) {
+	// Make sure the review exists and the user is the author
+	return db('reviews')
+		.where({ user_id, review_id })
+		.first()
+		.then(review => {
+			if (!review) {
+				// No review by that id and author
+				return { reviewNotFound: true };
+			} else {
+				// Hold onto the previous rating for later.
+				const previous_rating = review.rating;
+				// Update the review
+				return db.transaction(trx => {
+					return trx('reviews')
+						.where({ user_id, review_id })
+						.update({ rating, text }, 'review_id')
+						.then(([updated]) => {
+							if (!updated) {
+								// Something went wrong updating the review
+								trx.rollback;
+							} else {
+								// Do we need to update the average ratings?
+								if (rating == previous_rating) {
+									// Nope, just had to update the review text
+									return { review_id };
+								} else {
+									// Yep. Let's go update the averages
+									return trx('projects')
+										.where({ project_id })
+										.select(
+											'user_id as maker_id',
+											'rating_sum as project_rating_sum',
+											'rating_count as project_rating_count'
+										)
+										.first()
+										.then(
+											({
+												maker_id,
+												project_rating_sum,
+												project_rating_count
+											}) => {
+												console.log('before math', {
+													previous_rating,
+													rating,
+													maker_id,
+													project_rating_sum,
+													project_rating_count
+												});
+												project_rating_sum += rating - previous_rating;
+												return trx('projects')
+													.where({ project_id })
+													.update(
+														{
+															// // This returns whole stars
+															// project_rating: Math.round(
+															// 	project_rating_sum / project_rating_count
+															// ),
+															// This returns half stars
+															project_rating: (
+																Math.round(
+																	(project_rating_sum / project_rating_count) *
+																		2
+																) / 2
+															).toFixed(1),
+															rating_sum: project_rating_sum
+														},
+														'project_id'
+													)
+													.then(([project_updated]) => {
+														if (!project_updated) {
+															trx.rollback;
+														} else {
+															return trx('users')
+																.where({ user_id: maker_id })
+																.select(
+																	'rating_sum as user_rating_sum',
+																	'rating_count as user_rating_count'
+																)
+																.first()
+																.then(
+																	({ user_rating_sum, user_rating_count }) => {
+																		user_rating_sum += rating - previous_rating;
+																		return db('users')
+																			.where({ user_id: maker_id })
+																			.update(
+																				{
+																					// // This returns whole stars
+																					// user_rating: Math.round(
+																					// 	user_rating_sum / user_rating_count
+																					// ),
+																					// This returns half stars
+																					user_rating: (
+																						Math.round(
+																							(user_rating_sum /
+																								user_rating_count) *
+																								2
+																						) / 2
+																					).toFixed(1),
+																					rating_sum: user_rating_sum
+																				},
+																				'user_id'
+																			);
+																	}
+																);
+														}
+													});
+											}
+										)
+										.then(([user_updated]) => {
+											if (!user_updated) {
+												trx.rollback;
+											} else {
+												console.log(
+													`Average ratings updated for project ${project_id} and user ${user_updated}`
+												);
+												return { review_id };
+											}
+										})
+										.catch(error => {
+											console.error(error);
+											return {};
+										});
+								}
+							}
+						});
+				});
+			}
+		});
+}
 
-// function removeReview(user_id, review_id) {
-// 	return db('reviews')
-// 		.where({ user_id, review_id })
-// 		.del();
-// }
+// This is big and ugly but it works. It would be easier to read with async/await
+function removeReview(user_id, review_id) {
+	// Make sure the review exists and the user is the author
+	return db('reviews')
+		.where({ user_id, review_id })
+		.first()
+		.then(review => {
+			if (!review) {
+				// No review by that id and author
+				return { reviewNotFound: true };
+			} else {
+				console.log(
+					`\nUser ${user_id} attempting to delete review ${review_id}\n...`
+				);
+				// Hold onto the rating for later.
+				const { project_id, rating } = review;
+				// Delete the review
+				return db.transaction(trx => {
+					return trx('reviews')
+						.where({ user_id, review_id })
+						.del()
+						.then(deleted => {
+							if (!deleted) {
+								// Something went wrong deleting the review
+								trx.rollback;
+							} else {
+								// Update the projects table
+								return trx('projects')
+									.where({ project_id })
+									.select(
+										'user_id as maker_id',
+										'rating_sum as project_rating_sum',
+										'rating_count as project_rating_count'
+									)
+									.first()
+									.then(
+										({
+											maker_id,
+											project_rating_sum,
+											project_rating_count
+										}) => {
+											project_rating_sum -= rating;
+											project_rating_count--;
+											return trx('projects')
+												.where({ project_id })
+												.update(
+													{
+														// // This returns whole stars
+														// project_rating: Math.round(
+														// 	project_rating_sum / project_rating_count
+														// ),
+														// This returns half stars
+														project_rating: (
+															Math.round(
+																(project_rating_sum / project_rating_count) * 2
+															) / 2
+														).toFixed(1),
+														rating_sum: project_rating_sum,
+														rating_count: project_rating_count
+													},
+													'project_id'
+												)
+												.then(([project_updated]) => {
+													if (!project_updated) {
+														trx.rollback;
+													} else {
+														// Update the users table
+														return trx('users')
+															.where({ user_id: maker_id })
+															.select(
+																'rating_sum as user_rating_sum',
+																'rating_count as user_rating_count'
+															)
+															.first()
+															.then(
+																({ user_rating_sum, user_rating_count }) => {
+																	user_rating_sum -= rating;
+																	user_rating_count--;
+																	return db('users')
+																		.where({ user_id: maker_id })
+																		.update(
+																			{
+																				// // This returns whole stars
+																				// user_rating: Math.round(
+																				// 	user_rating_sum / user_rating_count
+																				// ),
+																				// This returns half stars
+																				user_rating: (
+																					Math.round(
+																						(user_rating_sum /
+																							user_rating_count) *
+																							2
+																					) / 2
+																				).toFixed(1),
+																				rating_sum: user_rating_sum,
+																				rating_count: user_rating_count
+																			},
+																			'user_id'
+																		);
+																}
+															);
+													}
+												});
+										}
+									)
+									.then(([user_updated]) => {
+										if (!user_updated) {
+											trx.rollback;
+										} else {
+											console.log(
+												`Average ratings updated for project ${project_id} and user ${user_updated}`
+											);
+											console.log('deleted', deleted);
+											return { deleted };
+										}
+									})
+									.catch(error => {
+										console.error(error);
+										return {};
+									});
+							}
+						});
+				});
+			}
+		});
+}

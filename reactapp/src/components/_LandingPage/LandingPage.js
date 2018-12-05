@@ -107,7 +107,7 @@ class LandingPage extends Component {
 			});
 		} else {
 			//call featch search results action
-			this.props.fetchSearchResults(this.state.input);
+			// this.props.fetchSearchResults(this.state.input);
 
 			//push to search page
 			this.props.history.push(`/search?query=${searchTerm}`);

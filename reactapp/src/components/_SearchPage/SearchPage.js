@@ -5,70 +5,73 @@ import { fetchSearchResults, fetchCategoryResults } from '../../actions';
 import { connect } from 'react-redux';
 import './SearchPage.css';
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 //Import components
 import {
-	SearchBar,
-	ProjectTile,
-	SearchPageSearchBar,
-	Nav,
-	Header
+  SearchBar,
+  ProjectTile,
+  SearchPageSearchBar,
+  Nav,
+  Header
 } from '../../components';
 
 const SearchPageWrapper = styled.div`
-	width: 100%;
+  width: 100%;
 `;
 
 class SearchPage extends Component {
-	constructor() {
-		super();
-		this.state = { input: '' };
-	} // useless constructor
+  constructor() {
+    super();
+    this.state = { input: '' };
+  } // useless constructor
 
-	componentDidMount() {}
+  componentDidMount() {
+    const values = queryString.parse(this.props.location.search);
+    this.props.fetchSearchResults(values.query);
+  }
 
-	handleChange = e => {
-		this.setState({ ...this.state, input: e.target.value });
-	};
 
-	handleSearch = e => {
-		e.preventDefault();
-		const searchTerm = this.state.input;
-		console.log(searchTerm);
-		//call featch search results action
-		this.props.fetchSearchResults(searchTerm);
+  handleChange = e => {
+    this.setState({ ...this.state, input: e.target.value });
+  };
 
-		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
-	};
+  handleSearch = e => {
+	e.preventDefault();
+    const searchTerm = this.state.input;
+    console.log(searchTerm);
+    //call featch search results action
+	//push to search page
+	this.props.fetchSearchResults(searchTerm);
+	this.props.history.push(`/search?query=${searchTerm}`);
+  };
 
-	handleFilterCategoryFood = e => {
-		e.preventDefault();
-		const searchTerm = 'food';
-		console.log(searchTerm);
-		//call featch search results action
-		this.props.fetchCategoryResults(searchTerm);
-		//push to search page
-	};
+  handleFilterCategoryFood = e => {
+    e.preventDefault();
+    const searchTerm = 'food';
+    console.log(searchTerm);
+    //call featch search results action
+    this.props.fetchCategoryResults(searchTerm);
+    //push to search page
+  };
 
-	handleFilterCategoryTech = e => {
-		e.preventDefault();
-		const searchTerm = 'tech';
-		console.log(searchTerm);
-		//call featch search results action
-		this.props.fetchCategoryResults(searchTerm);
-		//push to search page
-	};
+  handleFilterCategoryTech = e => {
+    e.preventDefault();
+    const searchTerm = 'tech';
+    console.log(searchTerm);
+    //call featch search results action
+    this.props.fetchCategoryResults(searchTerm);
+    //push to search page
+  };
 
-	handleFilterCategoryHome = e => {
-		e.preventDefault();
-		const searchTerm = 'Home Improvement';
-		console.log(searchTerm);
-		//call featch search results action
-		this.props.fetchCategoryResults(searchTerm);
-		//push to search page
-	};
-
+  handleFilterCategoryHome = e => {
+    e.preventDefault();
+    const searchTerm = 'Home Improvement';
+    console.log(searchTerm);
+    //call featch search results action
+    this.props.fetchCategoryResults(searchTerm);
+    //push to search page
+  };
 	render() {
 		return (
 			<SearchPageWrapper>
@@ -99,13 +102,13 @@ class SearchPage extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state);
-	return {
-		projects: state.searchReducer.projects
-	};
+  console.log(state);
+  return {
+    projects: state.searchReducer.projects
+  };
 };
 
 export default connect(
-	mapStateToProps,
-	{ fetchSearchResults, fetchCategoryResults }
+  mapStateToProps,
+  { fetchSearchResults, fetchCategoryResults }
 )(SearchPage);

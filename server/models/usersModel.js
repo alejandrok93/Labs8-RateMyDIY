@@ -1,16 +1,10 @@
 const db = require('../config/dbConfig');
 
 module.exports = {
-	checkUsernames,
 	addUser,
 	getUserProjects,
 	getUserReviews
 };
-
-function checkUsernames(username) {
-	return db('users')
-		.where({ username: username });
-}
 
 function addUser(user) {
 	console.log(user);

@@ -22,14 +22,14 @@ class ProjectList extends Component {
 					<AccountSideBar />
 
 					<div className="myProjectDisplay">
-						{this.props.myProjects.map(myProjects => {
+						{this.props.myProjects.map(myProject => {
 							return (
-								<div className="myProjectsDisplay" key={myProjects.project_id}>
-									<Link to={`project/${myProjects.project_id}`}>
-										<h2>{myProjects.project_name}</h2>
+								<div className="myProjectDisplay" key={myProject.project_id}>
+									<Link to={`project/${myProject.project_id}`}>
+										<h2>{myProject.project_name}</h2>
 									</Link>
-									<p>{myProjects.project_rating}</p>
-									<img src={myProjects.img_url} alt="" />
+									<p>{myProject.project_rating}</p>
+									<img src={myProject.img_url} alt="" />
 								</div>
 							);
 						})}

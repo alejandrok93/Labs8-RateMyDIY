@@ -12,7 +12,8 @@ import {
 	EditPost,
 	ReviewModal,
 	ConfirmModal,
-	Nav
+	Nav,
+	Header
 } from '../../components';
 
 // Actions
@@ -25,7 +26,8 @@ import {
 	deleteProject,
 	willAddPost,
 	willUpdatePost,
-	willDeletePost
+	willDeletePost,
+	setRedirect
 } from '../../actions';
 
 // Styles
@@ -106,6 +108,10 @@ class ProjectPage extends Component {
 	componentDidMount() {
 		// Trying out this awkward action chain
 		this.props.loggedIn_Project_ReviewId_Chain(this.props.match.params.id);
+	}
+
+	componentWillUnmount() {
+		this.props.setRedirect(null);
 	}
 
 	render() {
@@ -309,6 +315,7 @@ export default connect(
 		deleteProject,
 		willAddPost,
 		willUpdatePost,
-		willDeletePost
+		willDeletePost,
+		setRedirect
 	}
 )(ProjectPage);

@@ -107,12 +107,10 @@ export const addProject = project => {
 					`/api/projects/`,
 				project
 			)
-
 			.then(async ({ data }) => {
 				await sleep(500);
 				dispatch({ type: ADDED_PROJECT, payload: data });
 			})
-
 			.catch(error => dispatch({ type: ADD_PROJECT_ERROR, payload: error }));
 	};
 };

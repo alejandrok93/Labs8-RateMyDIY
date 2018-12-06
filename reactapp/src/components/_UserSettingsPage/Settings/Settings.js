@@ -8,14 +8,16 @@ import axios from 'axios';
 import { Nav, Twillio } from '../../../components';
 //Styles
 const SettingsContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	min-width: 550px;
-	width: 84%;
-	background: #bbb;
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+  width: 100%;
+  background: #bbb;
+  margin-top: 98px;
 `;
 
 class UserSettingSettings extends Component {
+
 	state = {
 		username: '',
 		img_url: null

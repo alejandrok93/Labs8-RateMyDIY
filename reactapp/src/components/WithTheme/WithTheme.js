@@ -18,8 +18,8 @@ import PropTypes from 'prop-types';
 const muiTheme = createMuiTheme({
 	palette: {
 		primary: {
-			light: '#fff', // viking
-			main: '#fff', // shakespeare
+			light: '#fff', // viking -> changed back to white on 12/6
+			main: '#fff', // shakespeare -> changed back to white on 12/6
 			dark: '#263842' // pickledbluewood
 		},
 		secondary: {

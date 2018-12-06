@@ -67,7 +67,7 @@ class Nav extends React.Component {
 					) : (
 						<Fragment>
 							<a href={loginURL}>
-								<Button color="danger">
+								<Button color="primary">
 									<h3>Login/Signup</h3>
 								</Button>
 							</a>
@@ -109,7 +109,6 @@ const AuthWrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	border: 1px solid black;
 	margin: 0 8px 0 auto;
 	padding: 4px 8px;
 	padding: 10px;

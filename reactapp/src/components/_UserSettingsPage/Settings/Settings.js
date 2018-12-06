@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getEmail, updateEmail } from '../../../actions/settingActions';
+import { getUsername, getProfilePic } from '../../../actions/settingActions';
+import axios from 'axios';
 
 import { Nav, Twillio } from '../../../components';
 //Styles
@@ -16,19 +17,82 @@ const SettingsContainer = styled.div`
 
 class UserSettingSettings extends Component {
 	state = {
-		email: 'test@email.com',
-		fetching: ''
+		username: '',
+		img_url: null
 	};
 
-	componentDidMount() {
-		this.props.getEmail();
-	}
+	singleFileChangedHandler = event => {
+		this.setState({
+			selectedFile: event.target.files[0]
+		});
+	};
+
+	singleFileUploadHandler = event => {
+		event.preventDefault();
+		const data = new FormData();
+		// If file selected
+		if (this.state.selectedFile) {
+			data.append(
+				'image',
+				this.state.selectedFile,
+				this.state.selectedFile.name
+			);
+			axios
+				.post(
+					(process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
+						`/api/projects/image-upload`,
+					data,
+					{
+						headers: {
+							accept: 'application/json',
+							'Accept-Language': 'en-US,en;q=0.8',
+							'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+						}
+					}
+				)
+				.then(response => {
+					if (200 === response.status) {
+						// If file size is larger than expected.
+						if (response.data.error) {
+							if ('LIMIT_FILE_SIZE' === response.data.error.code) {
+								// this.ocShowAlert("Max size: 2MB", "red");
+							} else {
+								console.log(response.data.location);
+								// If not the given file type
+								// this.ocShowAlert(response.data.error, "red");
+							}
+						} else {
+							// Success
+							let fileName = response.data;
+
+							let photo = response.data.location;
+							this.setState({
+								img_url: photo
+							});
+							console.log('filedata', fileName);
+
+							console.log('photo', photo);
+
+							this.props.getProfilePic(this.state.img_url);
+
+							//   this.ocShowAlert("File Uploaded", "#3089cf");
+						}
+					} else {
+						console.log('error');
+					}
+				})
+				.catch(error => {
+					// If another error
+					console.log('error');
+				});
+		}
+	};
 
 	submitHandler = event => {
 		event.preventDefault();
-		this.props.updateEmail(this.state);
+		this.props.getUsername(this.state.username);
 		this.setState({
-			email: ''
+			username: ''
 		});
 	};
 
@@ -44,24 +108,40 @@ class UserSettingSettings extends Component {
 				<form onSubmit={this.submitHandler}>
 					<input
 						type="text"
-						value={this.state.email}
-						name="email"
+						value={this.state.username}
+						name="username"
 						onChange={this.changeHandler}
 					/>
-					<input type="submit" value="Change Email" />
+					<input type="submit" value="Change Username" />
 				</form>
-				Current Email: {this.state.email}
+				Current Username: {this.props.userInfo.username} {this.props.username_error ? this.props.username_error : null}
+				<form>
+					<input type="file" onChange={this.singleFileChangedHandler} />
+					<div>
+						<button
+							onClick={this.singleFileUploadHandler}
+						>
+							Upload!
+						</button>
+					</div>
+				</form>
+				{this.props.img_url ? this.props.img_url : this.props.profilepic_error}
 			</SettingsContainer>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
-	user: state.settingsReducer.users,
-	error: state.settingsReducer.error
+	gettingUsername: state.settingsReducer.gettingUsername,
+	username: state.settingsReducer.username,
+	username_error: state.settingsReducer.username_error,
+	gettingProfilePic: state.settingsReducer.gettingProfilePic,
+	img_url: state.settingsReducer.img_url,
+	profilepic_error: state.settingsReducer.profilepic_error,
+	userInfo: state.loggedInReducer.userInfo
 });
 
 export default connect(
 	mapStateToProps,
-	{ getEmail, updateEmail }
+	{ getUsername, getProfilePic }
 )(UserSettingSettings);

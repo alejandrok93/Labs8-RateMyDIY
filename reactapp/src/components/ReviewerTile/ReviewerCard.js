@@ -23,6 +23,9 @@ const styles = theme => ({
     width: 300,
     margin: '25px',
     fontSize: 24,
+    backgroundColor: theme.palette.secondary.light,
+    borderRadius: '35px',
+    color: theme.palette.secondary.main
   },
   media: {
     height: 0,

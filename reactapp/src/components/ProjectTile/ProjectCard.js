@@ -25,9 +25,13 @@ const styles = theme => ({
 	card: {
 		width: '300px',
 		margin: '25px',
+		marginBottom: '30px',
 		'&:hover': {
 			backgroundColor: '0'
-		}
+		},
+		backgroundColor: theme.palette.secondary.light,
+		borderRadius: '35px',
+		color: theme.palette.secondary.main
 	},
 	media: {
 		height: 0,
@@ -57,8 +61,9 @@ class ProjectCard extends React.Component {
 	};
 
 	render() {
-		const { classes } = this.props;
-
+		const { classes, theme } = this.props;
+		console.log(this.props.project);
+		console.log('THEME', theme)
 		return (
 			<CardLink
 				className="project-card"
@@ -107,4 +112,4 @@ ProjectCard.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProjectCard);
+export default withStyles(styles)(ProjectCard)

@@ -11,7 +11,10 @@ import { getPopularMakers } from '../../../actions/landingPageActions';
 const PopularMakersWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #fff;
+	// background: #fff;
+	border-radius: 30px;
+	background-color: ${props => props.theme.mui.palette.primary.light}
+	margin: 3% 0%;
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -32,7 +35,9 @@ const PopularMakerListTiles = styled.div`
 const PopularMakersTitle = styled.h1`
 	font-size: 18px;
 	width: 100%;
-	margin: 10px 25px;
+	// margin: 10px 25px;
+	margin: 25px 50px 0px 50px;
+	color: ${props => props.theme.mui.palette.primary.dark}
 
 	@media (max-width: 500px) {
 		width: 80%;

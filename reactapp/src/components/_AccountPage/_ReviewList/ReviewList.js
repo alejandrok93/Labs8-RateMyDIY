@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchMyReviews } from '../../../actions';
+import { fetchMyReviews,fetchSearchResults } from '../../../actions';
 import { AccountSideBar } from '../../../components';
-import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -132,5 +129,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchMyReviews }
+  { fetchMyReviews,fetchSearchResults }
 )(ReviewList);

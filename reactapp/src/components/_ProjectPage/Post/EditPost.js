@@ -18,14 +18,18 @@ const PostContainer = styled.div`
 
 const PostForm = styled.form``;
 
+const ImgContainer = styled.div`
+	padding-top: 12px;
+  margin: auto;
+	max-width: 700px;
+	height: auto;
+`;
+
 const Img = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
-	width: 100%;
-	background: #cceeee;
-	margin-bottom: 20px;
+  margin: 0 auto;
+	background: white;
+  width: auto;
+  height: auto;
 `;
 
 const TextInput = styled.input``;
@@ -68,7 +72,7 @@ class EditPost extends Component {
 			axios
 				.post(
 					(process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
-						`/api/projects/image-upload`,
+					`/api/projects/image-upload`,
 					data,
 					{
 						headers: {
@@ -169,10 +173,12 @@ class EditPost extends Component {
 			<PostContainer>
 				<PostForm onSubmit={this.submitHandler}>
 					{this.props.post.img_url && (
-						<Img
-							src={this.props.post.img_url}
-							alt={this.props.post.img_url || 'project image'}
-						/>
+						<ImgContainer>
+							<Img
+								src={this.props.post.img_url}
+								alt={this.props.post.img_url || 'project image'}
+							/>
+						</ImgContainer>
 					)}
 					<form>
 						<input type="file" onChange={this.singleFileChangedHandler} />
@@ -183,10 +189,12 @@ class EditPost extends Component {
 							>
 								Upload!
 							</button>
-							<Img
-								src={this.state.img_url || 'placeholder image'}
-								alt={this.state.img_url || 'placeholder image'}
-							/>
+							<ImgContainer>
+								<Img
+									src={this.state.img_url || 'placeholder image'}
+									alt={this.state.img_url || 'placeholder image'}
+								/>
+							</ImgContainer>
 						</div>
 					</form>
 					<TextInput

@@ -1,7 +1,8 @@
 // Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import ModalImage from 'react-modal-image';
+import { Button } from 'reactstrap';
 // Components
 import { ConfirmModal } from '../../../components';
 
@@ -11,35 +12,54 @@ import { deletePost } from '../../../actions';
 // Styles
 import styled from 'styled-components';
 
-const PostContainer = styled.div``;
-
-const Img = styled.img`
+const PostContainer = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
+	flex-direction: column;
+	background: #E9DED8;
 	width: 100%;
-	background: lightblue;
-	margin-bottom: 20px;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin: 8px 0;
+`;
+
+const ImgTextContainer = styled.div`
+	background: #E9DED4;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+`;
+
+const Img = styled(ModalImage)`
+  margin: 0 auto;
+	background: white;
+  width: auto;
+  height: auto;
+`;
+
+const ImgContainer = styled.div`
+	padding-top: 12px;
+  margin: auto;
+	max-width: 700px;
+	height: auto;
 `;
 
 const Text = styled.p`
-	width: 100%;
-	background: lightblue;
-	padding: 10px 10px;
-	margin-bottom: 20px;
+	width: auto;
+	padding: 16px 16px 8px 16px;
+	font-size: 16px;
 `;
 
-const OtherButtonContainer = styled.div`
+const OptionsContainer = styled.div`
 	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	margin: 8px 0 0 auto;
+	font-size: 11px;
+	color: rgb(42, 43, 45);
 `;
 
-const EditButton = styled.button``;
+const EditLink = styled.a`
+	margin-right: 8px;
+`;
 
-const DeleteButton = styled.button``;
+const DeleteLink = styled.a`
+	margin-right: 8px;
+`;
 
 const StatusMessage = styled.p``;
 
@@ -76,37 +96,48 @@ class Post extends Component {
 	render() {
 		return (
 			<PostContainer>
-				{this.props.post.img_url && (
-					<Img src={this.props.post.img_url} alt={this.props.post.img_url} />
-				)}
-				{this.props.post.text && <Text>{this.props.post.text}</Text>}
-				{this.props.owner && (
-					<OtherButtonContainer>
-						<EditButton
-							onClick={() => this.props.willUpdatePost(this.props.post.post_id)}
-							disabled={this.props.disabled}
-						>
-							Edit Post
-						</EditButton>
-						<DeleteButton
-							onClick={this.deleteHandler}
-							disabled={this.props.disabled}
-						>
-							Delete Post
-						</DeleteButton>
-					</OtherButtonContainer>
-				)}
+				<ImgTextContainer>
+					{this.props.post.img_url && (
 
-				{this.props.postToDelete && this.props.deletingPost && (
-					<StatusMessage small>Deleting post...</StatusMessage>
-				)}
-				{this.props.postToDelete && this.props.deletingPostError && (
-					<StatusMessage small error>
-						{this.props.deletingPostError}
-					</StatusMessage>
-				)}
+						<ImgContainer>
+							<Img
+								small={this.props.post.img_url}
+								large={this.props.post.img_url}
+								alt={this.props.post.img_url}
+								hideZoom='true'
+							/>
+						</ImgContainer>
+					)}
+					{this.props.post.text && <Text>{this.props.post.text}
+						{this.props.owner && (
+							<OptionsContainer>
+								<EditLink
+									onClick={() => this.props.willUpdatePost(this.props.post.post_id)}
+									disabled={this.props.disabled}
+								>
+									edit
+						</EditLink>
+								<DeleteLink
+									onClick={this.deleteHandler}
+									disabled={this.props.disabled}
+								>
+									delete
+						</DeleteLink>
+							</OptionsContainer>
+						)}
+					</Text>}
 
-				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+					{this.props.postToDelete && this.props.deletingPost && (
+						<StatusMessage small>Deleting post...</StatusMessage>
+					)}
+					{this.props.postToDelete && this.props.deletingPostError && (
+						<StatusMessage small error>
+							{this.props.deletingPostError}
+						</StatusMessage>
+					)}
+
+					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+				</ImgTextContainer>
 			</PostContainer>
 		);
 	}

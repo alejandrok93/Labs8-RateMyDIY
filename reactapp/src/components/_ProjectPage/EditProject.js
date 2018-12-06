@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+
 // Components
 import { StarCount, ConfirmModal } from '../../components';
 
@@ -19,10 +20,22 @@ const Img = styled.img`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 380px;
-	width: 100%;
+	height: 600px;
+	width: auto;
 	background: #cceeee;
-	margin-bottom: 20px;
+	margin: 0 auto 20px auto;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+`;
+const HiddenInputFileForm = styled.input`
+	display: none;
+`;
+
+const FileLabel = styled.label`
+	  font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
 `;
 
 const TextInput = styled.input``;
@@ -54,7 +67,8 @@ class EditProject extends Component {
 	state = {
 		project_name: '',
 		img_url: null,
-		text: ''
+		text: '',
+		selectedFile: null
 	};
 
 	singleFileChangedHandler = event => {
@@ -76,8 +90,13 @@ class EditProject extends Component {
 			axios
 				.post(
 					process.env.REACT_APP_BACKEND ||
-						'http://localhost:5000/api/projects/image-upload',
-					data,
+					'http://localhost:5000/api/projects/image-upload',
+					data, {
+						onUploadProgress: progressEvent => {
+							// display progress percentage in console 
+							console.log('Upload Progress: ' + Math.round((progressEvent.loaded / progressEvent.total) * 100) + '%')
+						}
+					},
 					{
 						headers: {
 							accept: 'application/json',
@@ -194,7 +213,13 @@ class EditProject extends Component {
 					alt={this.props.project.img_url || 'project image'}
 				/>
 				<form>
-					<input type="file" onChange={this.singleFileChangedHandler} />
+					{/* HiddenInputFileForm is hidden */}
+					<HiddenInputFileForm
+						type="file"
+						name="file"
+						onChange={this.singleFileChangedHandler}
+						ref={fileInput => this.fileInput = fileInput} />
+					<button onClick={() => this.fileInput.click()}>{this.state.selectedFile ? this.state.selectedFile.name : 'Pick File'}</button>
 					<div className="mt-5">
 						<button
 							className="btn btn-info"

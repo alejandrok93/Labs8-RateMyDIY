@@ -15,16 +15,16 @@ const ProjectWrapper = styled.div`
 const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #E9DED8;
+	background: #e9ded8;
 	width: 100%;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
 	flex-direction: column;
-	background: #E9DED8;
+	background: #e9ded8;
 	padding: 24px 24px 12px 24px;
 `;
 
@@ -39,14 +39,14 @@ const ProjectAuthor = styled.div`
 `;
 
 const Img = styled(ModalImage)`
-  margin: 0 auto;
+	margin: 0 auto;
 	background: white;
-  width: auto;
-  height: auto;
+	width: auto;
+	height: auto;
 `;
 
 const ImgContainer = styled.div`
-  margin: auto;
+	margin: auto;
 	max-width: 700px;
 	height: auto;
 `;
@@ -72,9 +72,7 @@ const EditLink = styled.a`
 	margin-right: 8px;
 `;
 
-const DeleteButton = styled.a`
-	
-`;
+const DeleteButton = styled.a``;
 
 const Project = props => {
 	return (
@@ -83,7 +81,7 @@ const Project = props => {
 				<ProjectHeader>
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
-					{props.project.project_rating ?
+					{/* {props.project.project_rating ?
 						<StarRatings
 							rating={props.project.project_rating}
 							starRatedColor="black"
@@ -92,7 +90,7 @@ const Project = props => {
 							starDimension="20px"
 							starSpacing="5px"
 							numberOfStars={5}
-						/> : null}
+						/> : null} */}
 				</ProjectHeader>
 				<ImgContainer>
 					<Img
@@ -102,21 +100,24 @@ const Project = props => {
 						src={props.project.img_url}
 					/>
 				</ImgContainer>
-				<Text>{props.project.text}
+				<Text>
+					{props.project.text}
 					{props.owner && (
 						<OptionsContainer>
-							<ReviewsLink disabled={props.disabled}>
-								reviews
-							</ReviewsLink>
+							<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
 							<EditLink
 								onClick={() => props.willUpdateProject(true)}
 								disabled={props.disabled}
 							>
 								edit
-						</EditLink>
-							<DeleteButton color="danger" onClick={props.deleteHandler} disabled={props.disabled}>
+							</EditLink>
+							<DeleteButton
+								color="danger"
+								onClick={props.deleteHandler}
+								disabled={props.disabled}
+							>
 								delete
-					</DeleteButton>
+							</DeleteButton>
 						</OptionsContainer>
 					)}
 				</Text>

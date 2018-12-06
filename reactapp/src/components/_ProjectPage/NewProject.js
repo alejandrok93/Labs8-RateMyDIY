@@ -104,6 +104,7 @@ class NewProject extends Component {
 								console.log(response.data.location);
 								// If not the given file type
 								// this.ocShowAlert(response.data.error, "red");
+								console.log(response.data.path);
 							}
 						} else {
 							// Success

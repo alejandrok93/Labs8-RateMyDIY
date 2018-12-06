@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-top: 98px;
 }
 
 .myReviewsDisplay {
   border: 1px solid #dedede;
   width: 200px;
-  margin-left: 30px;
-  height: 200px;
+  margin-left: 20px;
   background-color: #ffffff;
   margin-top: 20px;
 }
@@ -27,7 +27,6 @@
   justify-content: center;
   margin: 0 auto;
   align-items: center;
-  
 }
 
 .addNewReview img {
@@ -35,9 +34,9 @@
   margin-top: 20px;
 }
 
-.addNewReview h2{
-    font-size: 30px;
-  }
+.addNewReview h2 {
+  font-size: 30px;
+}
 
 @media (max-width: 500px) {
   .reviewPage {

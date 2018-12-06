@@ -28,6 +28,7 @@ img {
 
 .project-list-container {
 	display: flex;
+	margin-top: 20px;
 }
 .myProjectsDisplay {
 	border: 1px solid #dedede;
@@ -36,14 +37,22 @@ img {
 	height: 200px;
 	background-color: #ffffff;
 	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
 }
 
 .myProjectDisplay {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	width: 100%;
+	margin: 0PX 10px 20px 10px;
 	align-content: flex-start;
+	margin-top: 10px;
+}
+
+.projectImg img{
+	height: 200px;
+   
 }
 
 @media (max-width: 500px) {

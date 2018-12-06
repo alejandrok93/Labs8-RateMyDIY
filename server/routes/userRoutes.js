@@ -7,6 +7,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 const authDB = require('../models/authModel');
 const usersDB = require('../models/usersModel');
 const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 const authenticate = require('../config/authMiddleware');
 

@@ -1,46 +1,61 @@
 import axios from 'axios';
+import { loggedIn } from '../actions';
+axios.defaults.withCredentials = true;
 
-// example action
-export const GET_EMAIL = 'GET_EMAIL';
-export const GET_EMAIL_SUCCESS = 'GET_EMAIL_SUCCESS';
-export const GET_EMAIL_ERROR = 'GET_EMAIL_ERROR';
-export const UPDATE_EMAIL = 'UPDATE_EMAIL';
-export const UPDATE_EMAIL_SUCCESS = 'UPDATE_EMAIL_SUCCESS';
-export const UPDATE_EMAIL_ERROR = 'UPDATE_EMAIL_ERROR';
+// get userInfo
+export const GETTING_USERNAME = 'GETTING_USERNAME';
+export const GOT_USERNAME = 'GOT_USERNAME';
+export const GET_USERNAME_ERROR = 'GET_USERNAME_ERROR';
+export const GETTING_PROFILE_PIC = 'GETTING_PROFILE_PIC';
+export const GOT_PROFILE_PIC = 'GOT_PROFILE_PIC';
+export const GET_PROFILE_PIC_ERROR = 'GET_PROFILE_PIC_ERROR';
 
-// Test loading messages
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export const getUsername = (username) => {
+	return dispatch => {
+		dispatch({ type: GETTING_USERNAME });
+
+		axios
+			.post(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/api/users/editusername`, { username: username }
+			)
+
+			.then(({data}) => {
+				console.log('success', data);
+				if (data.success) {
+					dispatch({ type: GOT_USERNAME, payload: data.success });
+				} else {
+					dispatch({ type: GET_USERNAME_ERROR, payload: data.error });
+				}
+			})
+
+			.then(() => dispatch(loggedIn()))
+
+            .catch(error => {
+                console.log('error', error);
+                dispatch({ type: GET_USERNAME_ERROR, payload: error.response.data.error })
+            });
+	};
+};
+
+export const getProfilePic = (img_url) => {
+	return dispatch => {
+		dispatch({ type: GETTING_PROFILE_PIC });
+
+		axios
+			.post(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/api/users/editprofilepic`, { img_url: img_url }
+			)
+
+			.then(({data}) => {
+				console.log('success', data);
+				dispatch({ type: GOT_PROFILE_PIC, payload: data.success });
+			})
+
+			.then(() => dispatch(loggedIn()))
+
+            .catch(({error}) => {
+                console.log('error', error);
+                dispatch({ type: GET_PROFILE_PIC_ERROR, payload: error })
+            });
+	}
 }
-
-export const getEmail = () => {
-  return dispatch => {
-    dispatch({ type: GET_EMAIL });
-
-    axios
-      .get('/api/exampleEndpoint')
-
-      .then(async ({ data }) => {
-        await sleep(1000);
-        dispatch({ type: GET_EMAIL_SUCCESS, payload: data });
-      })
-
-      .catch(error => dispatch({ type: GET_EMAIL_ERROR, payload: error }));
-  };
-};
-
-export const updateEmail = () => {
-  return dispatch => {
-    dispatch({ type: UPDATE_EMAIL });
-
-    axios
-      .post('/api/exampleEndpoint')
-
-      .then(async ({ data }) => {
-        await sleep(1000);
-        dispatch({ type: UPDATE_EMAIL_SUCCESS, payload: data });
-      })
-
-      .catch(error => dispatch({ type: UPDATE_EMAIL_ERROR, payload: error }));
-  };
-};

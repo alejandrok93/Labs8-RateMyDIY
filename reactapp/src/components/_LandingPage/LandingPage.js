@@ -147,7 +147,7 @@ class LandingPage extends Component {
 				<HeroImageContainer>
 					{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
 					<HeroSearchContainer>
-						<HeroTitle>Find a project to build</HeroTitle>
+						<HeroTitle>Find a project to build or Review</HeroTitle>
 						<SearchBar
 							handleChange={this.handleChange}
 							handleSearch={this.handleSearch}

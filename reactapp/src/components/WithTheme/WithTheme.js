@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  MuiThemeProvider,
-  createMuiTheme,
-  withTheme as muiWithTheme,
+	MuiThemeProvider,
+	createMuiTheme,
+	withTheme as muiWithTheme
 } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -16,56 +16,56 @@ import PropTypes from 'prop-types';
 // }
 
 const muiTheme = createMuiTheme({
-  palette: {
-    primary: {
-        light: '#5DB7D9', // viking
-        main: '#4290CA', // shakespeare
-        dark: '#263842' // pickledbluewood
-    },
-    secondary: {
-        light: '#D5CDC2', // sisal
-        main: '#62554B', // soyabean
-    }
-  },
+	palette: {
+		primary: {
+			light: '#fff', // viking -> changed back to white on 12/6
+			main: '#fff', // shakespeare -> changed back to white on 12/6
+			dark: '#263842' // pickledbluewood
+		},
+		secondary: {
+			light: '#D5CDC2', // sisal
+			main: '#62554B' // soyabean
+		}
+	}
 });
 
 function MaterialUiTheme(props) {
-  return <MuiThemeProvider theme={muiTheme}>{props.children}</MuiThemeProvider>;
+	return <MuiThemeProvider theme={muiTheme}>{props.children}</MuiThemeProvider>;
 }
 
 MaterialUiTheme.propTypes = {
-  children: PropTypes.any,
+	children: PropTypes.any
 };
 
 const appTheme = { mode: 'light' };
 
 function StyledComponentsTheme(props) {
-  return (
-    <ThemeProvider theme={{ app: appTheme, mui: props.theme }}>
-      {props.children}
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider theme={{ app: appTheme, mui: props.theme }}>
+			{props.children}
+		</ThemeProvider>
+	);
 }
 
 StyledComponentsTheme.propTypes = {
-  children: PropTypes.any,
-  theme: PropTypes.object,
+	children: PropTypes.any,
+	theme: PropTypes.object
 };
 
 const StyledComponentsThemeWithMui = muiWithTheme()(StyledComponentsTheme);
 
 function WithTheme(props) {
-  return (
-    <MaterialUiTheme>
-      <StyledComponentsThemeWithMui>
-        {props.children}
-      </StyledComponentsThemeWithMui>
-    </MaterialUiTheme>
-  );
+	return (
+		<MaterialUiTheme>
+			<StyledComponentsThemeWithMui>
+				{props.children}
+			</StyledComponentsThemeWithMui>
+		</MaterialUiTheme>
+	);
 }
 
 WithTheme.propTypes = {
-  children: PropTypes.any,
+	children: PropTypes.any
 };
 
 export default WithTheme;

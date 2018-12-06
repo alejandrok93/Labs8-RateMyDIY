@@ -7640,6 +7640,11 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.2, react-lifecycles
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-modal-image@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-modal-image/-/react-modal-image-2.3.1.tgz#d62a3a17b91e252c68ba04e7d583ad1b0bc18ae8"
+  integrity sha512-wmNqP7QqeGH2uQ0RgpCDoev/uti58us33AEgnNpZJOriS1bbTnAKn7ApjCH50JMUfGVE2Dr8kVaPmDnUpodcWg==
+
 react-popper@^0.10.4:
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.10.4.tgz#af2a415ea22291edd504678d7afda8a6ee3295aa"

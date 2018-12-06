@@ -1,79 +1,128 @@
 // Dependencies
 import React from 'react';
-
+import ModalImage from 'react-modal-image';
+import { Button } from 'reactstrap';
 // Components
-import { StarCount } from '../../components';
+import StarRatings from 'react-star-ratings';
 
 // Styles
 import styled from 'styled-components';
 
-const ProjectHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
+const ProjectWrapper = styled.div`
+	margin: 0 0 24px 0;
 `;
 
-const ProjectName = styled.h2``;
-
-const ReviewsButton = styled.button``;
-
-const Img = styled.img`
+const ProjectContainer = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
+	flex-direction: column;
+	background: #e9ded8;
 	width: 100%;
-	background: #cceeee;
-	margin-bottom: 20px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+`;
+
+const ProjectHeader = styled.div`
+	display: flex;
+	position: 50%;
+	flex-direction: column;
+	background: #e9ded8;
+	padding: 24px 24px 12px 24px;
+`;
+
+const ProjectName = styled.h2`
+	display: flex;
+	font-size: 32px;
+	font-weight: bold;
+`;
+
+const ProjectAuthor = styled.div`
+	margin: 0 0 0 2px;
+`;
+
+const Img = styled(ModalImage)`
+	margin: 0 auto;
+	background: white;
+	width: auto;
+	height: auto;
+`;
+
+const ImgContainer = styled.div`
+	margin: auto;
+	max-width: 700px;
+	height: auto;
 `;
 
 const Text = styled.p`
-	width: 100%;
-	background: #cceeee;
-	padding: 10px 10px;
-	margin-bottom: 20px;
+	width: auto;
+	padding: 16px 16px 8px 16px;
+	font-size: 16px;
 `;
 
-const EditButton = styled.button``;
-
-const DeleteButton = styled.button``;
-
-const ProjectContainer = styled.div``;
-
-const ProjectButtonContainer = styled.div`
+const OptionsContainer = styled.div`
 	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	margin: 8px 0 0 auto;
+	font-size: 11px;
+	color: rgb(42, 43, 45);
 `;
+
+const ReviewsLink = styled.a`
+	margin-right: 8px;
+`;
+
+const EditLink = styled.a`
+	margin-right: 8px;
+`;
+
+const DeleteButton = styled.a``;
 
 const Project = props => {
 	return (
-		<ProjectContainer>
-			<ProjectHeader>
-				<ProjectName>{props.project.project_name}</ProjectName>
-				<StarCount rating={props.project.project_rating} />
-				<ReviewsButton disabled={props.disabled}>Reviews</ReviewsButton>
-			</ProjectHeader>
-			<Img
-				src={props.project.img_url}
-				alt={props.project.img_url || 'project image'}
-			/>
-			<Text>{props.project.text}</Text>
-			{props.owner && (
-				<ProjectButtonContainer>
-					<EditButton
-						onClick={() => props.willUpdateProject(true)}
-						disabled={props.disabled}
-					>
-						Edit Project
-					</EditButton>
-					<DeleteButton onClick={props.deleteHandler} disabled={props.disabled}>
-						Delete Project
-					</DeleteButton>
-				</ProjectButtonContainer>
-			)}
-		</ProjectContainer>
+		<ProjectWrapper>
+			<ProjectContainer>
+				<ProjectHeader>
+					<ProjectName>{props.project.project_name}</ProjectName>
+					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+					{/* {props.project.project_rating ?
+						<StarRatings
+							rating={props.project.project_rating}
+							starRatedColor="black"
+							starEmptyColor="grey"
+							// changeRating={this.changeRating}
+							starDimension="20px"
+							starSpacing="5px"
+							numberOfStars={5}
+						/> : null} */}
+				</ProjectHeader>
+				<ImgContainer>
+					<Img
+						small={props.project.img_url}
+						large={props.project.img_url}
+						alt={props.project.project_name}
+						src={props.project.img_url}
+					/>
+				</ImgContainer>
+				<Text>
+					{props.project.text}
+					{props.owner && (
+						<OptionsContainer>
+							<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
+							<EditLink
+								onClick={() => props.willUpdateProject(true)}
+								disabled={props.disabled}
+							>
+								edit
+							</EditLink>
+							<DeleteButton
+								color="danger"
+								onClick={props.deleteHandler}
+								disabled={props.disabled}
+							>
+								delete
+							</DeleteButton>
+						</OptionsContainer>
+					)}
+				</Text>
+			</ProjectContainer>
+		</ProjectWrapper>
 	);
 };
 

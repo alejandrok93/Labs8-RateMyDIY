@@ -11,6 +11,15 @@ import Typography from '@material-ui/core/Typography';
 import StarRatings from 'react-star-ratings';
 import { Header } from '../../../components';
 import './ReviewList.css';
+import styled from 'styled-components';
+const CardLink = styled.a`
+  text-decoration: none;
+  color:black &:hover {
+    text-decoration: none;
+    color: black;
+  }
+`;
+
 
 class ReviewList extends Component {
   constructor() {
@@ -31,14 +40,6 @@ class ReviewList extends Component {
     this.props.fetchSearchResults(searchTerm);
     this.props.history.push(`/search?query=${searchTerm}`);
   };
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.userInfo !== this.props.userInfo) {
-      console.log('USERINFO', this.props.userInfo);
-      
-    }
-    console.log(this.props.myReviews);
-  }
 
   componentDidMount(){
 	  this.props.fetchMyReviews(this.props.userInfo.user_id);
@@ -83,6 +84,10 @@ class ReviewList extends Component {
               {this.props.myReviews.map(myReviews => {
                 return (
                   <div className="myReviewsDisplay" key={myReviews.review_id}>
+                   <CardLink
+                    className="project-card"
+                    href={`project/${myReviews.project_id}`}
+                  >
                     <Card>
                       <CardHeader action={null} title={myReviews.text} />
                       {/* <div className="projectImg">
@@ -98,12 +103,9 @@ class ReviewList extends Component {
                           starRatedColor="black"
                         />
                       </CardContent>
-                      <CardContent>
-                        <Typography component="p">
-                          [THIS IS THE PROJECT DESCRIPTION]
-                        </Typography>
-                      </CardContent>
+                      
                     </Card>
+                    </CardLink>
                   </div>
                 );
               })}

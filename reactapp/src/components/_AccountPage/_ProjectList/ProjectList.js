@@ -79,13 +79,7 @@ class ProjectList extends Component {
     this.props.history.push(`/search?query=${searchTerm}`);
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.userInfo !== this.props.userInfo) {
-      console.log('USERINFO', this.props.userInfo);
-    }
-
-    console.log(this.props.myProjects);
-  }
+ 
 
   componentDidMount() {
     this.props.fetchMyProjects(this.props.userInfo.user_id);

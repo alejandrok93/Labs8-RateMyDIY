@@ -19,20 +19,14 @@ export { default as ProjectTile } from './ProjectTile/ProjectCard';
 export { default as MakerTile } from './MakerTile/MakerCard';
 export { default as ReviewerTile } from './ReviewerTile/ReviewerCard';
 export {
-	default as UserSettingsSummaries
-} from './_UserSettingsPage/Summaries/Summaries';
-export {
-	default as UserSettingsSideBar
-} from './_UserSettingsPage/SideBar/SideBar';
-export {
 	default as ProjectList
 } from './_AccountPage/_ProjectList/ProjectList';
 export { default as ReviewList } from './_AccountPage/_ReviewList/ReviewList';
 export { default as CreateEditPage } from './_CreateEditPage/CreateEditPage';
 export { default as AccountSideBar } from './_AccountPage/AccountSideBar';
 export {
-	default as UserSettingSettings
-} from './_UserSettingsPage/Settings/Settings';
+	default as UserSettings
+} from './_UserSettingsPage/Settings';
 export { default as SearchPage } from './_SearchPage/SearchPage';
 export { default as Nav } from './_Nav/Nav';
 export { default as DropDown } from './_Nav/DropDown/DropDown';

@@ -37,19 +37,19 @@ const settingsReducer = (state = initialState, action) => {
       };
 
     case GETTING_PROFILE_PIC:
-      return { ...state, gettingProfile: true };
+      return { ...state, gettingProfilePic: true };
 
     case GOT_PROFILE_PIC:
       return {
         ...state,
-        gettingProfile: false,
+        gettingProfilePic: false,
         img_url: action.payload
       }
     
     case GET_PROFILE_PIC_ERROR:
       return {
         ...state,
-        gettingProfile: false,
+        gettingProfilePic: false,
         profilepic_error: action.payload
       }
 

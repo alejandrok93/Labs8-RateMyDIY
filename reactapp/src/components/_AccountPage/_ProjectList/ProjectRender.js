@@ -78,9 +78,6 @@ class ProjectRender extends React.Component {
               />
             </CardContent>
             <CardContent>
-              <Typography component="p">
-                [THIS IS THE PROJECT DESCRIPTION]
-              </Typography>
             </CardContent>
           </Card>
         </CardLink>

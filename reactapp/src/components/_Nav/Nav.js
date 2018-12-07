@@ -25,16 +25,16 @@ class Nav extends React.Component {
 		this.toggle = this.toggle.bind(this);
 	}
 	// Custom client greeting based of client hour
-	clientGreeting() {
-		let clientHourTime = new Date().getHours();
-		if (clientHourTime < 10) {
-			return 'Good morning';
-		} else if (clientHourTime <= 16 && clientHourTime >= 10) {
-			return 'Good afternoon';
-		} else if (clientHourTime <= 24 && clientHourTime > 16) {
-			return 'Good evening';
-		}
-	}
+	// clientGreeting() {
+	// 	let clientHourTime = new Date().getHours();
+	// 	if (clientHourTime < 10) {
+	// 		return 'Good morning';
+	// 	} else if (clientHourTime <= 16 && clientHourTime >= 10) {
+	// 		return 'Good afternoon';
+	// 	} else if (clientHourTime <= 24 && clientHourTime > 16) {
+	// 		return 'Good evening';
+	// 	}
+	// }
 	// Sets state for the reactstrap modal
 	toggle() {
 		this.setState({
@@ -60,7 +60,7 @@ class Nav extends React.Component {
 					{this.props.userInfo.user_id ? (
 						<Fragment>
 							<WelcomeMessage>
-								{this.clientGreeting()} {this.props.userInfo.username}
+								{this.props.userInfo.username}
 							</WelcomeMessage>
 							<DropDown />
 						</Fragment>
@@ -124,8 +124,9 @@ const AuthWrapper = styled.div`
 
 const WelcomeMessage = styled.p`
 	font-size: 14px;
-	margin-right: 8px;
 	white-space: nowrap;
+	color:white;
+	
 
 	@media (max-width: 500px) {
 		display: none;

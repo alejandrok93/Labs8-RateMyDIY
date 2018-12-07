@@ -36,7 +36,9 @@ class ProjectList extends Component {
  
 
   componentDidMount() {
+
     this.props.fetchMyProjects(this.props.userInfo.user_id);
+    
   }
   render() {
     const { classes } = this.props;

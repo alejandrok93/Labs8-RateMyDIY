@@ -19,7 +19,8 @@ import {
 import {
 	loggedIn,
 	getProject,
-	loggedIn_Project_ReviewId_Chain,
+	// loggedIn_Project_ReviewId_Chain,
+	project_ReviewId_Chain,
 	getReviewId,
 	willUpdateProject,
 	deleteProject,
@@ -129,7 +130,9 @@ class ProjectPage extends Component {
 	// Visiting this page calls loggedIn() twice. Will fix later.
 	componentDidMount() {
 		// Trying out this awkward action chain
-		this.props.loggedIn_Project_ReviewId_Chain(this.props.match.params.id);
+		// this.props.loggedIn_Project_ReviewId_Chain(this.props.match.params.id);
+
+		this.props.loggedIn(project_ReviewId_Chain, this.props.match.params.id);
 	}
 
 	componentWillUnmount() {
@@ -164,38 +167,38 @@ class ProjectPage extends Component {
 									willUpdateProject={this.props.willUpdateProject}
 								/>
 							) : this.props.gettingUserInfo ||
-								this.props.gettingProject ||
-								this.props.gettingReviewId ? (
-										<React.Fragment>
-											<StatusMessage>Loading project...</StatusMessage>
-										</React.Fragment>
-									) : this.props.gettingProjectError ? (
-										<React.Fragment>
-											<StatusMessage>Failed to load project</StatusMessage>
-											<StatusMessage error>
-												{this.props.gettingProjectError}
-											</StatusMessage>
-										</React.Fragment>
-									) : this.props.deletingProject ? (
-										<React.Fragment>
-											<StatusMessage>Deleting project...</StatusMessage>
-										</React.Fragment>
-									) : this.props.deletingProjectError ? (
-										<React.Fragment>
-											<StatusMessage>Failed to delete project</StatusMessage>
-											<StatusMessage error>
-												{this.props.gettingProjectError}
-											</StatusMessage>
-										</React.Fragment>
-									) : (
-													<Project
-														project={this.props.project}
-														owner={owner}
-														willUpdateProject={this.props.willUpdateProject}
-														deleteHandler={this.deleteHandler}
-														disabled={disabled}
-													/>
-												)}
+							  this.props.gettingProject ||
+							  this.props.gettingReviewId ? (
+								<React.Fragment>
+									<StatusMessage>Loading project...</StatusMessage>
+								</React.Fragment>
+							) : this.props.gettingProjectError ? (
+								<React.Fragment>
+									<StatusMessage>Failed to load project</StatusMessage>
+									<StatusMessage error>
+										{this.props.gettingProjectError}
+									</StatusMessage>
+								</React.Fragment>
+							) : this.props.deletingProject ? (
+								<React.Fragment>
+									<StatusMessage>Deleting project...</StatusMessage>
+								</React.Fragment>
+							) : this.props.deletingProjectError ? (
+								<React.Fragment>
+									<StatusMessage>Failed to delete project</StatusMessage>
+									<StatusMessage error>
+										{this.props.gettingProjectError}
+									</StatusMessage>
+								</React.Fragment>
+							) : (
+								<Project
+									project={this.props.project}
+									owner={owner}
+									willUpdateProject={this.props.willUpdateProject}
+									deleteHandler={this.deleteHandler}
+									disabled={disabled}
+								/>
+							)}
 
 							{/* Display posts */}
 							{this.props.project.posts &&
@@ -209,17 +212,17 @@ class ProjectPage extends Component {
 											willUpdatePost={this.props.willUpdatePost}
 										/>
 									) : (
-											<Post
-												key={post.post_id}
-												post={post}
-												user_id={this.props.userInfo.user_id}
-												owner={owner}
-												willUpdatePost={this.props.willUpdatePost}
-												willDeletePost={this.props.willDeletePost}
-												postToDelete={post.post_id === this.props.postToDelete}
-												disabled={disabled}
-											/>
-										)
+										<Post
+											key={post.post_id}
+											post={post}
+											user_id={this.props.userInfo.user_id}
+											owner={owner}
+											willUpdatePost={this.props.willUpdatePost}
+											willDeletePost={this.props.willDeletePost}
+											postToDelete={post.post_id === this.props.postToDelete}
+											disabled={disabled}
+										/>
+									)
 								)}
 
 							{/* Add new post */}
@@ -247,13 +250,13 @@ class ProjectPage extends Component {
 											disabled={disabled}
 										>
 											Add Text Field
-								</ProjectButton>
+										</ProjectButton>
 										<ProjectButton
 											onClick={() => this.props.willAddPost('image')}
 											disabled={disabled}
 										>
 											Add Picture
-								</ProjectButton>
+										</ProjectButton>
 									</ButtonContainer>
 								) : this.props.reviewId ? (
 									<ReviewButton
@@ -261,19 +264,19 @@ class ProjectPage extends Component {
 										disabled={this.props.gettingReviewId}
 									>
 										View Your Review
-							</ReviewButton>
+									</ReviewButton>
 								) : (
-											<ReviewButton
-												onClick={() =>
-													this.props.userInfo.user_id
-														? this.setState({ review: 'new' })
-														: this.notLoggedInHandler()
-												}
-												disabled={this.props.gettingReviewId}
-											>
-												Review Project
-							</ReviewButton>
-										))}
+									<ReviewButton
+										onClick={() =>
+											this.props.userInfo.user_id
+												? this.setState({ review: 'new' })
+												: this.notLoggedInHandler()
+										}
+										disabled={this.props.gettingReviewId}
+									>
+										Review Project
+									</ReviewButton>
+								))}
 
 							{this.state.review &&
 								(this.props.reviewId ? (
@@ -282,19 +285,20 @@ class ProjectPage extends Component {
 										closeModal={() => this.setState({ review: undefined })}
 									/>
 								) : (
-										<ReviewModal
-											project_id={this.props.project.project_id}
-											project_name={this.props.project.project_name}
-											maker_name={this.props.project.username}
-											img_url={this.props.project.img_url}
-											closeModal={() => this.setState({ review: undefined })}
-										/>
-									))}
+									<ReviewModal
+										project_id={this.props.project.project_id}
+										project_name={this.props.project.project_name}
+										maker_name={this.props.project.username}
+										img_url={this.props.project.img_url}
+										closeModal={() => this.setState({ review: undefined })}
+									/>
+								))}
 
-							{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+							{this.state.confirm && (
+								<ConfirmModal confirm={this.state.confirm} />
+							)}
 						</ProjectContainer>
-						<SideBarContainer>
-						</SideBarContainer>
+						<SideBarContainer />
 					</ProjectPageContainer>
 				</ProjectPageHeaderContainer>
 			);
@@ -336,7 +340,8 @@ export default connect(
 	mapStateToProps,
 	{
 		loggedIn,
-		loggedIn_Project_ReviewId_Chain,
+		// loggedIn_Project_ReviewId_Chain,
+		project_ReviewId_Chain,
 		getProject,
 		getReviewId,
 		willUpdateProject,

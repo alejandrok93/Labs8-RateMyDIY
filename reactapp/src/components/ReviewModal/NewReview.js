@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { addReview } from '../../actions';
+import { addReview, showReviewModal } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -96,12 +96,12 @@ class NewReview extends Component {
 					},
 					submit: event => {
 						event.preventDefault();
-						this.props.closeModal();
+						this.props.showReviewModal(false);
 					}
 				}
 			});
 		} else {
-			this.props.closeModal();
+			this.props.showReviewModal(false);
 		}
 	};
 
@@ -171,7 +171,7 @@ class NewReview extends Component {
 						autoFocus
 					/>
 
-					{this.props.addingReview && (
+					{(this.props.addingReview || this.props.gettingReview) && (
 						<StatusMessage>Adding review...</StatusMessage>
 					)}
 					{this.props.addingReviewError && (
@@ -192,14 +192,19 @@ class NewReview extends Component {
 
 const mapStateToProps = state => {
 	return {
-		addingReview: state.reviewReducer.gettingReview,
-		addingReviewError: state.reviewReducer.gettingReviewError
+		gettingReview: state.reviewReducer.gettingReview,
+
+		addingReview: state.reviewReducer.addingReview,
+		addingReviewError: state.reviewReducer.addingReviewError,
+
+		reviewModal: state.reviewReducer.reviewModal
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{
-		addReview
+		addReview,
+		showReviewModal
 	}
 )(NewReview);

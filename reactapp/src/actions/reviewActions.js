@@ -24,6 +24,8 @@ export const WILL_DELETE_REVIEW = 'WILL_DELETE_REVIEW';
 export const DELETING_REVIEW = 'DELETING_REVIEW';
 export const DELETED_REVIEW = 'DELETED_REVIEW';
 export const DELETE_REVIEW_ERROR = 'DELETE_REVIEW_ERROR';
+// showReviewModal
+export const SHOW_REVIEW_MODAL = 'SHOW_REVIEW_MODAL';
 
 // Loading message tester
 function sleep(ms) {
@@ -122,8 +124,7 @@ export const updateReview = (review_id, changes) => {
 				dispatch({ type: UPDATED_REVIEW });
 			})
 
-			// I hate this. Preferred behavior: update the state in the parent component to {review: null} and fetch the reviews again
-			.then(window.location.reload())
+			.then(() => dispatch(getReview(review_id)))
 
 			.catch(error => dispatch({ type: UPDATE_REVIEW_ERROR, payload: error }));
 	};
@@ -153,9 +154,12 @@ export const deleteReview = (user_id, review_id) => {
 				dispatch({ type: DELETED_REVIEW });
 			})
 
-			// I hate this. Preferred behavior: update the state in the parent component to {review: null} and fetch the reviews again
-			.then(window.location.reload())
-
 			.catch(error => dispatch({ type: DELETE_REVIEW_ERROR, payload: error }));
+	};
+};
+
+export const showReviewModal = value => {
+	return dispatch => {
+		dispatch({ type: SHOW_REVIEW_MODAL, payload: value });
 	};
 };

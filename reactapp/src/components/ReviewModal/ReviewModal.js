@@ -6,7 +6,12 @@ import { connect } from 'react-redux';
 import { NewReview, EditReview, ConfirmModal } from '../../components';
 
 // Actions
-import { getReview, willUpdateReview, deleteReview } from '../../actions';
+import {
+	getReview,
+	willUpdateReview,
+	deleteReview,
+	showReviewModal
+} from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -115,6 +120,9 @@ class ReviewModal extends Component {
 		});
 	};
 
+	// Like, dislike, or remove like from review
+	likeHandler = (event, like) => {};
+
 	componentDidMount() {
 		if (this.props.review_id) this.props.getReview(this.props.review_id);
 	}
@@ -129,12 +137,13 @@ class ReviewModal extends Component {
 							<EditReview
 								user_id={this.props.userInfo.user_id}
 								review={this.props.review}
-								closeModal={this.props.closeModal}
 								willUpdateReview={this.props.willUpdateReview}
 							/>
 						) : (
 							<React.Fragment>
-								<CloseModalButton onClick={this.props.closeModal}>
+								<CloseModalButton
+									onClick={() => this.props.showReviewModal(false)}
+								>
 									x
 								</CloseModalButton>
 								{this.props.gettingReview ? (
@@ -193,7 +202,6 @@ class ReviewModal extends Component {
 							project_name={this.props.project_name}
 							maker_name={this.props.maker_name}
 							img_url={this.props.img_url}
-							closeModal={this.props.closeModal}
 						/>
 					) : (
 						<StatusMessage>How did you get here? Tell Max.</StatusMessage>
@@ -222,7 +230,9 @@ const mapStateToProps = state => {
 
 		reviewToDelete: state.reviewReducer.reviewToDelete,
 		deletingReview: state.reviewReducer.deletingReview,
-		deletingReviewError: state.reviewReducer.deletingReviewError
+		deletingReviewError: state.reviewReducer.deletingReviewError,
+
+		reviewModal: state.reviewReducer.reviewModal
 	};
 };
 
@@ -231,6 +241,7 @@ export default connect(
 	{
 		getReview,
 		willUpdateReview,
-		deleteReview
+		deleteReview,
+		showReviewModal
 	}
 )(ReviewModal);

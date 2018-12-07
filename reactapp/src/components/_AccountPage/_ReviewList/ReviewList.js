@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchMyReviews,fetchSearchResults } from '../../../actions';
+import { fetchMyReviews, fetchSearchResults } from '../../../actions';
 import { AccountSideBar } from '../../../components';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,6 +12,7 @@ import StarRatings from 'react-star-ratings';
 import { Header } from '../../../components';
 import './ReviewList.css';
 import styled from 'styled-components';
+import { ReviewRender } from '../../../components';
 const CardLink = styled.a`
   text-decoration: none;
   color:black &:hover {
@@ -19,7 +20,6 @@ const CardLink = styled.a`
     color: black;
   }
 `;
-
 
 class ReviewList extends Component {
   constructor() {
@@ -41,8 +41,8 @@ class ReviewList extends Component {
     this.props.history.push(`/search?query=${searchTerm}`);
   };
 
-  componentDidMount(){
-	  this.props.fetchMyReviews(this.props.userInfo.user_id);
+  componentDidMount() {
+    this.props.fetchMyReviews(this.props.userInfo.user_id);
   }
 
   render() {
@@ -81,34 +81,14 @@ class ReviewList extends Component {
             <AccountSideBar />
 
             <div className="myReviewDisplay">
-              {this.props.myReviews.map(myReviews => {
-                return (
-                  <div className="myReviewsDisplay" key={myReviews.review_id}>
-                   <CardLink
-                    className="project-card"
-                    href={`project/${myReviews.project_id}`}
-                  >
-                    <Card>
-                      <CardHeader action={null} title={myReviews.text} />
-                      {/* <div className="projectImg">
-                        <img src={myProject.img_url} />
-                      </div> */}
-                      <CardMedia image={myReviews.img_url} />
-                      <CardContent>
-                        <StarRatings
-                          rating={Math.round(myReviews.rating)}
-                          starRatedColor="yellow"
-                          starDimension="14px"
-                          starSpacing="4px"
-                          starRatedColor="black"
-                        />
-                      </CardContent>
-                      
-                    </Card>
-                    </CardLink>
-                  </div>
-                );
-              })}
+              {this.props.myReviews.map(myReviews => (
+                <ReviewRender
+                  myReview_id={myReviews.review_id}
+                  myReviewsText={myReviews.text}
+                  myReviewsImg_url={myReviews.img_url}
+                  myReviewsRating={myReviews.rating}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -117,11 +97,6 @@ class ReviewList extends Component {
   }
 }
 
-{
-  /* <h2>{myReviews.text}</h2>
-									<p>{myReviews.rating}</p>
-									<img src={myReviews.img_url} alt="" /> */
-}
 const mapStateToProps = state => {
   return {
     myReviews: state.myProjectReducer.myReviews,
@@ -131,5 +106,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchMyReviews,fetchSearchResults }
+  { fetchMyReviews, fetchSearchResults }
 )(ReviewList);

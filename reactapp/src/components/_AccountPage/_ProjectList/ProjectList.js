@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
 import { Link } from 'react-router-dom';
-import StarRatings from 'react-star-ratings';
 import { AccountSideBar, Nav } from '../../../components';
 import { Header } from '../../../components';
+import { ProjectRender } from '../../../components';
 import './ProjectList.css';
 
 import {
@@ -20,37 +13,9 @@ import {
   fetchCategoryResults
 } from '../../../actions';
 
-const styles = theme => ({
-  card: {
-    width: '300px',
-    margin: '25px',
-    '&:hover': {
-      backgroundColor: '0'
-    }
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
-  },
-  actions: {
-    display: 'flex'
-  },
-  avatar: {
-    backgroundColor: red[500]
-  }
-});
-
-const CardLink = styled.a`
-  text-decoration: none;
-  color:black &:hover {
-    text-decoration: none;
-    color: black;
-  }
-`;
-
 class ProjectList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { input: '' };
   }
 
@@ -73,15 +38,6 @@ class ProjectList extends Component {
   componentDidMount() {
     this.props.fetchMyProjects(this.props.userInfo.user_id);
   }
-
-  //  <div className="myProjectDisplay" key={myProject.project_id}>
-  //                   <Link to={`project/${myProject.project_id}`}>
-  //                     <h2>{myProject.project_name}</h2>
-  //                   </Link>
-  //                   <p>{myProject.project_rating}</p>
-  //                   <img src={myProject.img_url} alt="" />
-  //                 </div>
-
   render() {
     const { classes } = this.props;
 
@@ -95,45 +51,16 @@ class ProjectList extends Component {
         <div className="project-list-container">
           <AccountSideBar />
 
-          <div className="myProjectDisplay">
-            {this.props.myProjects.map(myProject => {
-              return (
-                <div className="myProjectDisplay" key={myProject.project_id}>
-                  <CardLink
-                    className="project-card"
-                    href={`project/${myProject.project_id}`}
-                  >
-                    <Card>
-                      <CardHeader
-                        action={null}
-                        title={myProject.project_name}
-                      />
-                      {/* <div className="projectImg">
-                        <img src={myProject.img_url} />
-                      </div> */}
-                      <CardMedia
-                        image={myProject.img_url}
-                        title={myProject.project_name}
-                      />
-                      <CardContent>
-                        <StarRatings
-                          rating={Math.round(myProject.project_rating)}
-                          starRatedColor="yellow"
-                          starDimension="14px"
-                          starSpacing="4px"
-                          starRatedColor="black"
-                        />
-                      </CardContent>
-                      <CardContent>
-                        <Typography component="p">
-                          [THIS IS THE PROJECT DESCRIPTION]
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </CardLink>
-                </div>
-              );
-            })}
+          <div className="myProjectsDisplay">
+            {this.props.myProjects.map(myProject => ( 
+                <ProjectRender 
+                myProjectProject_id={myProject.project_id} 
+                myProjectProject_name={myProject.project_name}
+                myProjectImg_url={myProject.img_url}
+                myProjectProject_rating={myProject.project_rating}
+                
+                />
+            ))}
             <div className="addNew">
               <h2>New Project</h2>
               <Link to="/newproject">
@@ -163,5 +90,6 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSearchResults, fetchCategoryResults, fetchMyProjects }
+  { fetchSearchResults, fetchCategoryResults, fetchMyProjects  }
 )(ProjectList);
+

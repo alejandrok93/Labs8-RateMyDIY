@@ -126,9 +126,6 @@ const WelcomeMessage = styled.p`
 	font-size: 14px;
 	white-space: nowrap;
 	color:white;
-	background-color:grey;
-	padding: 10px;
-	border-radius:8%;
 	
 
 	@media (max-width: 500px) {

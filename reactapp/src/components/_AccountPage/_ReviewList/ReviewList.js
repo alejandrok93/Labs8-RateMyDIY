@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchMyReviews, fetchSearchResults } from '../../../actions';
+import { fetchMyReviews, fetchSearchResults,loggedIn } from '../../../actions';
 import { AccountSideBar } from '../../../components';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import StarRatings from 'react-star-ratings';
 import { Header } from '../../../components';
 import './ReviewList.css';
 import styled from 'styled-components';
@@ -42,7 +36,7 @@ class ReviewList extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchMyReviews(this.props.userInfo.user_id);
+    this.props.loggedIn(fetchMyReviews);
   }
 
   render() {
@@ -106,5 +100,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchMyReviews, fetchSearchResults }
+  { fetchMyReviews, fetchSearchResults , loggedIn }
 )(ReviewList);

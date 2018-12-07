@@ -24,7 +24,6 @@ export const loggedIn = (nextAction, args) => {
 				dispatch({ type: GOT_USER_INFO, payload: data });
 				return data;
 			})
-
 			.then(userInfo => {
 				if (nextAction) {
 					dispatch(nextAction(userInfo.user_id, args));

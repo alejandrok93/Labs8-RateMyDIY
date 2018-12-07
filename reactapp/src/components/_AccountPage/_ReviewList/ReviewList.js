@@ -77,7 +77,7 @@ class ReviewList extends Component {
             <div className="myReviewDisplay">
               {this.props.myReviews.map(myReviews => (
                 <ReviewRender
-                  myReview_id={myReviews.review_id}
+                  myReview_id={myReviews.project_id}
                   myReviewsText={myReviews.text}
                   myReviewsImg_url={myReviews.img_url}
                   myReviewsRating={myReviews.rating}

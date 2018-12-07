@@ -40,8 +40,6 @@ class ProjectList extends Component {
 		this.props.loggedIn(fetchMyProjects);
 	}
 	render() {
-		const { classes } = this.props;
-
 		return (
 			<div className="projectPage">
 				<Header

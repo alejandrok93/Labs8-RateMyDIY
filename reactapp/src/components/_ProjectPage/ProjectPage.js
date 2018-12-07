@@ -19,7 +19,8 @@ import {
 import {
 	loggedIn,
 	getProject,
-	loggedIn_Project_ReviewId_Chain,
+	// loggedIn_Project_ReviewId_Chain,
+	project_ReviewId_Chain,
 	getReviewId,
 	willUpdateProject,
 	deleteProject,
@@ -130,7 +131,9 @@ class ProjectPage extends Component {
 	// Visiting this page calls loggedIn() twice. Will fix later.
 	componentDidMount() {
 		// Trying out this awkward action chain
-		this.props.loggedIn_Project_ReviewId_Chain(this.props.match.params.id);
+		// this.props.loggedIn_Project_ReviewId_Chain(this.props.match.params.id);
+
+		this.props.loggedIn(project_ReviewId_Chain, this.props.match.params.id);
 	}
 
 	componentWillUnmount() {
@@ -267,7 +270,9 @@ class ProjectPage extends Component {
 									<ReviewButton
 										onClick={() =>
 											this.props.userInfo.user_id
+
 												? this.props.showReviewModal('new')
+
 												: this.notLoggedInHandler()
 										}
 										disabled={this.props.gettingReviewId}
@@ -275,6 +280,7 @@ class ProjectPage extends Component {
 										Review Project
 									</ReviewButton>
 								))}
+
 
 							{this.props.reviewModal &&
 								(this.props.reviewId ? (
@@ -336,7 +342,8 @@ export default connect(
 	mapStateToProps,
 	{
 		loggedIn,
-		loggedIn_Project_ReviewId_Chain,
+		// loggedIn_Project_ReviewId_Chain,
+		project_ReviewId_Chain,
 		getProject,
 		getReviewId,
 		willUpdateProject,

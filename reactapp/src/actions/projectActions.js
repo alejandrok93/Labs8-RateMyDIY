@@ -72,7 +72,7 @@ export const getProjectLite = project_id => {
 
 // I don't know how to chain actions properly. This is a mess.
 // got userInfo, get project, then reviewId
-export const project_ReviewId_Chain = (project_id, user_id) => {
+export const project_ReviewId_Chain = (user_id, project_id) => {
 	return dispatch => {
 		dispatch({ type: GETTING_PROJECT });
 

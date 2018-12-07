@@ -1,16 +1,16 @@
 export { default as App } from './__App/App';
 export { default as SearchBar } from './SearchBar/SearchBar';
 export {
-	default as SearchPageSearchBar
+  default as SearchPageSearchBar
 } from './SearchPageSearchBar/SearchPageSearchBar';
 export {
-	default as FeaturedProjects
+  default as FeaturedProjects
 } from './_LandingPage/FeaturedProjects/FeaturedProjects';
 export {
-	default as PopularMakers
+  default as PopularMakers
 } from './_LandingPage/PopularMakers/PopularMakers';
 export {
-	default as PopularReviewers
+  default as PopularReviewers
 } from './_LandingPage/PopularReviewers/PopularReviewers';
 export { default as LandingPage } from './_LandingPage/LandingPage';
 //export { default as ProjectTile } from './ProjectTile/ProjectTile';
@@ -51,3 +51,7 @@ export { default as LogInPopUp } from './LogInPopUp/LogInPopUp';
 export { default as Header } from './Header/Header';
 export { default as WithTheme } from './WithTheme/WithTheme';
 export { default as SearchTags } from './SearchTags/SearchTags';
+export {
+  default as ProjectRender
+} from './_AccountPage/_ProjectList/ProjectRender';
+export { default as ReviewRender } from './_AccountPage/_ReviewList/ReviewRender';

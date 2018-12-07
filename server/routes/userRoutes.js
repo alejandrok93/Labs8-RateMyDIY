@@ -79,29 +79,29 @@ router.post('/editusername', function (req, res, next) {
 							.editUsername(auth_id, username)
 							.then(editSuccess => {
 								console.log('EDIT SUCCESS', editSuccess);
-								res.status(200).json({ success: editedUsername});
+								res.status(200).json({ message: editedUsername});
 							})
 							.catch(editError => {
 								console.log('EDIT ERROR', editError);
-								res.status(500).json({ error: 'Please choose a different username' });
+								res.status(500).json({ message: 'Please choose a different username' });
 							});
 					} else {
-						res.status(500).json({ error: 'Please choose a different username' });
+						res.status(500).json({ message: 'Please choose a different username' });
 					}
 				})
 				.catch(usernameListError => {
 					console.log('usernameListError', usernameListError);
-					res.status(500).json({ error: 'Please choose a different username' });
+					res.status(500).json({ message: 'Please choose a different username' });
 				});
 		})
 		.catch(changeError => {
-			console.log('USERNAME ERROR', changeError);
-			res.status(500).json(changeError)
+			console.log('USERNAME ERROR', changeError.response.data);
+			res.status(200).json(changeError.response.data);
 		});
 	})
 	.catch(tokenError => {
-		console.log('tokenError', tokenError)
-		res.status(500).json(tokenError);
+		console.log('tokenError', tokenError.response.data)
+		res.status(200).json(tokenError.response.data);
 	})
 });
 
@@ -113,11 +113,11 @@ router.post('/editprofilepic', function (req, res, next) {
 		.editProfilePic(auth_id, img_url)
 		.then(picSuccess => {
 			console.log('PIC SUCCESS', picSuccess);
-			res.status(200).json({ success: 'Profile picture changed' });
+			res.status(200).json({ message: 'Profile picture changed' });
 		})
 		.catch(picError => {
 			console.log('PIC ERROR', picError);
-			res.status(500).json({ error: 'Error changing profile picture' });
+			res.status(500).json({ message: 'Error changing profile picture' });
 		});
 });
 

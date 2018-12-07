@@ -12,8 +12,8 @@ import {
 	LandingPage,
 	ProjectList,
 	CreateEditPage,
-	UserSettingsSummaries,
-	UserSettingSettings,
+
+	UserSettings,
 	//  SearchBar, // not used
 	SearchPage,
 	ProjectPage,
@@ -62,11 +62,11 @@ class App extends Component {
         </ul> */}
 				{/* <Navbar /> */}
 				<Route exact path="/" component={LandingPage} />
-				<Route path="/settings/summaries" component={UserSettingsSummaries} />
+
 				<Route exact path="/ReviewList" component={ReviewList} />
 				<Route exact path="/ProjectList" component={ProjectList} />
 				<Route exact path="/CreateEditPage" component={CreateEditPage} />
-				<Route path="/settings" component={UserSettingSettings} />
+				<Route path="/settings" component={UserSettings} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />

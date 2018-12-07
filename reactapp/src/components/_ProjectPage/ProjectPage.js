@@ -27,6 +27,7 @@ import {
 	willAddPost,
 	willUpdatePost,
 	willDeletePost,
+	showReviewModal,
 	setRedirect
 } from '../../actions';
 
@@ -111,7 +112,7 @@ class ProjectPage extends Component {
 		this.setState({
 			confirm: {
 				text: [
-					`You aren't logged in! todo: add a redirect to signup to this modal`,
+					`You aren't logged in! todo: add a redirect to signup`,
 					'Cancel',
 					'Cancel'
 				],
@@ -260,7 +261,7 @@ class ProjectPage extends Component {
 									</ButtonContainer>
 								) : this.props.reviewId ? (
 									<ReviewButton
-										onClick={() => this.setState({ review: true })}
+										onClick={() => this.props.showReviewModal(true)}
 										disabled={this.props.gettingReviewId}
 									>
 										View Your Review
@@ -269,7 +270,9 @@ class ProjectPage extends Component {
 									<ReviewButton
 										onClick={() =>
 											this.props.userInfo.user_id
-												? this.setState({ review: 'new' })
+
+												? this.props.showReviewModal('new')
+
 												: this.notLoggedInHandler()
 										}
 										disabled={this.props.gettingReviewId}
@@ -278,19 +281,16 @@ class ProjectPage extends Component {
 									</ReviewButton>
 								))}
 
-							{this.state.review &&
+
+							{this.props.reviewModal &&
 								(this.props.reviewId ? (
-									<ReviewModal
-										review_id={this.props.reviewId}
-										closeModal={() => this.setState({ review: undefined })}
-									/>
+									<ReviewModal review_id={this.props.reviewId} />
 								) : (
 									<ReviewModal
 										project_id={this.props.project.project_id}
 										project_name={this.props.project.project_name}
 										maker_name={this.props.project.username}
 										img_url={this.props.project.img_url}
-										closeModal={() => this.setState({ review: undefined })}
 									/>
 								))}
 
@@ -332,6 +332,8 @@ const mapStateToProps = state => {
 		deletingProject: state.projectReducer.deletingProject,
 		deletingProjectError: state.projectReducer.deletingProjectError,
 
+		reviewModal: state.reviewReducer.reviewModal,
+
 		redirect: state.projectReducer.redirect
 	};
 };
@@ -349,6 +351,7 @@ export default connect(
 		willAddPost,
 		willUpdatePost,
 		willDeletePost,
+		showReviewModal,
 		setRedirect
 	}
 )(ProjectPage);

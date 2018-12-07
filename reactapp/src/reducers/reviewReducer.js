@@ -15,7 +15,8 @@ import {
 	WILL_DELETE_REVIEW,
 	DELETING_REVIEW,
 	DELETED_REVIEW,
-	DELETE_REVIEW_ERROR
+	DELETE_REVIEW_ERROR,
+	SHOW_REVIEW_MODAL
 } from '../actions';
 
 const initialState = {
@@ -37,7 +38,9 @@ const initialState = {
 
 	reviewToDelete: false,
 	deletingReview: false,
-	deletingReviewError: null
+	deletingReviewError: null,
+
+	reviewModal: false
 };
 
 const reviewReducer = (state = initialState, action) => {
@@ -50,7 +53,8 @@ const reviewReducer = (state = initialState, action) => {
 			return {
 				...state,
 				review: action.payload,
-				gettingReview: false
+				gettingReview: false,
+				reviewToUpdate: false
 			};
 
 		case GET_REVIEW_ERROR:
@@ -110,8 +114,7 @@ const reviewReducer = (state = initialState, action) => {
 		case UPDATED_REVIEW:
 			return {
 				...state,
-				updatingReview: false,
-				reviewToUpdate: false
+				updatingReview: false
 			};
 
 		case UPDATE_REVIEW_ERROR:
@@ -135,7 +138,9 @@ const reviewReducer = (state = initialState, action) => {
 		case DELETED_REVIEW:
 			return {
 				...state,
-				deletingReview: false
+				deletingReview: false,
+				reviewModal: false,
+				reviewId: null
 			};
 
 		case DELETE_REVIEW_ERROR:
@@ -143,6 +148,13 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				deletingReview: false,
 				deletingReviewError: `${action.payload}`
+			};
+
+		// showReviewModal
+		case SHOW_REVIEW_MODAL:
+			return {
+				...state,
+				reviewModal: action.payload
 			};
 
 		default:

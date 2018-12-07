@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { updateReview } from '../../actions';
+import { updateReview, showReviewModal } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -126,12 +126,12 @@ class EditReview extends Component {
 					submit: event => {
 						event.preventDefault();
 						this.props.willUpdateReview(false);
-						this.props.closeModal();
+						this.props.showReviewModal(false);
 					}
 				}
 			});
 		} else {
-			this.props.closeModal();
+			this.props.showReviewModal(false);
 		}
 	};
 
@@ -213,8 +213,8 @@ class EditReview extends Component {
 						autoFocus
 					/>
 
-					{this.props.updatingReview && (
-						<StatusMessage>Adding review...</StatusMessage>
+					{(this.props.updatingReview || this.props.gettingReview) && (
+						<StatusMessage>Updating review...</StatusMessage>
 					)}
 					{this.props.updatingReviewError && (
 						<StatusMessage>{this.props.updatingReviewError}</StatusMessage>
@@ -234,14 +234,19 @@ class EditReview extends Component {
 
 const mapStateToProps = state => {
 	return {
+		gettingReview: state.reviewReducer.gettingReview,
+
 		updatingReview: state.reviewReducer.updatingReview,
-		updatingReviewError: state.reviewReducer.updatingReviewError
+		updatingReviewError: state.reviewReducer.updatingReviewError,
+
+		reviewModal: state.reviewReducer.reviewModal
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{
-		updateReview
+		updateReview,
+		showReviewModal
 	}
 )(EditReview);

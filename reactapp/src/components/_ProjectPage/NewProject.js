@@ -25,11 +25,10 @@ const NewProjectContainer = styled.div`
 `;
 
 const NewProjectBody = styled.div`
-width:100%;
+  width: 100%;
 `;
-const NewProjectHeader = styled.div`
 
-`;
+const NewProjectHeader = styled.div``;
 const StatusMessage = styled.p``;
 
 const ProjectForm = styled.form``;
@@ -90,7 +89,13 @@ const ProjectImageUpload = styled.div`
     background-color: #772940;
   }
 `;
-
+const ProfileHeader = styled.h2`
+  width: 80%;
+  color: ${props => props.theme.mui.palette.secondary.main};
+  font-size: 2.5rem;
+  margin: 2% auto;
+  text-align: center;
+`;
 const ImageFileUpload = styled.div`
   width: 1em;
   height: 1em;
@@ -102,8 +107,7 @@ const ImageFileUpload = styled.div`
 `;
 
 const TextInput = styled.input`
-  padding: 5px 461px 200px 5px;
-  margin-bottom: 20px;
+
 `;
 
 const CancelButton = styled.button`
@@ -141,6 +145,7 @@ const SubmitInput = styled.input`
 const ProjectHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
   margin-bottom: 20px;
 `;
 
@@ -298,6 +303,7 @@ class NewProject extends Component {
         <NewProjectContainer>
           {this.state.redirect && <Redirect push to={this.state.redirect} />}
           <ProjectForm onSubmit={this.submitHandler}>
+          Project title:
             <ProjectHeader>
               <ProjectNameInput
                 name="project_name"
@@ -311,8 +317,14 @@ class NewProject extends Component {
             </ProjectHeader>
 
             <Img
-              src={this.state.img_url || 'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'}
-              alt={this.state.img_url || 'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'}
+              src={
+                this.state.img_url ||
+                'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
+              }
+              alt={
+                this.state.img_url ||
+                'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
+              }
             />
             <ProjectImage
               type="file"
@@ -343,7 +355,12 @@ class NewProject extends Component {
                 Upload Image!
               </ProjectImageUpload>
             </ProjectImageFlex>
+            {this.state.selectedFile ? (
+              <ProfileHeader>{this.state.selectedFile.name}</ProfileHeader>
+            ) : null}
+            Project description:
             <TextInput
+              className="TextInput"
               name="text"
               type="text"
               placeholder="Project description"

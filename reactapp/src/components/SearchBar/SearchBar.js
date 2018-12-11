@@ -3,35 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 //Apply styles
-// const SearchWrapper = styled.div`
-// 	width: 80%;
-// 	height: 0px;
-// 	margin: 0 auto;
-// 	display: flex;
-// 	flex-direction: column;
-
-// 	@media (max-width: 500px) {
-// 		width: 100%;
-// 	}
-// `;
-
-// const SelectWrapper = styled.div`
-// 	display: flex;
-// 	justify-content: space-around;
-// `;
-
-// const SelectStyle = styled.select`
-// 	height: 24px;
-// 	width: 20%;
-// 	transform: 1s;
-// 	/* border-radius: 5px; */
-
-// 	@media (max-width: 500px) {
-// 		text-align-last: center;
-// 		padding-left: 10px;
-// 	}
-// `;
-
 const SearchBarWrapper = styled.form`
 	display: flex;
 	width: 70%;
@@ -56,8 +27,8 @@ const SearchBarInput = styled.input`
 	border: 2px solid black;
 	border-right: 0;
 	font-size: 14px;
-
-	font-size: 14px;
+	padding: 0px 15px;
+	font-size: 18px;
 `;
 
 const SearchBarButton = styled.button`
@@ -79,16 +50,11 @@ const SearchBarButton = styled.button`
 
 const SearchBar = props => {
 	return (
-		// <SearchWrapper>
-		// 	<SelectWrapper />
-		// 	<SearchBarSearchButtonWrapper>
-		// 	</SearchBarSearchButtonWrapper>
-		// </SearchWrapper>
-
 		<SearchBarWrapper>
 			<SearchBarInput
 				onChange={e => props.handleChange(e)}
 				placeholder="Find a DIY project or Author"
+				value={props.searchTerm}
 			/>
 			<SearchBarButton
 				onClick={e => props.handleSearch(e)}

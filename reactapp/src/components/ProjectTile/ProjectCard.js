@@ -11,6 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import StarRatings from 'react-star-ratings';
+import './ProjectCard.css';
 
 const styles = theme => ({
 	card: {

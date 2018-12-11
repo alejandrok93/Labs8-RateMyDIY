@@ -15,7 +15,7 @@ import styled from 'styled-components';
 
 const NewProjectContainer = styled.div`
   width: 700px;
-  padding: 30px;
+  padding: 25px 30px 15px 30px ;
   margin: 0 auto;
   margin-top: 80px;
   display: flex;
@@ -107,7 +107,9 @@ const ImageFileUpload = styled.div`
 `;
 
 const TextInput = styled.input`
-
+  padding: 5px 461px 200px 5px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 `;
 
 const CancelButton = styled.button`
@@ -145,7 +147,7 @@ const SubmitInput = styled.input`
 const ProjectHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 20px;
 `;
 
@@ -156,7 +158,6 @@ const ProjectNameInput = styled.input`
 const ProjectButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
 `;
 
 class NewProject extends Component {

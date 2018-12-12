@@ -36,7 +36,7 @@ const styles = theme => ({
 		display: 'flex'
 	},
 	avatar: {
-		backgroundColor: red[500]
+		backgroundColor: red[500],
 	}
 });
 

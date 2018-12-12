@@ -6,10 +6,34 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { updateReview, showReviewModal } from '../../actions';
+import { updateReview } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
+
+const ModalShade = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(200, 200, 200, 0.75);
+`;
+
+const ModalBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 440px;
+	height: 590px;
+	background: white;
+	padding: 20px;
+	border: 2px solid #9a9a9a;
+	transform: translate(-50%, -50%);
+`;
 
 const CloseModalButton = styled.button`
 	align-self: flex-end;
@@ -74,12 +98,16 @@ class EditReview extends Component {
 	submitHandler = event => {
 		event.preventDefault();
 
-		this.props.updateReview(this.props.review.review_id, {
-			user_id: this.props.user_id,
-			project_id: this.props.review.project_id,
-			rating: this.state.rating,
-			text: this.state.text
-		});
+		this.props.updateReview(
+			this.props.review.review_id,
+			{
+				user_id: this.props.user_id,
+				project_id: this.props.review.project_id,
+				rating: this.state.rating,
+				text: this.state.text
+			},
+			() => this.props.willUpdateReview(false)
+		);
 	};
 
 	// Cancel new review (with confirmation prompt)
@@ -125,7 +153,6 @@ class EditReview extends Component {
 					},
 					submit: event => {
 						event.preventDefault();
-						this.props.willUpdateReview(false);
 						this.props.showReviewModal(false);
 					}
 				}
@@ -143,91 +170,108 @@ class EditReview extends Component {
 	}
 
 	render() {
+		const disabled = this.props.updatingReview || this.props.gettingReview;
+
 		return (
-			<React.Fragment>
-				<CloseModalButton onClick={this.closeHandler}>x</CloseModalButton>
+			<ModalShade
+				onClick={event => {
+					event.stopPropagation();
+					if (!this.state.confirm) this.closeHandler(event);
+				}}
+			>
+				<ModalBox onClick={event => event.stopPropagation()}>
+					<CloseModalButton onClick={this.closeHandler}>x</CloseModalButton>
 
-				{/* todo: click outside modal to trigger cancelHandler */}
-				<ReviewForm onSubmit={this.submitHandler}>
-					<ProjectTitle>{`@${this.props.maker_name}'s ${
-						this.props.project_name
-					}`}</ProjectTitle>
+					{/* todo: click outside modal to trigger cancelHandler */}
+					<ReviewForm onSubmit={this.submitHandler}>
+						<ProjectTitle>{`@${this.props.maker_name}'s ${
+							this.props.project_name
+						}`}</ProjectTitle>
 
-					<Reviewer>{`Review by: @${this.props.username}`}</Reviewer>
+						<Reviewer>{`Review by: @${this.props.username}`}</Reviewer>
 
-					<Img
-						src={this.props.img_url}
-						alt={this.props.img_url || 'project image'}
-					/>
+						<Img
+							src={this.props.img_url}
+							alt={this.props.img_url || 'project image'}
+						/>
 
-					<StarContainer>
-						<input
-							type="radio"
-							name="rating"
-							value="1"
-							// checked={this.state.checked == 1 ? 'checked' : false}
+						<StarContainer>
+							<input
+								type="radio"
+								name="rating"
+								value="1"
+								// checked={this.state.checked == 1 ? 'checked' : false}
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="2"
+								// checked={this.state.checked == 2 ? 'checked' : false}
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="3"
+								// checked={this.state.checked == 3 ? 'checked' : false}
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="4"
+								// checked={this.state.checked == 4 ? 'checked' : false}
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="5"
+								// checked={this.state.checked == 5 ? 'checked' : false}
+								onChange={this.changeHandler}
+								required
+							/>
+						</StarContainer>
+
+						<TextArea
+							name="text"
+							type="text"
+							placeholder="review text"
+							value={this.state.text}
 							onChange={this.changeHandler}
 							required
+							autoFocus
 						/>
-						<input
-							type="radio"
-							name="rating"
-							value="2"
-							// checked={this.state.checked == 2 ? 'checked' : false}
-							onChange={this.changeHandler}
-							required
-						/>
-						<input
-							type="radio"
-							name="rating"
-							value="3"
-							// checked={this.state.checked == 3 ? 'checked' : false}
-							onChange={this.changeHandler}
-							required
-						/>
-						<input
-							type="radio"
-							name="rating"
-							value="4"
-							// checked={this.state.checked == 4 ? 'checked' : false}
-							onChange={this.changeHandler}
-							required
-						/>
-						<input
-							type="radio"
-							name="rating"
-							value="5"
-							// checked={this.state.checked == 5 ? 'checked' : false}
-							onChange={this.changeHandler}
-							required
-						/>
-					</StarContainer>
 
-					<TextArea
-						name="text"
-						type="text"
-						placeholder="review text"
-						value={this.state.text}
-						onChange={this.changeHandler}
-						required
-						autoFocus
-					/>
+						{(this.props.updatingReview || this.props.gettingReview) && (
+							<StatusMessage>Updating review...</StatusMessage>
+						)}
+						{this.props.updatingReviewError && (
+							<StatusMessage>{this.props.updatingReviewError}</StatusMessage>
+						)}
 
-					{(this.props.updatingReview || this.props.gettingReview) && (
-						<StatusMessage>Updating review...</StatusMessage>
-					)}
-					{this.props.updatingReviewError && (
-						<StatusMessage>{this.props.updatingReviewError}</StatusMessage>
-					)}
+						<ButtonContainer>
+							<CancelButton onClick={this.cancelHandler} disabled={disabled}>
+								Cancel
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Submit Changes"
+								disabled={disabled}
+							/>
+						</ButtonContainer>
 
-					<ButtonContainer>
-						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-						<SubmitInput type="submit" value="Submit Changes" />
-					</ButtonContainer>
-
-					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
-				</ReviewForm>
-			</React.Fragment>
+						{this.state.confirm && (
+							<ConfirmModal confirm={this.state.confirm} />
+						)}
+					</ReviewForm>
+				</ModalBox>
+			</ModalShade>
 		);
 	}
 }
@@ -246,7 +290,6 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
-		updateReview,
-		showReviewModal
+		updateReview
 	}
 )(EditReview);

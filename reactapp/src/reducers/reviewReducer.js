@@ -8,39 +8,35 @@ import {
 	ADDING_REVIEW,
 	ADDED_REVIEW,
 	ADD_REVIEW_ERROR,
-	WILL_UPDATE_REVIEW,
 	UPDATING_REVIEW,
 	UPDATED_REVIEW,
 	UPDATE_REVIEW_ERROR,
-	WILL_DELETE_REVIEW,
 	DELETING_REVIEW,
 	DELETED_REVIEW,
 	DELETE_REVIEW_ERROR,
-	SHOW_REVIEW_MODAL
+	LIKING_REVIEW,
+	LIKED_REVIEW,
+	LIKE_REVIEW_ERROR
 } from '../actions';
 
 const initialState = {
-	review: {},
-	reviewId: null,
+	review: {}
+	// reviewId: null,
 
-	gettingReviews: false,
-	gettingReviewsError: null,
+	// gettingReviews: false,
+	// gettingReviewsError: null,
 
-	gettingReview: false,
-	gettingReviewError: null,
+	// gettingReview: false,
+	// gettingReviewError: null,
 
-	addingReview: false,
-	addingReviewError: null,
+	// addingReview: false,
+	// addingReviewError: null,
 
-	reviewToUpdate: false,
-	updatingReview: false,
-	updatingReviewError: null,
+	// updatingReview: false,
+	// updatingReviewError: null,
 
-	reviewToDelete: false,
-	deletingReview: false,
-	deletingReviewError: null,
-
-	reviewModal: false
+	// deletingReview: false,
+	// deletingReviewError: null,
 };
 
 const reviewReducer = (state = initialState, action) => {
@@ -52,9 +48,10 @@ const reviewReducer = (state = initialState, action) => {
 		case GOT_REVIEW:
 			return {
 				...state,
-				review: action.payload,
+				review: action.payload.review,
+				reviewId: action.payload.review_id,
 				gettingReview: false,
-				reviewToUpdate: false
+				likingReviewError: undefined
 			};
 
 		case GET_REVIEW_ERROR:
@@ -89,8 +86,7 @@ const reviewReducer = (state = initialState, action) => {
 		case ADDED_REVIEW:
 			return {
 				...state,
-				addingReview: false,
-				reviewId: action.payload
+				addingReview: false
 			};
 
 		case ADD_REVIEW_ERROR:
@@ -98,13 +94,6 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				addingReview: false,
 				addingReviewError: `${action.payload}`
-			};
-
-		// willUpdateReview
-		case WILL_UPDATE_REVIEW:
-			return {
-				...state,
-				reviewToUpdate: action.payload
 			};
 
 		// updateReview
@@ -122,13 +111,6 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				updatingReview: false,
 				updatingReviewError: `${action.payload}`
-			};
-
-		// willDeleteReview
-		case WILL_DELETE_REVIEW:
-			return {
-				...state,
-				reviewToDelete: action.payload
 			};
 
 		// deleteReview
@@ -150,11 +132,22 @@ const reviewReducer = (state = initialState, action) => {
 				deletingReviewError: `${action.payload}`
 			};
 
-		// showReviewModal
-		case SHOW_REVIEW_MODAL:
+		// likeReview
+		case LIKING_REVIEW:
+			return { ...state, likingReview: true };
+
+		case LIKED_REVIEW:
 			return {
 				...state,
-				reviewModal: action.payload
+				likingReview: false,
+				review: { ...state.review, like: action.payload }
+			};
+
+		case LIKE_REVIEW_ERROR:
+			return {
+				...state,
+				likingReview: false,
+				likingReviewError: `${action.payload}`
 			};
 
 		default:

@@ -16,6 +16,7 @@ import MenuDrawer from '../MenuDrawer/MenuDrawer';
 //Import components
 import {
 	Nav,
+	ScrollToTopOnMount,
 	FeaturedProjects,
 	PopularMakers,
 	PopularReviewers,
@@ -143,6 +144,7 @@ class LandingPage extends Component {
 	render() {
 		return (
 			<LandingPageWrapper>
+				<ScrollToTopOnMount />
 				<HeroImageContainer>
 					{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
 					<HeroSearchContainer>

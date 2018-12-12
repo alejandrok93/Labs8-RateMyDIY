@@ -35,8 +35,6 @@ class ProjectList extends Component {
 	};
 
 	componentDidMount() {
-		// this.props.fetchMyProjects(this.props.userInfo.user_id);
-
 		this.props.loggedIn(fetchMyProjects);
 	}
 	render() {
@@ -53,6 +51,7 @@ class ProjectList extends Component {
 					<div className="myProjectsDisplay">
 						{this.props.myProjects.map(myProject => (
 							<ProjectRender
+								key={myProject.project_id}
 								myProjectProject_id={myProject.project_id}
 								myProjectProject_name={myProject.project_name}
 								myProjectImg_url={myProject.img_url}

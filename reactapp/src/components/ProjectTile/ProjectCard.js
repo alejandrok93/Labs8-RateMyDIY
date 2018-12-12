@@ -45,14 +45,16 @@ const StyledLink = styled(Link)`
 
 	&:hover {
 		text-decoration: none;
-		backgounrd: none;
+		background: none;
 	}
 `;
 
 const CardTitle = styled.h3`
-	fontsize: 2rem;
+	font-size: 2rem;
 `;
-const CardUsername = styled.p``;
+
+// const CardUsername = styled.p``;
+
 class ProjectCard extends React.Component {
 	state = { expanded: false };
 
@@ -61,7 +63,7 @@ class ProjectCard extends React.Component {
 	};
 
 	render() {
-		const { classes, theme } = this.props;
+		const { classes } = this.props;
 		return (
 			<StyledLink
 				style={{

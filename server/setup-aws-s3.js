@@ -1,4 +1,4 @@
-
+const path = require( 'path' );
 const aws = require('aws-sdk');
 
 aws.config.update({
@@ -19,6 +19,7 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 
 const upload = multer({
+
   storage: multerS3({
     // allows for new instances of s3 created from above
     s3: s3,
@@ -39,7 +40,25 @@ const upload = multer({
       // What to call file on AWS server
       cb(null, Date.now().toString())
     }
-  })
+  }),
+  limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
+	fileFilter: function( req, file, cb ){
+    checkFileType( file, cb );
+  }
 })
+
+function checkFileType( file, cb ){
+	// Allowed ext
+	const filetypes = /jpeg|jpg|png|gif/;
+	// Check ext
+	const extname = filetypes.test( path.extname( file.originalname ).toLowerCase());
+	// Check mime
+	const mimetype = filetypes.test( file.mimetype );
+	if( mimetype && extname ){
+		return cb( null, true );
+	} else {
+		cb( 'Error: Images Only!' );
+	}
+}
 
 module.exports = upload;

@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ConfirmModal, Header } from '../../components';
 
 // Actions
-import { addProject, fetchSearchResults } from '../../actions';
+import { addProject } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -166,22 +166,8 @@ class NewProject extends Component {
     img_url: null,
     text: '',
     categories: [],
-    input: ''
   };
 
-  handleChange = e => {
-    this.setState({ ...this.state, input: e.target.value });
-  };
-
-  handleSearch = e => {
-    e.preventDefault();
-    const searchTerm = this.state.input;
-    console.log(searchTerm);
-    //call featch search results action
-    //push to search page
-    this.props.fetchSearchResults(searchTerm);
-    this.props.history.push(`/search?query=${searchTerm}`);
-  };
 
   singleFileChangedHandler = event => {
     this.setState({
@@ -203,7 +189,9 @@ class NewProject extends Component {
         .post(
           (process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
             `/api/projects/image-upload`,
-          data,
+          data, { onUploadProgress: progressEvent => {
+            console.log("Upload Progress:" + Math.round(progressEvent.loaded/progressEvent.total * 100 ) + '%')
+          }},
           {
             headers: {
               accept: 'application/json',
@@ -213,6 +201,7 @@ class NewProject extends Component {
           }
         )
         .then(response => {
+          
           if (200 === response.status) {
             // If file size is larger than expected.
             if (response.data.error) {
@@ -296,10 +285,7 @@ class NewProject extends Component {
     return (
       <NewProjectBody>
         <NewProjectHeader>
-          <Header
-            handleChange={this.handleChange}
-            handleSearch={this.handleSearch}
-          />
+          <Header/>
         </NewProjectHeader>
         <NewProjectContainer>
           {this.state.redirect && <Redirect push to={this.state.redirect} />}
@@ -412,6 +398,5 @@ export default connect(
   mapStateToProps,
   {
     addProject,
-    fetchSearchResults
   }
 )(NewProject);

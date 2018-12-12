@@ -53,6 +53,7 @@ function getProjectsByReviewer(username) {
 		.select(
 			'projects.project_id',
 			'projects.project_name',
+			'reviews.text',
 			'projects.project_rating',
 			'projects.img_url',
 			'projects.user_id',

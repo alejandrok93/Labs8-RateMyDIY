@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
 	width: 100%;
@@ -8,7 +9,7 @@ const Container = styled.div`
 	margin-left: 33%;
 `;
 
-const SuggestedCategories = styled.a`
+const SuggestedCategories = styled(Link)`
 	font-size: 14px;
 	color: white;
 	margin: 0 3px;
@@ -25,7 +26,7 @@ const SearchTags = props => {
 		<Container>
 			<span>Suggested:</span>{' '}
 			{props.tags.map((tag, index) => (
-				<SuggestedCategories href={`/search?query=${tag}`} key={tag}>
+				<SuggestedCategories to={`/search?query=${tag}`} key={tag}>
 					{tag}
 					{props.tags.length > index + 1 ? ', ' : ''}
 				</SuggestedCategories>

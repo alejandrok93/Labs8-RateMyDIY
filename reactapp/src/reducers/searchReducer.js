@@ -18,9 +18,13 @@ const searchReducer = (state = initialState, action) => {
 	switch (action.type) {
 		// example action
 		case FETCH_SEARCH_RESULTS:
-			return { ...state };
+			return { ...state, gettingSearchResults: true };
 		case FETCH_SEARCH_RESULTS_SUCCESS:
-			return { ...state, projects: action.payload };
+			return {
+				...state,
+				projects: action.payload,
+				gettingSearchResults: false
+			};
 		case FETCH_SEARCH_RESULTS_ERROR:
 			return { ...state, error: 'There was an error' };
 		case FETCH_CATEGORY_RESULTS:

@@ -34,7 +34,7 @@ const Header = props => {
 				<Link to="/">
 					<Logo
 						style={{ width: '60px', height: '60px', margin: '0 20px' }}
-						src="https://ratemydiy.s3.amazonaws.com/1543872216210"
+						src="https://ratemydiy.s3.amazonaws.com/1544565541530"
 						alt="LOGO"
 					/>
 				</Link>
@@ -43,6 +43,7 @@ const Header = props => {
 					<SearchBar
 						handleChange={props.handleChange}
 						handleSearch={props.handleSearch}
+						searchTerm={props.searchTerm}
 					/>
 				</HeaderSearchContainer>
 				<Nav />

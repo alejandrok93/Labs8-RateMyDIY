@@ -12,8 +12,8 @@ import {
 //Apply styles
 const SearchWrapper = styled.div`
 	width: 80%;
-	height: 100px;
-	margin: 25px auto;
+	height: 25px;
+	margin: 15px auto;
 	display: flex;
 	flex-direction: column;
 `;
@@ -112,9 +112,9 @@ export default class SearchPageSearchBar extends React.Component {
 						<UncontrolledDropdown>
 							<DropdownToggle caret>Sort By</DropdownToggle>
 							<DropdownMenu>
-								<DropdownItem>Rateing Up</DropdownItem>
+								<DropdownItem>Rating Up</DropdownItem>
 								<DropdownItem divider />
-								<DropdownItem>Rateing Down</DropdownItem>
+								<DropdownItem>Rating Down</DropdownItem>
 								<DropdownItem divider />
 								<DropdownItem>Date of Review</DropdownItem>
 							</DropdownMenu>

@@ -375,7 +375,7 @@ function removeReview(user_id, review_id) {
 																			2
 																	) / 2
 															  ).toFixed(1)
-															: null,
+															: 0,
 														rating_sum: project_rating_sum,
 														rating_count: project_rating_count
 													},
@@ -414,7 +414,7 @@ function removeReview(user_id, review_id) {
 																									2
 																							) / 2
 																					  ).toFixed(1)
-																					: null,
+																					: 0,
 																				rating_sum: user_rating_sum,
 																				rating_count: user_rating_count
 																			},

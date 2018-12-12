@@ -14,6 +14,8 @@ import styled from 'styled-components';
 
 const PostContainer = styled.div`
 	background: #ffcccc;
+	padding: 16px 16px 8px 16px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const PostForm = styled.form``;
@@ -21,14 +23,14 @@ const PostForm = styled.form``;
 const ImgContainer = styled.div`
 	padding-top: 12px;
 	margin: auto;
-	max-width: 700px;
+	max-width: 100%;
 	height: auto;
 `;
 
 const Img = styled.img`
 	margin: 0 auto;
 	background: white;
-	width: auto;
+	max-width: 100%;
 	height: auto;
 `;
 
@@ -42,7 +44,6 @@ const PostButtonContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin-top: -12px;
-	margin-bottom: 20px;
 `;
 
 const StatusMessage = styled.p``;
@@ -198,12 +199,6 @@ class EditPost extends Component {
 							>
 								Upload!
 							</button>
-							<ImgContainer>
-								<Img
-									src={this.state.img_url || 'placeholder image'}
-									alt={this.state.img_url || 'placeholder image'}
-								/>
-							</ImgContainer>
 						</div>
 					</form>
 					<TextInput

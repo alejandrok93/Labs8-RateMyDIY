@@ -38,9 +38,17 @@ const Logo = styled.img`
 `;
 
 class Header extends React.Component {
-	state = { input: '', searchTerm: '' };
+	state = { input: '', searchTerm: this.props.searchTerm };
 
-	componentDidMount() {}
+	componentDidUpdate(prevProps) {
+		if (this.props.searchTerm !== prevProps.searchTerm) {
+			console.log('component did update!');
+			this.setState(
+				{ searchTerm: this.props.searchTerm },
+				console.log(this.state)
+			);
+		}
+	}
 	handleChange = e => {
 		console.log(e.target.value);
 		this.setState({
@@ -60,7 +68,7 @@ class Header extends React.Component {
 		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 	render() {
-		console.log('this is the search term: ' + this.props.searchTerm);
+		console.log('this is the original search term: ' + this.props.searchTerm);
 		console.log(
 			'this is the search term stored in state: ' + this.state.searchTerm
 		);
@@ -82,8 +90,8 @@ class Header extends React.Component {
 							searchTerm={this.state.searchTerm}
 						/>
 					</HeaderSearchContainer>
-					
-					{window.innerWidth <= 500 ? <MenuDrawer sidebar profile /> : <Nav /> }
+
+					{window.innerWidth <= 500 ? <MenuDrawer sidebar profile /> : <Nav />}
 				</HeaderContainerWraper>
 			</HeaderContainer>
 		);

@@ -81,7 +81,7 @@ class ProjectCard extends React.Component {
 									src={this.props.project.maker_photo_url}
 									className={classes.avatar}
 									// Used negative margin because I can't access the parent element's margin
-									style={{ marginRight: '-5px' }}
+									style={{ marginRight: '-5px', background: '#bfbfbf' }}
 								/>
 							</Link>
 						}
@@ -115,38 +115,21 @@ class ProjectCard extends React.Component {
 				</div>
 
 				<Link to={`/project/${this.props.project.project_id}`}>
-					<CardMedia
-						className={classes.media}
-						image={this.props.project.img_url}
+					<img
+						// className={classes.media}
+						src={this.props.project.img_url}
+						alt=""
 						// title={this.props.project.project_name}
-						style={{ height: '220px' }}
+						style={{
+							width: '100%',
+							height: '220px',
+							objectFit: 'cover',
+							background: '#bfbfbf'
+						}}
 					/>
 				</Link>
 
-				{/* <CardContent
-					style={{
-						display: 'flex',
-						'justifyContent': 'center',
-						padding: '10px 0 4px'
-					}}
-				>
-					<StarRatings
-						rating={Math.round(this.props.project.project_rating)}
-						starDimension="22px"
-						starSpacing="4px"
-						starRatedColor="darkred"
-						starEmptyColor="gray"
-					/>
-				</CardContent> */}
-
-				<CardTitle
-					to={`/project/${this.props.project.project_id}`}
-					// style={{
-					// 	background: 'none',
-					// 	textDecoration: 'none',
-					// 	display: 'inlineBlock'
-					// }}
-				>
+				<CardTitle to={`/project/${this.props.project.project_id}`}>
 					{this.props.project.project_name}
 				</CardTitle>
 
@@ -163,8 +146,6 @@ class ProjectCard extends React.Component {
 						{this.props.project.text}
 					</Typography>
 				</CardContent>
-
-				{/* <CardActions className={classes.actions} disableActionSpacing /> */}
 			</Card>
 		);
 	}

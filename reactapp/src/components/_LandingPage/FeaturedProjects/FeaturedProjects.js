@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 //Import components
-import { ProjectTile } from '../../../components';
+import { ProjectTile, EmptyCard } from '../../../components';
 // import connect for reducers
 import { connect } from 'react-redux';
 import { getFeaturedProjects } from '../../../actions/landingPageActions';
@@ -58,13 +58,26 @@ class FeaturedProjects extends Component {
 			<FeaturedProjectsWrapper>
 				<FeaturedProjectTitle>Featured Projects</FeaturedProjectTitle>
 				<FeaturedProjectListTiles>
-					{this.props.featuredProjects.map(project => (
-						<ProjectTile
-							history={this.props.history}
-							project={project}
-							key={project.project_id}
-						/>
-					))}
+					{!this.props.featuredProjects[0] ? (
+						<FeaturedProjectListTiles>
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+						</FeaturedProjectListTiles>
+					) : (
+						<FeaturedProjectListTiles>
+							{this.props.featuredProjects.map(project => (
+								<ProjectTile
+									history={this.props.history}
+									project={project}
+									key={project.project_id}
+								/>
+							))}
+						</FeaturedProjectListTiles>
+					)}
 				</FeaturedProjectListTiles>
 			</FeaturedProjectsWrapper>
 		);

@@ -121,7 +121,6 @@ class SearchPageSearchBar extends React.Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state);
 	return {
 		// projects: state.searchReducer.projects,
 		// gettingSearchResults: state.searchReducer.gettingSearchResults

@@ -42,15 +42,10 @@ class Header extends React.Component {
 
 	componentDidUpdate(prevProps) {
 		if (this.props.searchTerm !== prevProps.searchTerm) {
-			console.log('component did update!');
-			this.setState(
-				{ searchTerm: this.props.searchTerm },
-				console.log(this.state)
-			);
+			this.setState({ searchTerm: this.props.searchTerm });
 		}
 	}
 	handleChange = e => {
-		console.log(e.target.value);
 		this.setState({
 			...this.state,
 			input: e.target.value,
@@ -61,17 +56,12 @@ class Header extends React.Component {
 	handleSearch = e => {
 		e.preventDefault();
 		const searchTerm = this.state.input;
-		console.log(searchTerm);
 		//call featch search results action
 		//push to search page
 		this.props.fetchSearchResults(searchTerm);
 		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 	render() {
-		console.log('this is the original search term: ' + this.props.searchTerm);
-		console.log(
-			'this is the search term stored in state: ' + this.state.searchTerm
-		);
 		return (
 			<HeaderContainer>
 				<HeaderContainerWraper>

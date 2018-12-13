@@ -12,8 +12,16 @@ import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
+import styled from 'styled-components';
+
 // Assets
 import arrowDown from '../../../assets/images/arrow-down.png';
+
+const Signout = styled.a`
+	/* &:hover {
+		color: red;
+	} */
+`;
 
 const logoutURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
@@ -55,7 +63,10 @@ class DropDown extends React.Component {
 		const { open } = this.state;
 
 		return (
-			<div className={classes.root} style={{ marginRight: '-10px' }}>
+			<div
+				className={classes.root}
+				style={{ marginRight: '-8px', fontSize: '2rem' }}
+			>
 				<Button
 					buttonRef={node => {
 						this.anchorEl = node;
@@ -65,14 +76,15 @@ class DropDown extends React.Component {
 					onClick={this.handleToggle}
 					style={{
 						outline: 'none',
-						padding: '8px 8px 8px 20px',
-						margin: '0 0 0 4px'
+						padding: '8px 6px 8px 16px',
+						margin: '0 0 0 2px'
 					}}
 				>
 					<img
 						src={this.props.userInfo.img_url}
 						className={classes.profilepic}
 						alt={this.props.userInfo.username}
+						style={{ background: '#bfbfbf' }}
 					/>
 					<img
 						src={arrowDown}
@@ -87,30 +99,44 @@ class DropDown extends React.Component {
 							id="menu-list-grow"
 							style={{
 								transformOrigin:
-									placement === 'bottom' ? 'center top' : 'center bottom'
+									placement === 'bottom' ? 'right top' : 'center bottom'
 							}}
 						>
-							<Paper>
+							<Paper style={{ marginRight: '42px' }}>
 								<ClickAwayListener onClickAway={this.handleClose}>
 									<MenuList>
 										<Link to={`/ProjectList`}>
-											<MenuItem onClick={this.handleClose}>My Profile</MenuItem>
+											<MenuItem
+												onClick={this.handleClose}
+												style={{ fontSize: '1.4rem' }}
+											>
+												My Profile
+											</MenuItem>
 										</Link>
 										<Link to={`/settings`}>
-											<MenuItem onClick={this.handleClose}>
+											<MenuItem
+												onClick={this.handleClose}
+												style={{ fontSize: '1.4rem' }}
+											>
 												Profile Settings
 											</MenuItem>
 										</Link>
 										<Link to={`/newproject`}>
-											<MenuItem onClick={this.handleClose}>
+											<MenuItem
+												onClick={this.handleClose}
+												style={{ fontSize: '1.4rem' }}
+											>
 												New Project
 											</MenuItem>
 										</Link>
-										<MenuItem onClick={this.handleClose}>
-											<a style={{ color: 'red' }} href={logoutURL}>
+										<Signout href={logoutURL}>
+											<MenuItem
+												onClick={this.handleClose}
+												style={{ fontSize: '1.4rem' }}
+											>
 												Signout
-											</a>
-										</MenuItem>
+											</MenuItem>
+										</Signout>
 									</MenuList>
 								</ClickAwayListener>
 							</Paper>

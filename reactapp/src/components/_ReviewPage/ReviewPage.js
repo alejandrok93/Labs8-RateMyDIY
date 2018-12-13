@@ -89,7 +89,7 @@ class ReviewPage extends Component {
 		return (
 			<ReviewPageHeaderContainer>
 				<ScrollToTopOnMount />
-				<Header />
+				<Header history={this.props.history} />
 				<ReviewPageContainer>
 					{this.props.gettingProjectReviews || this.props.gettingUserInfo ? (
 						<StatusMessage>Loading reviews...</StatusMessage>

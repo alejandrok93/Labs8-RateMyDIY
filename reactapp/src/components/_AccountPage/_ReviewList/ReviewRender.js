@@ -68,7 +68,6 @@ class ReviewRender extends Component {
                   fontSize: '1.5rem',
                   lineHeight: '2rem',
                   background: 'none',
-                  height: '40px'
                 }}
                 component="p"
               >

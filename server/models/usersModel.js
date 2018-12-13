@@ -23,7 +23,22 @@ function getUserProjects(user_id) {
 
 function getUserReviews(user_id) {
 	return db('reviews')
-		.where({ user_id: user_id });
+		.where({ 'reviews.user_id': user_id })
+		// .join('projects', 'projects.project_id', 'reviews.project_id')
+		.join(`users as reviewers`, `reviewers.user_id`, `reviews.user_id`)
+        .join(`projects`, `projects.project_id`, `reviews.project_id`)
+		.select(
+		'projects.img_url',
+		'reviews.review_id',
+		'reviews.project_id',
+		'projects.project_name',
+		'reviews.user_id as reviewer_id',
+		'reviewers.username as reviewer_name',
+		'projects.img_url',
+		'reviews.rating',
+		'reviews.text'
+		)
+				
 }
 
 function checkUsernames(username) {

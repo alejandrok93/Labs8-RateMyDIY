@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+export const SORT_PROJECTS_BY_RATING = 'SORT_PROJECTS_BY_RATING';
+export const SORT_PROJECTS_BY_DATE = 'SORT_PROJECTS_BY_DATE';
+export const SORT_PROJECTS_BY_REVIEWS = 'SORT_PROJECTS_BY_REVIEWS';
+
 export const FETCH_MYPROJECT = 'FETCH_MYPROJECT';
 export const FETCH_MYPROJECT_SUCCESS = 'FETCH_MYPROJECT_SUCCESS';
 export const FETCH_MYPROJECT_ERROR = 'FETCH_MYPROJECT_ERROR';
@@ -124,5 +128,15 @@ export const fetchCategoryResults = query => {
 				console.log(err);
 				dispatch({ type: FETCH_CATEGORY_RESULTS_ERROR });
 			});
+	};
+};
+
+export const sortProjects = type => {
+	return dispatch => {
+		if ('rating' === type.toLowerCase()) {
+			dispatch({ type: SORT_PROJECTS_BY_RATING });
+		} else if ('new' === type.toLowerCase()) {
+			dispatch({ type: SORT_PROJECTS_BY_DATE });
+		}
 	};
 };

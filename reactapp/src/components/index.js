@@ -56,3 +56,4 @@ export {
 	default as ReviewRender
 } from './_AccountPage/_ReviewList/ReviewRender';
 export { default as ScrollToTopOnMount } from './ScrollToTopOnMount';
+export { default as SortDropDown } from './SearchPageSearchBar/SortDropDown';

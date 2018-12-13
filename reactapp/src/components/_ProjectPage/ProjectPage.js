@@ -139,7 +139,7 @@ class ProjectPage extends Component {
 		return (
 			<ProjectPageHeaderContainer>
 				{this.state.redirect && <Redirect push to={this.state.redirect} />}
-				<Header />
+				<Header history={this.props.history} />
 				<ProjectPageContainer>
 					<ProjectContainer>
 						{this.props.gettingUserInfo ||

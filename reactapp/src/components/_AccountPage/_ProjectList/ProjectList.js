@@ -56,6 +56,7 @@ class ProjectList extends Component {
 								myProjectProject_name={myProject.project_name}
 								myProjectImg_url={myProject.img_url}
 								myProjectProject_rating={myProject.project_rating}
+								myProjectProject_text={myProject.text}
 							/>
 						))}
 						<div className="addNew">

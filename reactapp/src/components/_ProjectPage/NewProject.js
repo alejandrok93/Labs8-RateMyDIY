@@ -172,17 +172,6 @@ class NewProject extends Component {
     this.setState({
       selectedFile: event.target.files[0]
     });
-    let reader = new FileReader();
-    let file = event.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    };
-
-    reader.readAsDataURL(file);
   };
 
   singleFileUploadHandler() {
@@ -262,21 +251,15 @@ class NewProject extends Component {
   // Submit new project
   submitHandler = event => {
     event.preventDefault();
-    this.singleFileUploadHandler();
-    setTimeout(
-      function() {
-        this.props.addProject(
-          {
-            user_id: this.props.userInfo.user_id,
-            project_name: this.state.project_name,
-            img_url: this.state.img_url,
-            text: this.state.text,
-            categories: this.state.categories
-          },
-          url => this.setState({ redirect: url })
-        );
-      }.bind(this),
-      1000
+    this.props.addProject(
+      {
+        user_id: this.props.userInfo.user_id,
+        project_name: this.state.project_name,
+        img_url: this.state.img_url,
+        text: this.state.text,
+        categories: this.state.categories
+      },
+      url => this.setState({ redirect: url })
     );
   };
 
@@ -304,7 +287,7 @@ class NewProject extends Component {
   };
 
   render() {
-    let {imagePreviewUrl} = this.state;
+    let { imagePreviewUrl } = this.state;
     return (
       <NewProjectBody>
         <NewProjectHeader>

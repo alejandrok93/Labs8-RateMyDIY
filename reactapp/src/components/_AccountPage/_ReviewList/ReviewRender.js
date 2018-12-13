@@ -4,6 +4,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import StarRatings from 'react-star-ratings';
+import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -60,7 +61,20 @@ class ReviewRender extends Component {
               className={classes.media}
               image={this.props.myReviewsImg_url}
             />
-            <CardContent>Review: {this.props.myReviewsText}</CardContent>
+            <CardContent>
+              {' '}
+              <Typography
+                style={{
+                  fontSize: '1.5rem',
+                  lineHeight: '2rem',
+                  background: 'none',
+                  height: '40px'
+                }}
+                component="p"
+              >
+                Review: {this.props.myReviewsText}
+              </Typography>
+            </CardContent>
 
             <CardContent>
               <StarRatings

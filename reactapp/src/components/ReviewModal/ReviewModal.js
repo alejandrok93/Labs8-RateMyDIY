@@ -166,7 +166,8 @@ class ReviewModal extends Component {
 	};
 
 	componentDidMount() {
-		if (this.props.review_id) this.props.getReview(this.props.review_id);
+		if (this.props.review_id)
+			this.props.getReview(this.props.review_id, this.props.userInfo.user_id);
 	}
 
 	// Todo:
@@ -236,7 +237,9 @@ class ReviewModal extends Component {
 										) : (
 											<LikeContainer>
 												<Like
-													src={this.props.review === 1 ? thumbupBlue : thumbup}
+													src={
+														this.props.review.like === 1 ? thumbupBlue : thumbup
+													}
 													small={this.props.likingReview}
 													alt="thumbup"
 													onClick={() => {
@@ -246,7 +249,9 @@ class ReviewModal extends Component {
 												<HelpfulText>Helpful?</HelpfulText>
 												<Dislike
 													src={
-														this.props.review === -1 ? thumbdownRed : thumbdown
+														this.props.review.like === -1
+															? thumbdownRed
+															: thumbdown
 													}
 													small={this.props.likingReview}
 													alt="thumbdown"

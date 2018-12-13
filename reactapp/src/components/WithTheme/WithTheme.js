@@ -21,13 +21,13 @@ const muiTheme = createMuiTheme({
 	},
 	palette: {
 		primary: {
-			light: '#fff', // viking -> changed back to white on 12/6
+			light: '#f9f2ec', // viking -> changed back to white on 12/6
 			main: '#fff', // shakespeare -> changed back to white on 12/6
 			dark: '#263842' // pickledbluewood
 		},
 		secondary: {
-			light: '#D5CDC2', // sisal
-			main: '#62554B' // soyabean
+			light: '#fff', // sisal
+			main: '#fff' // soyabean
 		}
 	}
 });

@@ -32,12 +32,16 @@ function getReview(review_id, user_id) {
 		.then(review => {
 			// Is the user logged in?
 			if (user_id) {
+				console.log(`Checking if user ${user_id} liked review ${review_id}`);
 				// Return the review with like state
 				return db('likes')
 					.where({ review_id, user_id })
 					.select('like')
 					.first()
-					.then(like => ({ ...review, like }));
+					.then(like =>
+						// This could be cleaned up a bit
+						like === undefined ? review : { ...review, like: like.like }
+					);
 			} else {
 				// Return the review without like state
 				return review;

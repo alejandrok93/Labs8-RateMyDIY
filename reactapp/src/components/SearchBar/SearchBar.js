@@ -7,7 +7,6 @@ const SearchBarWrapper = styled.form`
 	display: flex;
 	width: 70%;
 	height: 35px;
-	//align-items: baseline;
 
 	@media (max-width: 500px) {
 		width: 85%;
@@ -22,13 +21,13 @@ const SearchBarWrapper = styled.form`
 const SearchBarInput = styled.input`
 	width: 100%;
 	height: 45px;
-	//color: #a6aaad;
 	outline: none;
-	border: 2px solid black;
-	border-right: 0;
+	border: none;
+	/* border-right: 0; */
 	font-size: 14px;
 	padding: 0px 15px;
 	font-size: 18px;
+	border-radius: 4px 0 0 4px;
 `;
 
 const SearchBarButton = styled.button`
@@ -36,9 +35,10 @@ const SearchBarButton = styled.button`
 	right: 0;
 	width: 11%;
 	height: 45px;
-	border: 2px solid black;
+	border: none;
 	border-left: 0;
 	background-color: white;
+	border-radius: 0 4px 4px 0;
 
 	@media (max-width: 500px) {
 		text-align: right;

@@ -63,15 +63,85 @@ function getProject(project_id) {
 		});
 }
 
-function getReviewsByProjectID(project_id) {
-	return db('projects')
-		.where({ project_id })
-		.first()
-		.then(project => {
-			if (project) {
-				return db('reviews').where({ project_id });
-			} else return undefined;
-		});
+function getReviewsByProjectID(project_id, user_id) {
+	return db('reviews')
+		.where({ 'reviews.project_id': project_id })
+		.join('users as reviewers', 'reviewers.user_id', 'reviews.user_id')
+		.join('projects', 'projects.project_id', 'reviews.project_id')
+		.join('users as makers', 'makers.user_id', 'projects.user_id')
+		.select(
+			'reviews.review_id',
+			'makers.user_id as maker_id',
+			'makers.username as maker_name',
+			'makers.img_url as maker_img',
+			'reviews.project_id',
+			'projects.project_name',
+			'reviews.user_id as reviewer_id',
+			'reviewers.username as reviewer_name',
+			'reviewers.img_url as reviewer_img',
+			'projects.img_url',
+			'reviews.rating',
+			'reviews.text',
+			'reviews.helpfulness'
+		)
+		.then(reviews => {
+			// Is the user logged in?
+			if (user_id !== '0') {
+				// I couldn't figure out how to get a join working...
+				// This is probably very inefficient
+
+				// Make an array of just the review_ids + the user's user_id
+				const reviewIdArray = reviews.map(({ review_id }) => [
+					user_id,
+					review_id
+				]);
+
+				// Return an array of reviews liked or disliked by the user
+				return db('likes')
+					.whereIn(['user_id', 'review_id'], reviewIdArray)
+					.select('review_id', 'like')
+
+					.then(likes => {
+						// Merge the two arrays
+						const reviewsWithLikes = reviews.map(review => ({
+							...likes.find(like => review.review_id === like.review_id),
+							...review
+						}));
+
+						return reviewsWithLikes;
+					});
+			} else {
+				return reviews;
+			}
+		})
+		.catch(error => console.log(`getReviewsByProjectID error:`, error));
+
+	// If you know how to make this work with a join, let me know
+
+	// if (user_id) {
+	// 	return db('reviews')
+	// 		.where({ 'reviews.project_id': project_id, 'likes.user_id': user_id  })
+	// 		.join('users as reviewers', 'reviewers.user_id', 'reviews.user_id')
+	// 		.join('projects', 'projects.project_id', 'reviews.project_id')
+	// 		.join('users as makers', 'makers.user_id', 'projects.user_id')
+	// 		.join('likes', 'likes.review_id', 'reviews.review_id')
+
+	// 		.select(
+	// 			'reviews.review_id',
+	// 			'makers.user_id as maker_id',
+	// 			'makers.username as maker_name',
+	// 			'makers.img_url as maker_img',
+	// 			'reviews.project_id',
+	// 			'projects.project_name',
+	// 			'reviews.user_id as reviewer_id',
+	// 			'reviewers.username as reviewer_name',
+	// 			'reviewers.img_url as reviewer_img',
+	// 			'projects.img_url',
+	// 			'reviews.rating',
+	// 			'reviews.text',
+	// 			'likes.like'
+	// 		)
+	// 		.catch(error => console.log(`getReviewsByProjectID error:`, error));
 }
 
 // I'm not satisfied with this solution because it's not atomic. It can add a project but fail to add its categories.

@@ -7,11 +7,12 @@ const authorize = require('../config/authMiddleware');
 const db = require('../models/reviewModel');
 
 // get review by id
-router.get('/:review_id', function(req, res, next) {
-	const { review_id } = req.params;
+router.get('/:review_id/:user_id', function(req, res, next) {
+	const { review_id, user_id } = req.params;
 
-	db.getReview(review_id)
+	db.getReview(review_id, user_id)
 		.then(review => {
+			console.log(`Response from reviewModel:`, { review });
 			if (review) {
 				res.status(200).json(review);
 			} else {
@@ -154,7 +155,7 @@ router.put('/:review_id/like', ensureLoggedIn, authorize, function(
 			} else if (ownReview) {
 				res.status(403).json({ error: `You can't like your own review.` });
 			} else if (liked) {
-				res.status(200).json(liked);
+				res.status(200).json(liked.like);
 			} else {
 				res.status(500).json({ error: `Failed to update like value` });
 			}

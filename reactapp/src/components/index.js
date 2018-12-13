@@ -56,4 +56,6 @@ export {
 	default as ReviewRender
 } from './_AccountPage/_ReviewList/ReviewRender';
 export { default as ScrollToTopOnMount } from './ScrollToTopOnMount';
+export { default as ReviewPage } from './_ReviewPage/ReviewPage';
+export { default as ReviewCard } from './ReviewCard/ReviewCard';
 export { default as SortDropDown } from './SearchPageSearchBar/SortDropDown';

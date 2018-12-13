@@ -24,7 +24,7 @@ function getPopularProjects() {
 			// .orderBy('project_rating', 'desc')
 			// For Heroku
 			.orderByRaw('project_rating DESC NULLS LAST')
-			.limit(4)
+			.limit(6)
 	);
 }
 

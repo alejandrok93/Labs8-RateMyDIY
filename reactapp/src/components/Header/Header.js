@@ -10,7 +10,7 @@ const HeaderContainer = styled.div`
 	height: 76px;
 	z-index: 999;
 	position: fixed;
-	background-color: #232a34;
+	background-color: #1c293b;
 `;
 
 const HeaderContainerWraper = styled.div`

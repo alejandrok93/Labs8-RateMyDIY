@@ -12,6 +12,9 @@ import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
+// Assets
+import arrowDown from '../../../assets/images/arrow-down.png';
+
 const logoutURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
 
@@ -52,7 +55,7 @@ class DropDown extends React.Component {
 		const { open } = this.state;
 
 		return (
-			<div className={classes.root}>
+			<div className={classes.root} style={{ marginRight: '-10px' }}>
 				<Button
 					buttonRef={node => {
 						this.anchorEl = node;
@@ -60,12 +63,21 @@ class DropDown extends React.Component {
 					aria-owns={open ? 'menu-list-grow' : undefined}
 					aria-haspopup="true"
 					onClick={this.handleToggle}
-					style={{ outline: 'none' }}
+					style={{
+						outline: 'none',
+						padding: '8px 8px 8px 20px',
+						margin: '0 0 0 4px'
+					}}
 				>
 					<img
 						src={this.props.userInfo.img_url}
 						className={classes.profilepic}
 						alt={this.props.userInfo.username}
+					/>
+					<img
+						src={arrowDown}
+						alt="arrowDown"
+						style={{ width: '15px', margin: '3px 0 0 7px' }}
 					/>
 				</Button>
 				<Popper open={open} anchorEl={this.anchorEl} transition disablePortal>

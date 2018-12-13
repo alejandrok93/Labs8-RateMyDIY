@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { AccountSideBar, Nav } from '../../../components';
 import { Header } from '../../../components';
 import { ProjectRender } from '../../../components';
+import { MenuDrawer } from '../../../components';
+import styled from 'styled-components';
 import './ProjectList.css';
 
 import {
@@ -13,6 +15,10 @@ import {
 	fetchSearchResults,
 	fetchCategoryResults
 } from '../../../actions';
+
+const AddButton = styled.div`
+	background-color: ${props => props.theme.mui.palette.primary.dark};
+`;
 
 class ProjectList extends Component {
 	constructor(props) {
@@ -39,14 +45,28 @@ class ProjectList extends Component {
 	}
 	render() {
 		return (
-			<div className="projectPage">
+			<div className='projectPage'>
 				<Header
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
 				/>
-				<Nav />
-				<div className="project-list-container">
-					<AccountSideBar />
+				{window.innerWidth <= 500 ? null : <AccountSideBar />}
+				{window.innerWidth <= 500 ? 
+				<AddButton className='addButton'>
+					<Link to='/newproject' style={{ color: 'white' }}>
+						New Project
+					</Link>
+				</AddButton>
+				:
+				<div className="addNew">
+				<h2>New Project</h2>
+					<Link to="/newproject">
+						<img
+							alt="PLACEHOLDER! alt text"
+							src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
+						/>
+					</Link>
+				</div>}
 
 					<div className="myProjectsDisplay">
 						{this.props.myProjects.map(myProject => (
@@ -59,18 +79,8 @@ class ProjectList extends Component {
 								myProjectProject_text={myProject.text}
 							/>
 						))}
-						<div className="addNew">
-							<h2>New Project</h2>
-							<Link to="/newproject">
-								<img
-									alt="PLACEHOLDER! alt text"
-									src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
-								/>
-							</Link>
-						</div>
 					</div>
 				</div>
-			</div>
 		);
 	}
 }

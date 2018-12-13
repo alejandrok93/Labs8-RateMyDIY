@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchSearchResults, fetchCategoryResults } from '../../actions';
 import { connect } from 'react-redux';
 import { SearchBar, Nav } from '../index';
+import { MenuDrawer } from '../../components';
 
 const HeaderContainer = styled.div`
 	width: 100%;
@@ -22,10 +23,18 @@ const HeaderContainerWraper = styled.div`
 const HeaderSearchContainer = styled.div`
 	width: 50%;
 	margin: 0 20px;
+
+	@media (max-width: 500px) {
+		width: 90%;
+	}
 `;
 
 const Logo = styled.img`
 	cursor: pointer;
+
+	@media (max-width: 500px) {
+		display: none;
+	}
 `;
 
 class Header extends React.Component {
@@ -73,7 +82,8 @@ class Header extends React.Component {
 							searchTerm={this.state.searchTerm}
 						/>
 					</HeaderSearchContainer>
-					<Nav />
+					
+					{window.innerWidth <= 500 ? <MenuDrawer sidebar profile /> : <Nav /> }
 				</HeaderContainerWraper>
 			</HeaderContainer>
 		);

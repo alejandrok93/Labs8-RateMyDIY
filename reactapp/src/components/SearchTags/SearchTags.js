@@ -7,6 +7,12 @@ const Container = styled.div`
 	display: flex;
 	margin: 25px;
 	margin-left: 33%;
+
+	@media (max-width: 500px) {
+		justify-content: center;
+		margin: 25 auto;
+		margin-left: auto;
+	}
 `;
 
 const SuggestedCategories = styled(Link)`

@@ -1,8 +1,7 @@
 .reviewPage {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
-  margin-top: 98px;
 }
 
 .myReviewsDisplay {
@@ -43,9 +42,18 @@
     width: 100vw;
   }
 
-  .myReviewsDisplay {
-    width: 40%;
-    padding: 3%;
-    margin: 3%;
+  .myReviewDisplay {
+    width: 80%;
   }
+
+  .selectHeader {
+		width: 80%;
+		margin: 0 auto;
+		margin-top: 100px;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+	}
 }

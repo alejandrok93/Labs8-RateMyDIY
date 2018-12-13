@@ -40,6 +40,10 @@ const SettingsPageContainer = styled.div`
 	width: 100%;
 	min-width: 550px;
 	background-color: ${props => props.theme.mui.palette.primary.main};
+
+	@media (max-width: 500px) {
+		width: 100vw;
+	}
 `;
 
 const SettingsContainer = styled.div`
@@ -51,6 +55,13 @@ const SettingsContainer = styled.div`
 	margin-top: 100px;
 	border-radius: 30px;
 	background-color: ${props => props.theme.mui.palette.primary.light};
+
+	@media (max-width: 500px) {
+		position: absolute;
+		width: 100%;
+		border-radius: none;
+		text-align: center;
+	}
 `;
 
 const ProfileImgHolder = styled.div`
@@ -70,6 +81,12 @@ const ProfileForm = styled.form`
 	width: 30%;
 	height: 100%;
 	margin: 2% 0%;
+
+	@media (max-width: 500px) {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
 `;
 
 // const CustomFileInput = styled.input`
@@ -99,6 +116,11 @@ const FileButton = styled.label`
 		background-color: ${props => props.theme.mui.palette.primary.dark};
 		color: white;
 	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+	}
 `;
 
 const UploadButton = styled.button`
@@ -118,6 +140,11 @@ const UploadButton = styled.button`
 		background-color: ${props => props.theme.mui.palette.primary.dark};
 		color: white;
 	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+	}
 `;
 
 const ProfileHeader = styled.h2`
@@ -126,6 +153,10 @@ const ProfileHeader = styled.h2`
 	font-size: 2.5rem;
 	margin: 2% auto;
 	text-align: center;
+
+	@media (max-width: 500px) {
+		color: ${props => props.theme.mui.palette.primary.dark};
+	}
 `;
 
 const StatusMessage = styled.h2`
@@ -134,6 +165,10 @@ const StatusMessage = styled.h2`
 	font-size: 2.5rem;
 	margin: 2% auto;
 	text-align: center;
+
+	@media (max-width: 500px) {
+		color: ${props => props.theme.mui.palette.primary.dark};
+	}
 `;
 
 const UsernameContainer = styled.div`
@@ -143,17 +178,30 @@ const UsernameContainer = styled.div`
 	padding: 3%;
 	background-color: ${props => props.theme.mui.palette.secondary.light};
 	border-radius: 5px;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		text-align: center;
+	}
 `;
 
 const UsernameHeader = styled.h1`
 	align-self: center;
-	color: ${props => props.theme.mui.palette.secondary.main};
+	color: ${props => props.theme.mui.palette.primary.dark};
 	font-size: 4rem;
+
+	@media (max-width: 500px) {
+		color: ${props => props.theme.mui.palette.primary.dark};
+	}
 `;
 
 const UsernameForm = styled.form`
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const StyledInput = styled.input`
@@ -162,6 +210,13 @@ const StyledInput = styled.input`
 
 	&:focus {
 		outline: none;
+	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+		align-self: center;
+		border: 1px solid ${props => props.theme.mui.palette.primary.dark}
 	}
 `;
 
@@ -181,6 +236,12 @@ const UsernameButton = styled.input`
 	&:hover {
 		background-color: ${props => props.theme.mui.palette.primary.dark};
 		color: white;
+	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+		align-self: center;
 	}
 `;
 

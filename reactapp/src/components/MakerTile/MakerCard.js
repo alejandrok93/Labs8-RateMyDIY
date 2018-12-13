@@ -24,7 +24,11 @@ const styles = theme => ({
 		margin: '25px',
 		backgroundColor: theme.palette.secondary.light,
 		borderRadius: '35px',
-		color: theme.palette.secondary.main
+		color: theme.palette.secondary.main,
+		['@media (max-width: 500px)']: {
+			width: '100%',
+			// margin: '25px auto 25px'
+		}
 	},
 	media: {
 		height: 0,

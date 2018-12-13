@@ -14,18 +14,18 @@ import { addProject } from '../../actions';
 import styled from 'styled-components';
 
 const NewProjectContainer = styled.div`
-	width: 700px;
-	padding: 25px 30px 15px 30px;
-	margin: 0 auto;
-	margin-top: 80px;
-	display: flex;
-	flex-direction: column;
-	background: #e9ded8;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width: 700px;
+  padding: 25px 30px 15px 30px;
+  margin: 0 auto;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  background: #e9ded8;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const NewProjectBody = styled.div`
-	width: 100%;
+  width: 100%;
 `;
 
 const NewProjectHeader = styled.div``;
@@ -34,150 +34,158 @@ const StatusMessage = styled.p``;
 const ProjectForm = styled.form``;
 
 const Img = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
-	width: 100%;
-	background: white;
-	margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 380px;
+  width: 100%;
+  background: white;
+  margin-bottom: 20px;
 `;
 
 const ProjectImageFlex = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 const ProjectImage = styled.input`
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 `;
 
 const ProjectImageFile = styled.div`
-	font-size: 1.25em;
-	font-weight: 700;
-	color: #f1e5e6;
-	background-color: #d3394c;
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 15px 10px 15px;
-	cursor: pointer;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	&:hover {
-		outline: 1px dotted #000;
-		outline: -webkit-focus-ring-color auto 5px;
-		background-color: #772940;
-	}
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #f1e5e6;
+  background-color: #d3394c;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px 10px 15px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  &:hover {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+    background-color: #772940;
+  }
 `;
 
 const ProjectImageUpload = styled.div`
-	font-size: 1.25em;
-	font-weight: 700;
-	color: #f1e5e6;
-	background-color: #d3394c;
-	padding: 10px 15px 10px 15px;
-	cursor: pointer;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	&:hover {
-		outline: 1px dotted #000;
-		outline: -webkit-focus-ring-color auto 5px;
-		background-color: #772940;
-	}
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #f1e5e6;
+  background-color: #d3394c;
+  padding: 10px 15px 10px 15px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  &:hover {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+    background-color: #772940;
+  }
 `;
 const ProfileHeader = styled.h2`
-	width: 80%;
-	color: ${props => props.theme.mui.palette.secondary.main};
-	font-size: 2.5rem;
-	margin: 2% auto;
-	text-align: center;
+  width: 80%;
+  color: ${props => props.theme.mui.palette.secondary.main};
+  font-size: 2.5rem;
+  margin: 2% auto;
+  text-align: center;
 `;
 const ImageFileUpload = styled.div`
-	width: 1em;
-	height: 1em;
-	vertical-align: middle;
-	fill: currentColor;
-	margin-top: -0.25em;
-	margin-right: 0.25em;
-	cursor: pointer;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  margin-top: -0.25em;
+  margin-right: 0.25em;
+  cursor: pointer;
 `;
 
 const TextInput = styled.input`
-	padding: 5px 461px 200px 5px;
-	margin-bottom: 20px;
-	margin-top: 10px;
+  padding: 5px 461px 200px 5px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 `;
 
 const CancelButton = styled.button`
-	font-size: 1.25em;
-	font-weight: 700;
-	color: #f1e5e6;
-	background-color: #d3394c;
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 15px 10px 15px;
-	cursor: pointer;
-	&:hover {
-		outline: 1px dotted #000;
-		outline: -webkit-focus-ring-color auto 5px;
-		background-color: #772940;
-	}
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #f1e5e6;
+  background-color: #d3394c;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px 10px 15px;
+  cursor: pointer;
+  &:hover {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+    background-color: #772940;
+  }
 `;
 
 const SubmitInput = styled.input`
-	font-size: 1.25em;
-	font-weight: 700;
-	color: #f1e5e6;
-	background-color: #d3394c;
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 15px 10px 15px;
-	cursor: pointer;
-	&:hover {
-		outline: 1px dotted #000;
-		outline: -webkit-focus-ring-color auto 5px;
-		background-color: #772940;
-	}
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #f1e5e6;
+  background-color: #d3394c;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px 10px 15px;
+  cursor: pointer;
+  &:hover {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+    background-color: #772940;
+  }
 `;
 
 const ProjectHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-top: 10px;
-	margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 20px;
 `;
 
 const ProjectNameInput = styled.input`
-	padding: 8px;
+  padding: 8px;
 `;
 
 const ProjectButtonContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 `;
 
 class NewProject extends Component {
-
   state = {
     project_name: '',
     img_url: null,
     text: '',
-    categories: [],
+    categories: []
   };
-
 
   singleFileChangedHandler = event => {
     this.setState({
       selectedFile: event.target.files[0]
     });
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
   };
 
-  singleFileUploadHandler = event => {
-    event.preventDefault();
+  singleFileUploadHandler() {
     const data = new FormData();
     // If file selected
     if (this.state.selectedFile) {
@@ -190,9 +198,18 @@ class NewProject extends Component {
         .post(
           (process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
             `/api/projects/image-upload`,
-          data, { onUploadProgress: progressEvent => {
-            console.log("Upload Progress:" + Math.round(progressEvent.loaded/progressEvent.total * 100 ) + '%')
-          }},
+          data,
+          {
+            onUploadProgress: progressEvent => {
+              console.log(
+                'Upload Progress:' +
+                  Math.round(
+                    (progressEvent.loaded / progressEvent.total) * 100
+                  ) +
+                  '%'
+              );
+            }
+          },
           {
             headers: {
               accept: 'application/json',
@@ -202,7 +219,6 @@ class NewProject extends Component {
           }
         )
         .then(response => {
-          
           if (200 === response.status) {
             // If file size is larger than expected.
             if (response.data.error) {
@@ -237,7 +253,7 @@ class NewProject extends Component {
           console.log('error');
         });
     }
-  };
+  }
   // Keep form data in the state
   changeHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -246,16 +262,21 @@ class NewProject extends Component {
   // Submit new project
   submitHandler = event => {
     event.preventDefault();
-
-    this.props.addProject(
-      {
-        user_id: this.props.userInfo.user_id,
-        project_name: this.state.project_name,
-        img_url: this.state.img_url,
-        text: this.state.text,
-        categories: this.state.categories
-      },
-      url => this.setState({ redirect: url })
+    this.singleFileUploadHandler();
+    setTimeout(
+      function() {
+        this.props.addProject(
+          {
+            user_id: this.props.userInfo.user_id,
+            project_name: this.state.project_name,
+            img_url: this.state.img_url,
+            text: this.state.text,
+            categories: this.state.categories
+          },
+          url => this.setState({ redirect: url })
+        );
+      }.bind(this),
+      1000
     );
   };
 
@@ -283,15 +304,16 @@ class NewProject extends Component {
   };
 
   render() {
+    let {imagePreviewUrl} = this.state;
     return (
       <NewProjectBody>
         <NewProjectHeader>
-          <Header/>
+          <Header />
         </NewProjectHeader>
         <NewProjectContainer>
           {this.state.redirect && <Redirect push to={this.state.redirect} />}
           <ProjectForm onSubmit={this.submitHandler}>
-          Project title:
+            Project title:
             <ProjectHeader>
               <ProjectNameInput
                 name="project_name"
@@ -303,14 +325,13 @@ class NewProject extends Component {
                 required
               />
             </ProjectHeader>
-
             <Img
               src={
-                this.state.img_url ||
+                imagePreviewUrl ||
                 'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
               }
               alt={
-                this.state.img_url ||
+                imagePreviewUrl ||
                 'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
               }
             />
@@ -384,23 +405,20 @@ class NewProject extends Component {
       </NewProjectBody>
     );
   }
-
 }
 
 const mapStateToProps = state => {
-	return {
-		userInfo: state.loggedInReducer.userInfo,
+  return {
+    userInfo: state.loggedInReducer.userInfo,
 
-		addingProject: state.projectReducer.addingProject,
-		addingProjectError: state.projectReducer.addingProjectError
-	};
+    addingProject: state.projectReducer.addingProject,
+    addingProjectError: state.projectReducer.addingProjectError
+  };
 };
 
 export default connect(
-
   mapStateToProps,
   {
-    addProject,
+    addProject
   }
-
 )(NewProject);

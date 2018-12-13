@@ -17,7 +17,8 @@ import {
 	SearchPage,
 	ProjectPage,
 	NewProject,
-	AboutTheTeam
+	AboutTheTeam,
+	ReviewPage
 } from '../../components';
 
 //Styles
@@ -67,7 +68,8 @@ class App extends Component {
 					<Route exact path="/CreateEditPage" component={CreateEditPage} />
 					<Route path="/settings" component={UserSettings} />
 					<Route path="/search" component={SearchPage} />
-					<Route path="/project/:project_id" component={ProjectPage} />
+					<Route exact path="/project/:project_id" component={ProjectPage} />
+					<Route path="/project/:project_id/reviews" component={ReviewPage} />
 					<Route path="/newproject" component={NewProject} />
 					<Route path="/about" component={AboutTheTeam} />
 				</AppContainer>

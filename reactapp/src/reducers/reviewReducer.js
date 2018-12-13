@@ -43,15 +43,19 @@ const reviewReducer = (state = initialState, action) => {
 	switch (action.type) {
 		// getReview
 		case GETTING_REVIEW:
-			return { ...state, gettingReview: true };
+			return {
+				...state,
+				gettingReview: true,
+				likingReviewError: undefined,
+				gettingReviewError: undefined
+			};
 
 		case GOT_REVIEW:
 			return {
 				...state,
 				review: action.payload.review,
 				reviewId: action.payload.review_id,
-				gettingReview: false,
-				likingReviewError: undefined
+				gettingReview: false
 			};
 
 		case GET_REVIEW_ERROR:

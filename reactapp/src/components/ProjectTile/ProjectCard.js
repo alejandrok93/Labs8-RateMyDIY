@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
@@ -15,17 +15,17 @@ import { Link } from 'react-router-dom';
 
 const styles = theme => ({
 	card: {
-		width: '300px',
-		margin: '25px',
-		marginBottom: '30px',
+		width: '31%',
+		height: '387px',
+		'min-width': '300px',
+		margin: '0 0 15px 1.75%',
 		fontSize: '24px',
-		cursor: 'pointer',
-		'&:hover': {
-			color: theme.palette.secondary.main,
-			boxShadow: '4px 4px 4px'
-		},
+		// '&:hover': {
+		// 	color: theme.palette.secondary.main,
+		// 	boxShadow: '4px 4px 4px'
+		// },
 		backgroundColor: theme.palette.secondary.light,
-		borderRadius: '35px',
+		// borderRadius: '35px',
 		color: theme.palette.secondary.main
 	},
 	media: {
@@ -40,20 +40,16 @@ const styles = theme => ({
 	}
 });
 
-const StyledLink = styled(Link)`
-	text-decoration: none;
+const CardTitle = styled(Link)`
+	margin: 18px 20px 10px;
+	font-size: 1.9rem;
+	display: inline-block;
 
 	&:hover {
-		text-decoration: none;
 		background: none;
+		text-decoration: none;
 	}
 `;
-
-const CardTitle = styled.h3`
-	font-size: 2rem;
-`;
-
-// const CardUsername = styled.p``;
 
 class ProjectCard extends React.Component {
 	state = { expanded: false };
@@ -65,33 +61,38 @@ class ProjectCard extends React.Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<StyledLink
-				style={{
-					textDecoration: 'none',
-					background: 'none',
-					outline: 'none',
-					'&hover': { background: 'none' }
-				}}
-				to={`/project/${this.props.project.project_id}`}
-			>
-				<Card className={classes.card}>
+			<Card className={classes.card} style={{ border: '1px solid lightgray' }}>
+				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<CardHeader
-						style={{ fontSize: '24px' }}
+						style={{
+							fontSize: '18px',
+							padding: '10px 10px'
+						}}
 						avatar={
-							<Avatar
-								src={this.props.project.maker_photo_url}
-								className={classes.avatar}
-							/>
+							<Link
+								style={{
+									fontSize: '1.5rem',
+									background: 'none',
+									textDecoration: 'none'
+								}}
+								to={`/search?query=${this.props.project.username}`}
+							>
+								<Avatar
+									src={this.props.project.maker_photo_url}
+									className={classes.avatar}
+									// Used negative margin because I can't access the parent element's margin
+									style={{ marginRight: '-5px' }}
+								/>
+							</Link>
 						}
 						action={null}
-						title={
-							<CardTitle style={{ fontSize: '2rem' }}>
-								{this.props.project.project_name}
-							</CardTitle>
-						}
 						subheader={
 							<Link
-								style={{ fontSize: '1.5rem', background: 'none' }}
+								style={{
+									fontSize: '1.5rem',
+									background: 'none',
+									textDecoration: 'none'
+								}}
 								onClick={e => {
 									e.stopPropagation();
 								}}
@@ -102,31 +103,69 @@ class ProjectCard extends React.Component {
 						}
 					/>
 
+					<CardContent style={{ padding: '0 14px 7px 0', alignSelf: 'center' }}>
+						<StarRatings
+							rating={Math.round(this.props.project.project_rating)}
+							starDimension="19px"
+							starSpacing="1px"
+							starRatedColor="#cc0000"
+							starEmptyColor="#bfbfbf"
+						/>
+					</CardContent>
+				</div>
+
+				<Link to={`/project/${this.props.project.project_id}`}>
 					<CardMedia
 						className={classes.media}
 						image={this.props.project.img_url}
-						title={this.props.project.project_name}
+						// title={this.props.project.project_name}
+						style={{ height: '220px' }}
 					/>
-					<CardContent>
-						<StarRatings
-							rating={Math.round(this.props.project.project_rating)}
-							// starRatedColor="yellow"
-							starDimension="14px"
-							starSpacing="4px"
-							starRatedColor="black"
-						/>
-					</CardContent>
-					<CardContent>
-						<Typography
-							style={{ fontSize: '1.5rem', background: 'none' }}
-							component="p"
-						>
-							{this.props.project.text}
-						</Typography>
-					</CardContent>
-					<CardActions className={classes.actions} disableActionSpacing />
-				</Card>
-			</StyledLink>
+				</Link>
+
+				{/* <CardContent
+					style={{
+						display: 'flex',
+						'justifyContent': 'center',
+						padding: '10px 0 4px'
+					}}
+				>
+					<StarRatings
+						rating={Math.round(this.props.project.project_rating)}
+						starDimension="22px"
+						starSpacing="4px"
+						starRatedColor="darkred"
+						starEmptyColor="gray"
+					/>
+				</CardContent> */}
+
+				<CardTitle
+					to={`/project/${this.props.project.project_id}`}
+					// style={{
+					// 	background: 'none',
+					// 	textDecoration: 'none',
+					// 	display: 'inlineBlock'
+					// }}
+				>
+					{this.props.project.project_name}
+				</CardTitle>
+
+				<CardContent style={{ padding: '2px 20px 16px' }}>
+					<Typography
+						style={{
+							fontSize: '1.5rem',
+							lineHeight: '2rem',
+							background: 'none',
+							height: '40px'
+						}}
+						component="p"
+					>
+						{this.props.project.text}
+					</Typography>
+				</CardContent>
+
+				{/* <CardActions className={classes.actions} disableActionSpacing /> */}
+			</Card>
 		);
 	}
 }

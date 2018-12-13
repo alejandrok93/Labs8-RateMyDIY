@@ -5,6 +5,8 @@ import ModalImage from 'react-modal-image';
 // Components
 // import StarRatings from 'react-star-ratings';
 
+import { Link } from 'react-router-dom';
+
 // Styles
 import styled from 'styled-components';
 
@@ -64,14 +66,14 @@ const OptionsContainer = styled.div`
 	color: rgb(42, 43, 45);
 `;
 
-const ReviewsLink = styled.button`
-	background: none;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	padding: 0;
-	margin-right: 8px;
-`;
+// const ReviewsLink = styled.button`
+// 	background: none;
+// 	border: none;
+// 	outline: none;
+// 	cursor: pointer;
+// 	padding: 0;
+// 	margin-right: 8px;
+// `;
 
 const EditLink = styled.button`
 	background: none;
@@ -90,11 +92,26 @@ const DeleteButton = styled.button`
 	padding: 0;
 `;
 
+const ReviewsLink = styled(Link)`
+	position: relative;
+	width: 200px;
+	top: -10px;
+	left: 55%;
+
+	&:hover {
+		text-decoration: none;
+		background: none;
+	}
+`;
+
 const Project = props => {
 	return (
 		<ProjectWrapper>
 			<ProjectContainer>
 				<ProjectHeader>
+					<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
+						Super Temporary Reviews Link
+					</ReviewsLink>
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
 					{/* {props.project.project_rating ?
@@ -119,7 +136,7 @@ const Project = props => {
 				<Text>{props.project.text}</Text>
 				{props.owner && (
 					<OptionsContainer>
-						<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
+						{/* <ReviewsLink disabled={props.disabled}>reviews</ReviewsLink> */}
 						<EditLink
 							onClick={() => props.willUpdateProject(true)}
 							disabled={props.disabled}

@@ -31,8 +31,8 @@ import {
 const LandingPageContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 5% auto;
-	width: 80%;
+	margin: 30px auto;
+	max-width: 1000px;
 	background-color: ${props => props.theme.mui.palette.primary.main};
 `;
 const LandingPageWrapper = styled.div`
@@ -49,18 +49,18 @@ const imgUrl =
 
 const HeroImageContainer = styled.div`
 	width: 100%;
-	height: 560px;
+	height: 460px;
 	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url(${imgUrl});
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: bottom;
+	background-position: center;
 `;
 
 const HeroSearchContainer = styled.div`
 	width: 60%;
 	position: absolute;
-	top: 30%;
+	top: 240px;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;

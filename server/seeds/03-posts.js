@@ -19,6 +19,11 @@ exports.seed = function(knex, Promise) {
 					project_id: 3,
 					img_url: '',
 					text: 'post text'
+				},
+				{
+					project_id: 4,
+					img_url: '',
+					text: 'post text'
 				}
 			]);
 		});

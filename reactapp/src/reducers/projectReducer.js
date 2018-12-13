@@ -10,7 +10,10 @@ import {
 	UPDATE_PROJECT_ERROR,
 	DELETING_PROJECT,
 	DELETED_PROJECT,
-	DELETE_PROJECT_ERROR
+	DELETE_PROJECT_ERROR,
+	GETTING_PROJECT_REVIEWS,
+	GOT_PROJECT_REVIEWS,
+	GET_PROJECT_REVIEWS_ERROR
 } from '../actions';
 
 const initialState = {
@@ -103,6 +106,24 @@ const projectReducer = (state = initialState, action) => {
 				...state,
 				deletingProject: false,
 				DeletingProjectError: `${action.payload}`
+			};
+
+		// getProject
+		case GETTING_PROJECT_REVIEWS:
+			return { ...state, gettingProjectReviews: true };
+
+		case GOT_PROJECT_REVIEWS:
+			return {
+				...state,
+				reviews: action.payload,
+				gettingProjectReviews: false
+			};
+
+		case GET_PROJECT_REVIEWS_ERROR:
+			return {
+				...state,
+				gettingProjectReviews: false,
+				gettingProjectReviewsError: `${action.payload}`
 			};
 
 		default:

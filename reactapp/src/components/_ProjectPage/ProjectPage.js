@@ -12,7 +12,8 @@ import {
 	EditPost,
 	ReviewModal,
 	ConfirmModal,
-	Header
+	Header,
+	ScrollToTopOnMount
 } from '../../components';
 
 // Actions
@@ -139,7 +140,8 @@ class ProjectPage extends Component {
 		return (
 			<ProjectPageHeaderContainer>
 				{this.state.redirect && <Redirect push to={this.state.redirect} />}
-				<Header />
+				<ScrollToTopOnMount />
+				<Header history={this.props.history} />
 				<ProjectPageContainer>
 					<ProjectContainer>
 						{this.props.gettingUserInfo ||

@@ -26,19 +26,19 @@ export const LIKED_REVIEW = 'LIKED_REVIEW';
 export const LIKE_REVIEW_ERROR = 'LIKE_REVIEW_ERROR';
 
 // Loading message tester
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+// 	return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 // get review by review_id
-export const getReview = review_id => {
+export const getReview = (review_id, user_id) => {
 	return dispatch => {
 		dispatch({ type: GETTING_REVIEW });
 
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-					`/api/reviews/${review_id}`
+					`/api/reviews/${review_id}/${user_id || 0}`
 			)
 
 			.then(({ data }) => {
@@ -85,7 +85,7 @@ export const addReview = review => {
 			)
 
 			.then(async ({ data }) => {
-				await sleep(500);
+				// await sleep(500);
 				dispatch({ type: ADDED_REVIEW, payload: data });
 				return data;
 			})
@@ -111,7 +111,7 @@ export const updateReview = (review_id, changes, callback) => {
 			)
 
 			.then(async () => {
-				await sleep(500);
+				// await sleep(500);
 				dispatch({ type: UPDATED_REVIEW });
 			})
 
@@ -137,7 +137,7 @@ export const deleteReview = (user_id, review_id, callback) => {
 			)
 
 			.then(async () => {
-				await sleep(500);
+				// await sleep(500);
 				dispatch({ type: DELETED_REVIEW });
 				callback();
 			})
@@ -159,7 +159,7 @@ export const likeReview = ({ user_id, review_id, like }) => {
 			)
 
 			.then(async ({ data }) => {
-				await sleep(500);
+				// await sleep(500);
 				dispatch({ type: LIKED_REVIEW, payload: data });
 			})
 

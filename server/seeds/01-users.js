@@ -28,6 +28,14 @@ exports.seed = function(knex, Promise) {
 					rating_sum: 31,
 					rating_count: 8,
 					helpfulness: 21
+				},
+				{
+					auth_id: '5c10700bb0bac32fa55a7d56',
+					username: 'seeduser',
+					user_rating: 4.0,
+					rating_sum: 29,
+					rating_count: 7,
+					helpfulness: 19
 				}
 			]);
 		});

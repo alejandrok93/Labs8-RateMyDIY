@@ -39,7 +39,8 @@ const Project = props => {
 						<ProjectRatingTool
 							rating={Number(props.project.project_rating)}
 							starRatedColor="black"
-							starEmptyColor="grey"
+							starEmptyColor="#bfbfbf"
+							starRatedColor="#cc0000"
 							// changeRating={this.changeRating}
 							starDimension="20px"
 							starSpacing="5px"
@@ -115,7 +116,8 @@ const ProjectHeader = styled.div`
 	flex-direction: row;
 	padding: 18px 20px 10px 20px;
 	justify-content: space-between;
-  align-items: center;
+	align-items: center;
+	margin: 0 0 20px 0;
 `;
 const ProjectNameAndAuthorContainer = styled.div`
 	display: flex;
@@ -194,15 +196,6 @@ const OptionsContainer = styled.div`
 	width: auto;
 	justify-content: flex-end;
 `;
-
-// const ReviewsLink = styled.button`
-// 	background: none;
-// 	border: none;
-// 	outline: none;
-// 	cursor: pointer;
-// 	padding: 0;
-// 	margin-right: 8px;
-// `;
 
 const EditLink = styled.button`
 	background: none;

@@ -1,7 +1,11 @@
 .reviewPage {
-  display: flex;
-  flex-direction: column;
   width: 100%;
+}
+
+.reviewContainer {
+  margin-top: 100px;
+  display: flex;
+	flex-direction: row;
 }
 
 .myReviewsDisplay {
@@ -42,8 +46,15 @@
     width: 100vw;
   }
 
+  .reviewContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
   .myReviewDisplay {
     width: 80%;
+    align-self: center;
   }
 
   .selectHeader {

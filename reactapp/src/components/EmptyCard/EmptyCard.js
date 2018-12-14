@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 // import CardActions from '@material-ui/core/CardActions';
 import red from '@material-ui/core/colors/red';
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
 	card: {
@@ -60,7 +61,6 @@ class ProjectCard extends React.Component {
 							borderRadius: '50%'
 						}}
 					/>
-
 					<CardContent style={{ padding: '0 14px 7px 0', alignSelf: 'center' }}>
 						<StarRatings
 							rating={0}
@@ -72,9 +72,21 @@ class ProjectCard extends React.Component {
 					</CardContent>
 				</div>
 
-				<div
-					style={{ width: '100%', height: '220px', background: '#bfbfbf' }}
-				/>
+				{this.props.addNew ? 
+					<div style={{ width: '100%', height: '220px', background: '#bfbfbf', textAlign: 'center', verticalAlign: 'middle', lineHeight: '220px' }}>
+						{this.props.review ? 
+						<Link to={`/project/${this.props.featured_id}`}>
+							Add New
+						</Link>
+						:
+						<Link to='/newproject'>
+							Add New
+						</Link>
+						}
+					</div>
+					: 
+					<div style={{ width: '100%', height: '220px', background: '#bfbfbf' }} />
+				}
 			</Card>
 		);
 	}

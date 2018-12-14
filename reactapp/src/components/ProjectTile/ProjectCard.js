@@ -170,7 +170,8 @@ class ProjectCard extends React.Component {
 							fontSize: '1.5rem',
 							lineHeight: '2rem',
 							background: 'none',
-							height: '40px'
+							height: '40px',
+							overflow: 'hidden'
 						}}
 						component="p"
 					>

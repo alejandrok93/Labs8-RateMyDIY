@@ -58,9 +58,14 @@ const styles = theme => ({
 });
 
 const CardTitle = styled(Link)`
-	margin: 18px 20px 10px;
+	width: 100%;
+	padding: 0 20px;
+	margin: 18px 0 8px;
 	font-size: 1.9rem;
 	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 
 	&:hover {
 		background: none;

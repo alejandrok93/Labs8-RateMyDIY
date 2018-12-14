@@ -11,6 +11,9 @@ import {
 	DELETING_PROJECT,
 	DELETED_PROJECT,
 	DELETE_PROJECT_ERROR,
+	UPDATING_PROJECT_IMAGE,
+	UPDATED_PROJECT_IMAGE,
+	UPDATE_PROJECT_IMAGE_ERROR,
 	GETTING_PROJECT_REVIEWS,
 	GOT_PROJECT_REVIEWS,
 	GET_PROJECT_REVIEWS_ERROR,
@@ -110,7 +113,24 @@ const projectReducer = (state = initialState, action) => {
 				DeletingProjectError: `${action.payload}`
 			};
 
-		// getProject
+		// updateProjectImage
+		case UPDATING_PROJECT_IMAGE:
+			return { ...state, updatingProjectImage: true };
+
+		case UPDATED_PROJECT_IMAGE:
+			return {
+				...state,
+				updatingProjectImage: false
+			};
+
+		case UPDATE_PROJECT_IMAGE_ERROR:
+			return {
+				...state,
+				updatingProjectImage: false,
+				updatingProjectImageError: `${action.payload}`
+			};
+
+		// getProjectReviews
 		case GETTING_PROJECT_REVIEWS:
 			return { ...state, gettingProjectReviews: true };
 
@@ -133,10 +153,10 @@ const projectReducer = (state = initialState, action) => {
 				...state,
 				reviews: state.reviews[0]
 					? state.reviews.map(review =>
-							review.review_id === action.payload.review_id
-								? { ...review, like: action.payload.like }
-								: review
-					  )
+						review.review_id === action.payload.review_id
+							? { ...review, like: action.payload.like }
+							: review
+					)
 					: []
 			};
 

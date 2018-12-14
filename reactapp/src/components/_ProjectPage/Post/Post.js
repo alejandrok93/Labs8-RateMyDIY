@@ -15,15 +15,12 @@ import styled from 'styled-components';
 const PostContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #e9ded8;
+	border-radius: 4px;
 	width: 100%;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	margin: 8px 0;
+	border: 1px solid lightgray;
 `;
 
 const ImgTextContainer = styled.div`
-	background: #e9ded4;
-	padding: 16px 16px 8px 16px;
 `;
 
 const Img = styled(ModalImage)`
@@ -42,14 +39,18 @@ const ImgContainer = styled.div`
 
 const Text = styled.p`
 	width: auto;
-	font-size: 16px;
+	margin: 18px 20px 5px 20px;
+	line-height: 18px;
+	text-align: justify;
 `;
 
 const OptionsContainer = styled.div`
 	display: flex;
-	margin: 8px 0 0 auto;
+	justify-content: flex-end;
+	margin: 0 20px 10px 20px;
 	font-size: 11px;
 	color: rgb(42, 43, 45);
+	width: auto;
 `;
 
 const EditLink = styled.button`
@@ -118,7 +119,10 @@ class Post extends Component {
 							/>
 						</ImgContainer>
 					)}
-					{this.props.post.text && <Text>{this.props.post.text}</Text>}
+					{this.props.post.text &&
+						<Text>
+							{this.props.post.text}
+						</Text>}
 					{this.props.owner && (
 						<OptionsContainer>
 							<EditLink

@@ -1,9 +1,10 @@
 .addNew img {
 	height: 50px;
 }
-img {
+/* Please don't inject CSS to all img tags */
+/* img {
 	height: 80%;
-}
+} */
 .addNew {
 	border: 1px solid black;
 	display: flex;

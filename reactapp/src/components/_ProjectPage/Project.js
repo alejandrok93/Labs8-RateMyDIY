@@ -28,14 +28,13 @@ const Project = props => {
 			</ReviewsLink>
 
 			<ProjectHeader>
-
 				<ProjectNameAndAuthorContainer>
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
 				</ProjectNameAndAuthorContainer>
 
 				<ProjectRatingContainer>
-					{props.project.project_rating &&
+					{props.project.project_rating && (
 						<ProjectRatingTool
 							rating={Number(props.project.project_rating)}
 							starRatedColor="black"
@@ -45,7 +44,8 @@ const Project = props => {
 							starDimension="20px"
 							starSpacing="5px"
 							numberOfStars={5}
-						/>}
+						/>
+					)}
 				</ProjectRatingContainer>
 				<CategoryContainer>
 					{props.project.categories &&
@@ -107,7 +107,7 @@ const ProjectContainer = styled.div`
 	border-radius: 4px;
 	width: 100%;
 	border: 1px solid lightgray;
-	margin: 0 0 18px 0;
+	margin: 0 0 30px 0;
 `;
 
 const ProjectHeader = styled.div`
@@ -132,13 +132,12 @@ const ProjectName = styled.h2`
 	margin: 0 0 0 -2px;
 `;
 
-const ProjectAuthor = styled.div`
-`;
+const ProjectAuthor = styled.div``;
 
 const ProjectRatingContainer = styled.div`
 	display: flex;
 	align-self: flex-end;
-`
+`;
 
 const CategoryContainer = styled.div`
 	font-size: 1.6rem;
@@ -163,23 +162,23 @@ const Category = styled(Link)`
 	}
 `;
 
+const ImgContainer = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	max-height: 600px;
+	width: auto;
+`;
+
 const Img = styled(ModalImage)`
 	margin: 0 auto;
 	background: white;
-	width: auto;
-	padding: 0;
+	width: 100%;
+	min-height: 300px;
+	object-fit: contain;
 `;
 
-const ProjectRatingTool = styled(StarRatings)`
-`;
-
-const ImgContainer = styled.div`
-	display: flex;
-	height: auto;
-	margin: 0 auto;
-	max-height: 600px !important;
-	width: auto;
-`;
+const ProjectRatingTool = styled(StarRatings)``;
 
 const DescriptionContainer = styled.div`
 	width: auto;

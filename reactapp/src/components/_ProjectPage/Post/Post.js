@@ -18,23 +18,27 @@ const PostContainer = styled.div`
 	border-radius: 4px;
 	width: 100%;
 	border: 1px solid lightgray;
+	padding: 0 0 5px;
+	margin: 0 0 30px;
 `;
 
-const ImgTextContainer = styled.div`
+const ImgTextContainer = styled.div``;
+
+const ImgContainer = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	max-height: 600px;
+	width: auto;
 `;
 
 const Img = styled(ModalImage)`
 	margin: 0 auto;
 	background: white;
-	width: auto;
-	height: auto;
-`;
-
-const ImgContainer = styled.div`
-	padding-top: 12px;
-	margin: auto;
-	max-width: 700px;
-	height: auto;
+	width: 100%;
+	min-height: 300px;
+	object-fit: contain;
+	border-radius: 4px 4px 0 0;
 `;
 
 const Text = styled.p`
@@ -119,10 +123,7 @@ class Post extends Component {
 							/>
 						</ImgContainer>
 					)}
-					{this.props.post.text &&
-						<Text>
-							{this.props.post.text}
-						</Text>}
+					{this.props.post.text && <Text>{this.props.post.text}</Text>}
 					{this.props.owner && (
 						<OptionsContainer>
 							<EditLink

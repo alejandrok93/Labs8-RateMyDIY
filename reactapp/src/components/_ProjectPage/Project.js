@@ -10,30 +10,33 @@ import { Link } from 'react-router-dom';
 // Styles
 import styled from 'styled-components';
 
-const ReviewsLink = styled(Link)`
-	/* top: -10px; */
-
-	margin: 8px 12px 0 auto;
-	&:hover {
-		text-decoration: none;
-		background: none;
-	}
-`;
-
 const Project = props => {
 	return (
 		<ProjectContainer>
-			<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
-				Reviews
-			</ReviewsLink>
-
 			<ProjectHeader>
-				<ProjectNameAndAuthorContainer>
+				<ProjectNameAuthorCategoryContainer>
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
-				</ProjectNameAndAuthorContainer>
+					<CategoryContainer>
+						{props.project.categories &&
+							// [
+							// 	{ category_id: 1, category_name: 'Tech' },
+							// 	{ category_id: 2, category_name: 'Home' },
+							// 	{ category_id: 3, category_name: 'Cooking' }
+							// ].map(({ category_id, category_name }) => (
+							props.project.categories.map(({ category_id, category_name }) => (
+								// Needs category search!
+								<Category
+									to={`/make/search/queries/for/categories/please/${category_id}`}
+									key={category_id}
+								>
+									{category_name}
+								</Category>
+							))}
+					</CategoryContainer>
+				</ProjectNameAuthorCategoryContainer>
 
-				<ProjectRatingContainer>
+				<ProjectRatingAndReviewsContainer>
 					{props.project.project_rating && (
 						<ProjectRatingTool
 							rating={Number(props.project.project_rating)}
@@ -46,24 +49,10 @@ const Project = props => {
 							numberOfStars={5}
 						/>
 					)}
-				</ProjectRatingContainer>
-				<CategoryContainer>
-					{props.project.categories &&
-						// [
-						// 	{ category_id: 1, category_name: 'Tech' },
-						// 	{ category_id: 2, category_name: 'Home' },
-						// 	{ category_id: 3, category_name: 'Cooking' }
-						// ].map(({ category_id, category_name }) => (
-						props.project.categories.map(({ category_id, category_name }) => (
-							// Needs category search!
-							<Category
-								to={`/make/search/queries/for/categories/please/${category_id}`}
-								key={category_id}
-							>
-								{category_name}
-							</Category>
-						))}
-				</CategoryContainer>
+					<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
+						Reviews
+			</ReviewsLink>
+				</ProjectRatingAndReviewsContainer>
 			</ProjectHeader>
 
 			<ImgContainer>
@@ -114,13 +103,13 @@ const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
 	flex-direction: row;
-	padding: 18px 20px 10px 20px;
+	padding: 18px 20px 0 20px;
 	justify-content: space-between;
 	align-items: center;
 	margin: 0 0 20px 0;
 `;
 
-const ProjectNameAndAuthorContainer = styled.div`
+const ProjectNameAuthorCategoryContainer = styled.div`
 	display: flex;
 	min-width: 70%;
 	flex-direction: column;
@@ -135,9 +124,22 @@ const ProjectName = styled.h2`
 
 const ProjectAuthor = styled.div``;
 
-const ProjectRatingContainer = styled.div`
+const ProjectRatingAndReviewsContainer = styled.div`
 	display: flex;
+	flex-direction: column;
 	align-self: flex-end;
+	min-width: 140px;
+	align-content: flex-end;
+`;
+
+const ReviewsLink = styled(Link)`
+	margin: 8px 0 0 0;
+	display: flex;
+  align-self: flex-end;
+	&:hover {
+		text-decoration: none;
+		background: none;
+	}
 `;
 
 const CategoryContainer = styled.div`
@@ -155,7 +157,7 @@ const Category = styled(Link)`
 	background: #254f8d;
 	padding: 4px 5px 2px;
 	border-radius: 4px;
-
+	font-size: 12px;
 	&:hover {
 		text-decoration: none;
 		color: white;
@@ -183,7 +185,7 @@ const ProjectRatingTool = styled(StarRatings)``;
 
 const DescriptionContainer = styled.div`
 	width: auto;
-	margin: 18px 20px 10px 20px;
+	margin: 18px 20px 4px 20px;
 	line-height: 18px;
 	/* text-align: justify; */
 `;

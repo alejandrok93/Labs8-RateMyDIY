@@ -15,7 +15,7 @@ import styled from 'styled-components';
 class EditProject extends Component {
 	state = {
 		projectName: '',
-		img_url: '',
+		projectImage: '',
 		projectDescriptionText: '',
 		categories: [],
 		selectedFile: null,
@@ -25,9 +25,9 @@ class EditProject extends Component {
 	componentDidMount() {
 		this.setState({
 			projectName: this.props.project.project_name,
-			img_url: this.props.project.img_url,
+			projectImage: this.props.project.img_url,
 			projectDescriptionText: this.props.project.text,
-			project_rating: this.props.project.project_rating
+			categories: this.props.project.categories
 		});
 		document.addEventListener("keydown", this.escCancelHandler, false);
 	}
@@ -43,7 +43,9 @@ class EditProject extends Component {
 		event.preventDefault();
 		const data = new FormData();
 		// If file selected
-		if (this.state.selectedFile && !this.state.uploadingProjectImage) {
+		if (!this.state.selectedFile && !this.state.uploadingProjectImage) {
+			this.submitProjectChanges();
+		} else if (this.state.selectedFile && !this.state.uploadingProjectImage) {
 			data.append(
 				'image',
 				this.state.selectedFile,
@@ -97,7 +99,7 @@ class EditProject extends Component {
 						} else {
 							let photo = response.data.location;
 							this.setState({
-								img_url: photo,
+								projectImage: photo,
 								uploadingProjectImage: false
 							}, () => { this.submitProjectChanges() });
 						}
@@ -115,7 +117,7 @@ class EditProject extends Component {
 	// Keep form data in the state
 	changeHandler = event => {
 		this.setState({ [event.target.name]: event.target.value });
-		console.log(event.target.value)
+		console.log(this.state)
 	};
 
 	// updates the project with the edited data
@@ -127,9 +129,9 @@ class EditProject extends Component {
 			this.props.project.project_id,
 			{
 				user_id: this.props.user_id,
-				projectName: this.state.project_name,
-				img_url: this.state.img_url,
-				projectDescriptionText: this.state.projectDescriptionText,
+				project_name: this.state.projectName,
+				img_url: this.state.projectImage,
+				text: this.state.projectDescriptionText,
 				categories: this.state.categories
 			},
 			() => this.props.willUpdateProject(false)
@@ -142,7 +144,7 @@ class EditProject extends Component {
 
 		if (
 			this.state.projectName === this.props.project.project_name &&
-			this.state.img_url === this.props.project.img_url &&
+			this.state.projectImage === this.props.project.img_url &&
 			this.state.projectDescriptionText === this.props.project.text
 		) {
 			this.props.willUpdateProject(false);
@@ -197,8 +199,8 @@ class EditProject extends Component {
 							src={UploadProjectPictureIcon} />
 					</ProjectPictureUploadLabel>
 					<ProjectImage
-						src={this.state.img_url}
-						alt={this.state.img_url || 'project image'}
+						src={this.state.projectImage}
+						alt={this.state.projectImage || 'project image'}
 					/>
 				</ImgContainer>
 				{/* HiddenProfilePictureInput is hidden */}

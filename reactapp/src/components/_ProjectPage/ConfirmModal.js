@@ -11,6 +11,7 @@ const ModalShade = styled.div`
 	width: 100%;
 	height: 100%;
 	background: rgba(200, 200, 200, 0.85);
+	z-index: 10;
 `;
 
 const ModalBox = styled.div`
@@ -71,18 +72,18 @@ const ConfirmModal = props => {
 				{props.statusMessage ? (
 					<StatusMessage>{props.statusMessage}</StatusMessage>
 				) : (
-					<React.Fragment>
-						<ModalPrompt>{props.confirm.text[0] || 'u sure tho?'}</ModalPrompt>
-						<ButtonContainer>
-							<SubmitButton cancel onClick={props.confirm.cancel}>
-								{props.confirm.text[1] || 'No'}
-							</SubmitButton>
-							<SubmitButton onClick={props.confirm.submit}>
-								{props.confirm.text[2] || 'Yes'}
-							</SubmitButton>
-						</ButtonContainer>
-					</React.Fragment>
-				)}
+						<React.Fragment>
+							<ModalPrompt>{props.confirm.text[0] || 'u sure tho?'}</ModalPrompt>
+							<ButtonContainer>
+								<SubmitButton cancel onClick={props.confirm.cancel}>
+									{props.confirm.text[1] || 'No'}
+								</SubmitButton>
+								<SubmitButton onClick={props.confirm.submit}>
+									{props.confirm.text[2] || 'Yes'}
+								</SubmitButton>
+							</ButtonContainer>
+						</React.Fragment>
+					)}
 			</ModalBox>
 		</ModalShade>
 	);

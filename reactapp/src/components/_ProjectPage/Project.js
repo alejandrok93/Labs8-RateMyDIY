@@ -119,6 +119,7 @@ const ProjectHeader = styled.div`
 	align-items: center;
 	margin: 0 0 20px 0;
 `;
+
 const ProjectNameAndAuthorContainer = styled.div`
 	display: flex;
 	min-width: 70%;

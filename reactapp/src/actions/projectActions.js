@@ -174,6 +174,7 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 				selectedFile, headerData
 			)
 
+
 			.then(response => {
 				// If file size is larger than expected.
 				if (response.data.error) {
@@ -187,6 +188,9 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 					}
 
 					dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error });
+
+
+
 				} else {
 					const img_url = response.data.location
 					console.log(`projectActions img_url:`, img_url);
@@ -194,9 +198,13 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 					dispatch({ type: UPDATED_PROJECT_IMAGE });
 					callback(img_url);
 				}
-			})
+			}
+			)
+
 
 			.catch(error => dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error }))
+
+
 	}
 }
 

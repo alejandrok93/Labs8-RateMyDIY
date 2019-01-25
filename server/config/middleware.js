@@ -27,7 +27,8 @@ const sessionConfig = {
 var allowedOrigins = [
 	'http://localhost:3000',
 	'https://ratemydiy.netlify.com',
-	'https://ratemydiy-dev.netlify.com'
+	'https://ratemydiy-dev.netlify.com',
+	'https://www.qrafts.app'
 ];
 
 const corsConfig = {

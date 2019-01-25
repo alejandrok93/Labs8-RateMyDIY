@@ -15,6 +15,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import magnifier from '../../assets/images/magnifier.png';
+
 const loginURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`;
 
@@ -31,12 +33,36 @@ const styles = {
 	center: {
 		display: 'flex',
 		justifyContent: 'center'
+	},
+	profile: {
+		width: '40px',
+		height: '40px',
+		borderRadius: '50%',
+		position: 'absolute',
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+		margin: 'auto'
+	},
+	arrow: {
+		width: '20px',
+		height: '20px'
 	}
 };
 
 const ButtonContainer = styled.div`
 	display: flex;
 	justify-content: center;
+`;
+
+const ImgContainer = styled.div`
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #fff;
+	position: relative;
+	margin-top: 8px;
 `;
 
 class MenuDrawer extends React.Component {
@@ -73,6 +99,11 @@ class MenuDrawer extends React.Component {
 					<div className={classes.fullList}>
 						<List>
 							<ListItem className={classes.center}>
+								<Link exact="true" to="/">
+									Home
+								</Link>
+							</ListItem>
+							<ListItem className={classes.center}>
 								<Link to="/search">Search</Link>
 							</ListItem>
 							<ListItem className={classes.center}>
@@ -81,11 +112,14 @@ class MenuDrawer extends React.Component {
 							<ListItem className={classes.center}>
 								<Link to="/ReviewList">My Reviews</Link>
 							</ListItem>
-							<ListItem className={classes.center}>
+							{/* <ListItem className={classes.center}>
 								<Link to="/Billing">Billing</Link>
-							</ListItem>
+							</ListItem> */}
 							<ListItem className={classes.center}>
 								<Link to="/settings">Settings</Link>
+							</ListItem>
+							<ListItem className={classes.center}>
+								<a href={logoutURL}>Signout</a>
 							</ListItem>
 						</List>
 					</div>
@@ -95,14 +129,13 @@ class MenuDrawer extends React.Component {
 					<div className={classes.fullList}>
 						<List>
 							<ListItem className={classes.center}>
-								<Link to={`/users/${this.props.userInfo.user_id}`}>
-									My Profile
-								</Link>
+								<Link to={`/ProjectList`}>My Profile</Link>
 							</ListItem>
 							<ListItem className={classes.center}>
-								<Link to={`/users/${this.props.userInfo.user_id}/settings`}>
-									Profile Settings
-								</Link>
+								<Link to={`/settings`}>Profile Settings</Link>
+							</ListItem>
+							<ListItem className={classes.center}>
+								<Link to={`/newproject`}>New Project</Link>
 							</ListItem>
 							<ListItem className={classes.center}>
 								<a href={logoutURL}>Signout</a>
@@ -120,11 +153,17 @@ class MenuDrawer extends React.Component {
 						onClick={this.toggleDrawer('top', true)}
 						style={styles.center}
 					>
-						<img
-							src="https://cdn2.iconfinder.com/data/icons/lightly-icons/30/chevron-down-480.png"
-							alt=""
-							style={{ width: '20px', height: '20px' }}
-						/>
+						{this.props.profile ? (
+							<ImgContainer>
+								<img
+									src={this.props.userInfo.img_url}
+									alt=""
+									className={classes.profile}
+								/>
+							</ImgContainer>
+						) : (
+							<img src={magnifier} alt="" className={classes.arrow} />
+						)}
 					</Button>
 				</ButtonContainer>
 				<Drawer

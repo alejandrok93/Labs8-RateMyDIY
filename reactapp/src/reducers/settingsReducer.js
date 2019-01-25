@@ -1,54 +1,61 @@
 import {
-  GET_EMAIL,
-  GET_EMAIL_ERROR,
-  GET_EMAIL_SUCCESS,
-  UPDATE_EMAIL,
-  UPDATE_EMAIL_ERROR,
-  UPDATE_EMAIL_SUCCESS
-} from '../actions';
+  GETTING_USERNAME,
+  GOT_USERNAME,
+  GET_USERNAME_ERROR,
+  GETTING_PROFILE_PIC,
+  GOT_PROFILE_PIC,
+  GET_PROFILE_PIC_ERROR
+} from "../actions";
 
-const initialState = { email: '', error: '' }
+const initialState = {
+  gettingUsername: false,
+  username: '',
+  username_error: null,
+  gettingProfilePic: false,
+  img_url: null,
+  profilepic_error: null
+};
 
 const settingsReducer = (state = initialState, action) => {
   switch (action.type) {
+    // get userInfo
+    case GETTING_USERNAME:
+      return { ...state, gettingUsername: true };
 
-    case GET_EMAIL:
-      return { ...state, fetching: true };
-
-    case GET_EMAIL_SUCCESS:
+    case GOT_USERNAME:
       return {
         ...state,
-        users: action.payload,
-        fetching: false
+        gettingUsername: false,
+        username: action.payload
       };
 
-    case GET_EMAIL_ERROR:
+    case GET_USERNAME_ERROR:
       return {
         ...state,
-        fetching: false,
-        error: `${action.payload}`
+        gettingUserInfo: false,
+        username_error: action.payload
       };
 
-    case UPDATE_EMAIL:
-      return { ...state, fetching: true };
+    case GETTING_PROFILE_PIC:
+      return { ...state, gettingProfilePic: true };
 
-    case UPDATE_EMAIL_SUCCESS:
+    case GOT_PROFILE_PIC:
       return {
         ...state,
-        users: action.payload,
-        fetching: false
-      };
-
-    case UPDATE_EMAIL_ERROR:
+        gettingProfilePic: false,
+        img_url: action.payload
+      }
+    
+    case GET_PROFILE_PIC_ERROR:
       return {
         ...state,
-        fetching: false,
-        error: `${action.payload}`
-      };
+        gettingProfilePic: false,
+        profilepic_error: action.payload
+      }
 
     default:
       return state;
   }
-}
+};
 
-export default settingsReducer
+export default settingsReducer;

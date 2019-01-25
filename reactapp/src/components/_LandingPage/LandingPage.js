@@ -4,84 +4,115 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 //Added Redux imports
 import {
-  fetchSearchResults,
-  fetchProjectsByReviewer
+	fetchSearchResults,
+	fetchProjectsByReviewer
 } from '../../actions/index';
 import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
+import { Link } from 'react-router-dom';
 
+import plusIcon from '../../assets/images/plus-icon.svg';
 
 // ReactStrap
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 //Import components
 import {
-  Nav,
-  FeaturedProjects,
-  PopularMakers,
-  PopularReviewers,
-  SearchBar,
-  Twillio,
-  Footer,
-  LogInPopUp
+	Nav,
+	ScrollToTopOnMount,
+	FeaturedProjects,
+	PopularMakers,
+	PopularReviewers,
+	SearchBar,
+	// Twillio,
+	Footer,
+	LogInPopUp,
+	SearchTags
 } from '../../components';
 
 // styled-components
 const LandingPageContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 80%;
+	display: flex;
+	flex-direction: column;
+	margin: 30px auto;
+	max-width: 1000px;
+	background-color: ${props => props.theme.mui.palette.primary.main};
+
+	@media (max-width: 1000px) {
+		max-width: 700px;
+		/* margin: 30px 2%; */
+	}
 `;
 const LandingPageWrapper = styled.div`
-  width: 100%;
-  @media (max-width: 500px) {
-    width: 100vw;
-  }
+	width: 100%;
+	background-color: ${props => props.theme.mui.palette.primary.main};
+
+	@media (max-width: 680px) {
+		width: 100vw;
+	}
 `;
 
 const imgUrl =
-  'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
+	'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
 
 const HeroImageContainer = styled.div`
-    width: 100%;
-  height: 560px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${imgUrl});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: bottom;
+	width: 100%;
+	height: 460px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url(${imgUrl});
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 `;
 
 const HeroSearchContainer = styled.div`
-  width: 60%;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	width: 60%;
+	position: absolute;
+	top: 240px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 const HeroTitle = styled.h1`
-  text-align: center;
-  font-weight: bolder;
-  color: white;
-  font-size: 32px;
-  margin-bottom: 30px;
+	text-align: center;
+	font-weight: bolder;
+	color: white;
+	font-size: 32px;
+	margin-bottom: 30px;
 `;
+
+const NewProjectLink = styled(Link)`
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 21px;
+	left: 24px;
+	/* top: 355px;
+	left: 50%;
+	transform: translate(-50%, -50%); */
+	height: 30px;
+	font-size: 2rem;
+	color: white;
+
+	&:hover {
+		text-decoration: none;
+		color: white;
+		background: none;
+	}
+`;
+
 class LandingPage extends Component {
 	constructor() {
 		super();
 		this.state = { input: '', modal: false, toggleLogInPopUp: false };
 		this.toggle = this.toggle.bind(this);
-  }
-  
-  componentDidMount() {
-    
-  }
+	}
+
+	componentDidMount() {}
 
 	toggle() {
 		this.setState({
@@ -107,7 +138,7 @@ class LandingPage extends Component {
 			});
 		} else {
 			//call featch search results action
-			this.props.fetchSearchResults(this.state.input);
+			// this.props.fetchSearchResults(this.state.input);
 
 			//push to search page
 			this.props.history.push(`/search?query=${searchTerm}`);
@@ -140,17 +171,24 @@ class LandingPage extends Component {
 	};
 
 	render() {
-    console.log(this.props)
 		return (
 			<LandingPageWrapper>
+				<ScrollToTopOnMount />
 				<HeroImageContainer>
 					{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
+
+					<NewProjectLink to={`/newproject`}>
+						<img src={plusIcon} style={{ width: '30px', height: '30px' }} />
+						<p style={{ margin: '1px 0 0 6px' }}>Submit a new project</p>
+					</NewProjectLink>
+
 					<HeroSearchContainer>
-						<HeroTitle>Find a project to build</HeroTitle>
+						<HeroTitle>Find a project to build or review</HeroTitle>
 						<SearchBar
 							handleChange={this.handleChange}
 							handleSearch={this.handleSearch}
 						/>
+						<SearchTags tags={['carpentry', 'home', 'garden', 'tech']} />
 					</HeroSearchContainer>
 				</HeroImageContainer>
 				<LandingPageContentWrapper>
@@ -163,7 +201,7 @@ class LandingPage extends Component {
 						//  'hey please log in'
 						''
 					)}
-					<FeaturedProjects />
+					<FeaturedProjects history={this.props.history} />
 					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers
 						getProjectsByReviewer={this.getProjectsByReviewer}
@@ -176,11 +214,11 @@ class LandingPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  projects: state.searchReducer.projects,
-  loggedInObject: state.loggedInReducer
+	projects: state.searchReducer.projects,
+	loggedInObject: state.loggedInReducer
 });
 
 export default connect(
-  mapStateToProps,
-  { fetchSearchResults, fetchProjectsByReviewer }
+	mapStateToProps,
+	{ fetchSearchResults, fetchProjectsByReviewer }
 )(LandingPage);

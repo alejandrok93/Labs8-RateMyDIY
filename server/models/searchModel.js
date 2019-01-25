@@ -28,11 +28,12 @@ function getSearchResults(query) {
 			'projects.user_id',
 			'projects.project_name',
 			'users.username',
+			'users.img_url as maker_photo_url',
 			'projects.project_id',
 			'projects.project_rating',
-			'projects.text'
+			'projects.text',
+			'projects.last_updated'
 		)
-		.orderBy('project_rating', 'desc')
 		.then(projects => {
 			let fuse = new Fuse(projects, options); // "projects" is the item array
 			let result = fuse.search(query);
@@ -53,6 +54,7 @@ function getProjectsByReviewer(username) {
 		.select(
 			'projects.project_id',
 			'projects.project_name',
+			'reviews.text',
 			'projects.project_rating',
 			'projects.img_url',
 			'projects.user_id',

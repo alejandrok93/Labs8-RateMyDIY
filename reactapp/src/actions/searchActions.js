@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+export const SORT_PROJECTS_BY_RATING = 'SORT_PROJECTS_BY_RATING';
+export const SORT_PROJECTS_BY_DATE = 'SORT_PROJECTS_BY_DATE';
+export const SORT_PROJECTS_BY_REVIEWS = 'SORT_PROJECTS_BY_REVIEWS';
+
 export const FETCH_MYPROJECT = 'FETCH_MYPROJECT';
 export const FETCH_MYPROJECT_SUCCESS = 'FETCH_MYPROJECT_SUCCESS';
 export const FETCH_MYPROJECT_ERROR = 'FETCH_MYPROJECT_ERROR';
@@ -28,7 +32,7 @@ export const fetchMyProjects = user_id => {
 		axios
 			.post(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				'/api/users/myprojects',
+					'/api/users/myprojects',
 				{ user_id: user_id }
 			)
 			.then(response => {
@@ -47,7 +51,7 @@ export const fetchMyReviews = user_id => {
 		axios
 			.post(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				'/api/users/myreviews',
+					'/api/users/myreviews',
 				{ user_id: user_id }
 			)
 			.then(response => {
@@ -62,11 +66,9 @@ export const fetchMyReviews = user_id => {
 
 export const fetchSearchResults = query => {
 	return dispatch => {
-		console.log('query: ' + query);
 		const url =
 			(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-			'/api/search?query=' +
-			query;
+			`/api/search?query=${query}`;
 		dispatch({ type: FETCH_SEARCH_RESULTS });
 		axios
 			.get(url)
@@ -126,5 +128,15 @@ export const fetchCategoryResults = query => {
 				console.log(err);
 				dispatch({ type: FETCH_CATEGORY_RESULTS_ERROR });
 			});
+	};
+};
+
+export const sortProjects = type => {
+	return dispatch => {
+		if ('rating' === type.toLowerCase()) {
+			dispatch({ type: SORT_PROJECTS_BY_RATING });
+		} else if ('new' === type.toLowerCase()) {
+			dispatch({ type: SORT_PROJECTS_BY_DATE });
+		}
 	};
 };

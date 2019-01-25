@@ -28,7 +28,15 @@ exports.seed = function(knex, Promise) {
           project_rating: 4.5,
           rating_sum: 36,
           rating_count: 8
-        }
+        },
+        {
+          user_id: 4,
+          project_name: "Data Science",
+          text: "data science",
+          project_rating: 3.9,
+          rating_sum: 25,
+          rating_count: 6
+        },
       ]);
     });
 };

@@ -11,6 +11,30 @@ import { addReview } from '../../actions';
 // Styles
 import styled from 'styled-components';
 
+const ModalShade = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(200, 200, 200, 0.75);
+`;
+
+const ModalBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 440px;
+	height: 590px;
+	background: white;
+	padding: 20px;
+	border: 2px solid #9a9a9a;
+	transform: translate(-50%, -50%);
+`;
+
 const CloseModalButton = styled.button`
 	align-self: flex-end;
 `;
@@ -76,7 +100,7 @@ class NewReview extends Component {
 
 		this.props.addReview({
 			user_id: this.props.user_id,
-			project_id: this.props.project_id,
+			project_id: this.props.project.project_id,
 			rating: this.state.rating,
 			text: this.state.text
 		});
@@ -96,96 +120,113 @@ class NewReview extends Component {
 					},
 					submit: event => {
 						event.preventDefault();
-						this.props.closeModal();
+						this.props.showReviewModal(false);
 					}
 				}
 			});
 		} else {
-			this.props.closeModal();
+			this.props.showReviewModal(false);
 		}
 	};
 
 	render() {
+		const disabled = this.props.addingReview || this.props.gettingReview;
+
 		return (
-			<React.Fragment>
-				<CloseModalButton onClick={this.cancelHandler}>x</CloseModalButton>
+			<ModalShade
+				onClick={event => {
+					event.stopPropagation();
+					if (!this.state.confirm) this.cancelHandler(event);
+				}}
+			>
+				<ModalBox onClick={event => event.stopPropagation()}>
+					<CloseModalButton onClick={this.cancelHandler}>x</CloseModalButton>
 
-				{/* todo: click outside modal to trigger cancelHandler */}
-				<ReviewForm onSubmit={this.submitHandler}>
-					<ProjectTitle>{`@${this.props.maker_name}'s ${
-						this.props.project_name
-					}`}</ProjectTitle>
+					{/* todo: click outside modal to trigger cancelHandler */}
+					<ReviewForm onSubmit={this.submitHandler}>
+						<ProjectTitle>{`@${this.props.project.username}'s ${
+							this.props.project.project_name
+						}`}</ProjectTitle>
 
-					<Reviewer>{`Review by: @${this.props.username}`}</Reviewer>
+						<Reviewer>{`Review by: @${this.props.username}`}</Reviewer>
 
-					<Img
-						src={this.props.img_url}
-						alt={this.props.img_url || 'project image'}
-					/>
+						<Img
+							src={this.props.project.img_url}
+							alt={this.props.project.img_url || 'project image'}
+						/>
 
-					<StarContainer>
-						<input
-							type="radio"
-							name="rating"
-							value="1"
+						<StarContainer>
+							<input
+								type="radio"
+								name="rating"
+								value="1"
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="2"
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="3"
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="4"
+								onChange={this.changeHandler}
+								required
+							/>
+							<input
+								type="radio"
+								name="rating"
+								value="5"
+								onChange={this.changeHandler}
+								required
+							/>
+						</StarContainer>
+
+						<TextArea
+							name="text"
+							type="text"
+							placeholder="review text"
+							value={this.state.text}
 							onChange={this.changeHandler}
 							required
+							autoFocus
 						/>
-						<input
-							type="radio"
-							name="rating"
-							value="2"
-							onChange={this.changeHandler}
-							required
-						/>
-						<input
-							type="radio"
-							name="rating"
-							value="3"
-							onChange={this.changeHandler}
-							required
-						/>
-						<input
-							type="radio"
-							name="rating"
-							value="4"
-							onChange={this.changeHandler}
-							required
-						/>
-						<input
-							type="radio"
-							name="rating"
-							value="5"
-							onChange={this.changeHandler}
-							required
-						/>
-					</StarContainer>
 
-					<TextArea
-						name="text"
-						type="text"
-						placeholder="review text"
-						value={this.state.text}
-						onChange={this.changeHandler}
-						required
-						autoFocus
-					/>
+						{(this.props.addingReview || this.props.gettingReview) && (
+							<StatusMessage>Adding review...</StatusMessage>
+						)}
+						{this.props.addingReviewError && (
+							<StatusMessage>{this.props.addingReviewError}</StatusMessage>
+						)}
 
-					<ButtonContainer>
-						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-						<SubmitInput type="submit" value="Submit Review" />
-					</ButtonContainer>
+						<ButtonContainer>
+							<CancelButton onClick={this.cancelHandler} disabled={disabled}>
+								Cancel
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Submit Review"
+								disabled={disabled}
+							/>
+						</ButtonContainer>
 
-					{this.props.addingReview && (
-						<StatusMessage>Adding review...</StatusMessage>
-					)}
-					{this.props.addingReviewError && (
-						<StatusMessage>{this.props.addingReviewError}</StatusMessage>
-					)}
-
-					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
-				</ReviewForm>
-			</React.Fragment>
+						{this.state.confirm && (
+							<ConfirmModal confirm={this.state.confirm} />
+						)}
+					</ReviewForm>
+				</ModalBox>
+			</ModalShade>
 		);
 	}
 }
@@ -193,7 +234,11 @@ class NewReview extends Component {
 const mapStateToProps = state => {
 	return {
 		gettingReview: state.reviewReducer.gettingReview,
-		gettingReviewError: state.reviewReducer.gettingReviewError
+
+		addingReview: state.reviewReducer.addingReview,
+		addingReviewError: state.reviewReducer.addingReviewError,
+
+		reviewModal: state.reviewReducer.reviewModal
 	};
 };
 

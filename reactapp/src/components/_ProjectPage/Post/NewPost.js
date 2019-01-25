@@ -14,6 +14,8 @@ import styled from 'styled-components';
 
 const PostContainer = styled.div`
 	background: #ffcccc;
+	padding: 16px 16px 8px 16px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 const Img = styled.img`
 	display: flex;
@@ -37,7 +39,6 @@ const PostButtonContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin-top: -12px;
-	margin-bottom: 20px;
 `;
 
 const StatusMessage = styled.p``;
@@ -122,12 +123,15 @@ class NewPost extends Component {
 	submitHandler = event => {
 		event.preventDefault();
 
-		this.props.addPost({
-			user_id: this.props.user_id,
-			project_id: this.props.project_id,
-			img_url: this.state.img_url,
-			text: this.state.text
-		});
+		this.props.addPost(
+			{
+				user_id: this.props.user_id,
+				project_id: this.props.project_id,
+				img_url: this.state.img_url,
+				text: this.state.text
+			},
+			() => this.props.willAddPost(false)
+		);
 	};
 
 	// Cancel new post (with confirmation prompt)
@@ -170,25 +174,39 @@ class NewPost extends Component {
 							autoFocus
 						/>
 						<PostButtonContainer>
-							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Add Text Field" />
+							<CancelButton
+								onClick={this.cancelHandler}
+								disabled={this.props.addingPost || this.props.gettingProject}
+							>
+								Cancel
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Add Text Field"
+								disabled={this.props.addingPost || this.props.gettingProject}
+							/>
 						</PostButtonContainer>
 					</PostForm>
 				) : (
 					<PostForm onSubmit={this.submitHandler}>
 						<form>
-							<input type="file" onChange={this.singleFileChangedHandler} />
+							<Img
+								src={this.state.img_url || 'placeholder image'}
+								alt={this.state.img_url || 'placeholder image'}
+							/>
+							<input
+								type="file"
+								onChange={this.singleFileChangedHandler}
+								disabled={this.props.addingPost || this.props.gettingProject}
+							/>
 							<div className="mt-5">
 								<button
 									className="btn btn-info"
 									onClick={this.singleFileUploadHandler}
+									disabled={this.props.addingPost || this.props.gettingProject}
 								>
 									Upload!
 								</button>
-								<Img
-									src={this.state.img_url || 'placeholder image'}
-									alt={this.state.img_url || 'placeholder image'}
-								/>
 							</div>
 						</form>
 						<TextInput
@@ -199,12 +217,21 @@ class NewPost extends Component {
 							onChange={this.changeHandler}
 						/>
 						<PostButtonContainer>
-							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Add Picture" />
+							<CancelButton
+								onClick={this.cancelHandler}
+								disabled={this.props.addingPost || this.props.gettingProject}
+							>
+								Cancel
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Add Picture"
+								disabled={this.props.addingPost || this.props.gettingProject}
+							/>
 						</PostButtonContainer>
 					</PostForm>
 				)}
-				{this.props.addingPost && (
+				{(this.props.addingPost || this.props.gettingProject) && (
 					<StatusMessage small>Adding new post...</StatusMessage>
 				)}
 				{this.props.addingPostError && (
@@ -220,6 +247,8 @@ class NewPost extends Component {
 
 const mapStateToProps = state => {
 	return {
+		gettingProject: state.projectReducer.gettingProject,
+
 		addingPost: state.postReducer.addingPost,
 		addingPostError: state.postReducer.addingPostError
 	};

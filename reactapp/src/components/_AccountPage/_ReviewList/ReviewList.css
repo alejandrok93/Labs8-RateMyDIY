@@ -1,14 +1,15 @@
 .reviewPage {
-  display: flex;
-  flex-direction: row;
   width: 100%;
 }
 
+.reviewContainer {
+  margin-top: 100px;
+  display: flex;
+	flex-direction: row;
+}
+
 .myReviewsDisplay {
-  border: 1px solid #dedede;
-  width: 200px;
-  margin-left: 30px;
-  height: 200px;
+  margin-left: 20px;
   background-color: #ffffff;
   margin-top: 20px;
 }
@@ -27,7 +28,6 @@
   justify-content: center;
   margin: 0 auto;
   align-items: center;
-  
 }
 
 .addNewReview img {
@@ -35,9 +35,9 @@
   margin-top: 20px;
 }
 
-.addNewReview h2{
-    font-size: 30px;
-  }
+.addNewReview h2 {
+  font-size: 30px;
+}
 
 @media (max-width: 500px) {
   .reviewPage {
@@ -46,9 +46,25 @@
     width: 100vw;
   }
 
-  .myReviewsDisplay {
-    width: 40%;
-    padding: 3%;
-    margin: 3%;
+  .reviewContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
   }
+
+  .myReviewDisplay {
+    width: 80%;
+    align-self: center;
+  }
+
+  .selectHeader {
+		width: 80%;
+		margin: 0 auto;
+		margin-top: 100px;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+	}
 }

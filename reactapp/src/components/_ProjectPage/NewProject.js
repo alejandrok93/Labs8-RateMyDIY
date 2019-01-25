@@ -2,60 +2,203 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 import axios from 'axios';
 
 // Components
-import { ConfirmModal } from '../../components';
+import { ConfirmModal, Header } from '../../components';
 
 // Actions
-import { addProject, setRedirect } from '../../actions';
+import { addProject } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
 
 const NewProjectContainer = styled.div`
-	width: 700px;
-	background: #ffeeee;
-	padding: 30px;
+	width: 640px;
+	padding: 25px 30px 25px 30px;
 	margin: 0 auto;
+	margin-top: 110px;
+	display: flex;
+	flex-direction: column;
+	background: #e9ded8;
+	border-radius: 4px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
+const NewProjectBody = styled.div`
+	width: 100%;
+`;
+
+const NewProjectHeader = styled.div``;
 const StatusMessage = styled.p``;
 
-const ProjectForm = styled.form`
-	background: #ffcccc;
-`;
+const ProjectForm = styled.form``;
 
-const Img = styled.img`
+const ImgWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 380px;
 	width: 100%;
-	background: #cceeee;
+	background: #c8c8c8;
 	margin-bottom: 20px;
 `;
 
-const TextInput = styled.input``;
+const Img = styled.img`
+	align-self: center;
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+	background: #c8c8c8;
+`;
 
-const CancelButton = styled.button``;
-
-const SubmitInput = styled.input``;
-
-const ProjectHeader = styled.div`
+const ProjectImageFlex = styled.div`
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 20px;
 `;
 
-const ProjectNameInput = styled.input``;
+const ProjectImage = styled.input`
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+`;
+
+const ProjectImageFile = styled.div`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;
+
+const ProjectImageUpload = styled.div`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;
+
+const ProfileHeader = styled.h2`
+	width: 80%;
+	height: 24px;
+	color: ${props => props.theme.mui.palette.primary.dark};
+	font-size: 2.5rem;
+	margin: 2% auto;
+	text-align: center;
+`;
+
+const ImageFileUpload = styled.div`
+	width: 1em;
+	height: 1em;
+	vertical-align: middle;
+	fill: currentColor;
+	margin-top: -0.25em;
+	margin-right: 0.25em;
+	cursor: pointer;
+`;
+
+const TextArea = styled.textarea`
+	width: 100%;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	outline: none;
+	resize: none;
+	padding: 10px;
+	margin: 6px 0 20px;
+`;
+
+const CancelButton = styled.button`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;
+
+const SubmitInput = styled.input`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;
+
+const ProjectHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	/* margin-top: 10px; */
+	margin-bottom: 20px;
+`;
+
+const ProjectNameInput = styled.input`
+	width: 70%;
+	font-size: 1.6rem;
+	padding: 8px;
+`;
 
 const ProjectButtonContainer = styled.div`
 	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	justify-content: space-between;
 `;
+
+const selectorStyles = {
+	control: base => ({
+		...base,
+		height: '38px',
+		border: '1px solid #A9A9A9',
+		borderRadius: 'none',
+		fontSize: '1.6rem'
+	})
+};
+
+const options = [
+	{ value: 1, label: 'Home' },
+	{ value: 2, label: 'Garden' },
+	{ value: 3, label: 'Cooking' },
+	{ value: 4, label: 'Carpentry' },
+	{ value: 5, label: 'Tech' },
+	{ value: 6, label: 'Automotive' },
+	{ value: 7, label: 'Misc' }
+];
 
 class NewProject extends Component {
 	state = {
@@ -87,6 +230,17 @@ class NewProject extends Component {
 						`/api/projects/image-upload`,
 					data,
 					{
+						onUploadProgress: progressEvent => {
+							console.log(
+								'Upload Progress:' +
+									Math.round(
+										(progressEvent.loaded / progressEvent.total) * 100
+									) +
+									'%'
+							);
+						}
+					},
+					{
 						headers: {
 							accept: 'application/json',
 							'Accept-Language': 'en-US,en;q=0.8',
@@ -104,6 +258,7 @@ class NewProject extends Component {
 								console.log(response.data.location);
 								// If not the given file type
 								// this.ocShowAlert(response.data.error, "red");
+								console.log(response.data.path);
 							}
 						} else {
 							// Success
@@ -134,17 +289,26 @@ class NewProject extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
+	// Not multi select !!
+	handleSelect = categories => {
+		this.setState({ categories });
+		console.log(`Option selected:`, categories);
+	};
+
 	// Submit new project
 	submitHandler = event => {
 		event.preventDefault();
 
-		this.props.addProject({
-			user_id: this.props.userInfo.user_id,
-			project_name: this.state.project_name,
-			img_url: this.state.img_url,
-			text: this.state.text,
-			categories: this.state.categories
-		});
+		this.props.addProject(
+			{
+				user_id: this.props.userInfo.user_id,
+				project_name: this.state.project_name,
+				img_url: this.state.img_url,
+				text: this.state.text,
+				categories: [this.state.categories.value]
+			},
+			url => this.setState({ redirect: url })
+		);
 	};
 
 	// Cancel new project (with confirmation prompt)
@@ -161,63 +325,117 @@ class NewProject extends Component {
 					},
 					submit: event => {
 						event.preventDefault();
-						this.props.setRedirect('/');
+						this.setState({ redirect: '/' });
 					}
 				}
 			});
 		} else {
-			this.props.setRedirect('/');
+			this.setState({ redirect: '/' });
 		}
 	};
 
-	componentWillUnmount() {
-		this.props.setRedirect(null);
-	}
-
 	render() {
-		if (this.props.redirect) {
-			return <Redirect push to={this.props.redirect} />;
-		} else {
-			return (
+		return (
+			<NewProjectBody>
+				<NewProjectHeader>
+					<Header history={this.props.history} />
+				</NewProjectHeader>
+
 				<NewProjectContainer>
+					{this.state.redirect && <Redirect push to={this.state.redirect} />}
+
 					<ProjectForm onSubmit={this.submitHandler}>
+						{/* Project title: */}
 						<ProjectHeader>
 							<ProjectNameInput
 								name="project_name"
 								type="text"
-								placeholder="project title"
+								maxLength="48"
+								placeholder="Project title"
 								value={this.state.project_name}
 								onChange={this.changeHandler}
 								autoFocus
 								required
 							/>
-						</ProjectHeader>
-						<Img
-							src={this.state.img_url || 'placeholder image'}
-							alt={this.state.img_url || 'placeholder image'}
-						/>
-						<form>
-							<input type="file" onChange={this.singleFileChangedHandler} />
-							<div className="mt-5">
-								<button
-									className="btn btn-info"
-									onClick={this.singleFileUploadHandler}
-								>
-									Upload!
-								</button>
+
+							<div style={{ width: '30%' }}>
+								{/* // Not multi select !! */}
+								<Select
+									value={this.state.categories}
+									onChange={this.handleSelect}
+									options={options}
+									placeholder="Select category"
+									style={{ fontSize: '1.6rem' }}
+									styles={selectorStyles}
+									required
+								/>
 							</div>
-						</form>
-						<TextInput
+						</ProjectHeader>
+						<ImgWrapper>
+							<Img
+								src={
+									this.state.img_url ||
+									'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
+								}
+								alt={
+									this.state.img_url ||
+									'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
+								}
+							/>
+						</ImgWrapper>
+						<ProjectImage
+							type="file"
+							id="myuniqueid"
+							onChange={this.singleFileChangedHandler}
+							disabled={this.props.addingProject}
+						/>
+						<ProjectImageFlex>
+							<label for="myuniqueid">
+								<ProjectImageFile>
+									<ImageFileUpload>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="20"
+											height="17"
+											viewBox="0 0 20 17"
+										>
+											<path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+										</svg>
+									</ImageFileUpload>
+									<h1>Choose an image...</h1>
+								</ProjectImageFile>
+							</label>
+							<ProjectImageUpload
+								onClick={this.singleFileUploadHandler}
+								disabled={this.props.addingProject}
+							>
+								Upload Image!
+							</ProjectImageUpload>
+						</ProjectImageFlex>
+						{/* <ProfileHeader>
+							{this.state.selectedFile ? this.state.selectedFile.name : null}
+						</ProfileHeader> */}
+						{/* Project description: */}
+						<TextArea
 							name="text"
-							type="text"
-							placeholder="project description"
+							rows="6"
+							maxLength="1024"
+							placeholder="Project description"
 							value={this.state.text}
 							onChange={this.changeHandler}
-							required
 						/>
 						<ProjectButtonContainer>
-							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Add New Project" />
+							<CancelButton
+								onClick={this.cancelHandler}
+								disabled={this.props.addingProject}
+							>
+								Cancel Project
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Add New Project"
+								disabled={this.props.addingProject}
+							/>
 						</ProjectButtonContainer>
 						{this.props.addingProject && (
 							<StatusMessage small>Adding new project...</StatusMessage>
@@ -231,8 +449,8 @@ class NewProject extends Component {
 
 					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
 				</NewProjectContainer>
-			);
-		}
+			</NewProjectBody>
+		);
 	}
 }
 
@@ -241,16 +459,13 @@ const mapStateToProps = state => {
 		userInfo: state.loggedInReducer.userInfo,
 
 		addingProject: state.projectReducer.addingProject,
-		addingProjectError: state.projectReducer.addingProjectError,
-
-		redirect: state.projectReducer.redirect
+		addingProjectError: state.projectReducer.addingProjectError
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{
-		addProject,
-		setRedirect
+		addProject
 	}
 )(NewProject);

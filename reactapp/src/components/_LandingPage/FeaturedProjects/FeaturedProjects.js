@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 //Import components
-import { ProjectTile } from '../../../components';
+import { ProjectTile, EmptyCard } from '../../../components';
 // import connect for reducers
 import { connect } from 'react-redux';
 import { getFeaturedProjects } from '../../../actions/landingPageActions';
@@ -11,7 +11,11 @@ import { getFeaturedProjects } from '../../../actions/landingPageActions';
 const FeaturedProjectsWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #fff;
+	/* background-color: ${props => props.theme.mui.palette.primary.light}; */
+	background: white;
+	padding: 12px 0;
+	border: 1px solid lightgray;
+	border-radius: 8px;
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -21,7 +25,7 @@ const FeaturedProjectsWrapper = styled.div`
 const FeaturedProjectListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	align-content: space-between;
+	/* justify-content: space-between; */
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -30,9 +34,11 @@ const FeaturedProjectListTiles = styled.div`
 `;
 
 const FeaturedProjectTitle = styled.h1`
-	font-size: 18px;
+	font-size: 22px;
+	font-weight: bold;
 	width: 100%;
-	margin: 10px 25px;
+	color: ${props => props.theme.mui.palette.primary.dark};
+	margin: 0 0 13px 2%;
 
 	@media (max-width: 500px) {
 		width: 80%;
@@ -48,14 +54,30 @@ class FeaturedProjects extends Component {
 	}
 
 	render() {
-
 		return (
 			<FeaturedProjectsWrapper>
 				<FeaturedProjectTitle>Featured Projects</FeaturedProjectTitle>
 				<FeaturedProjectListTiles>
-					{this.props.featuredProjects.map(project => (
-						<ProjectTile project={project} key={project.project_id} />
-					))}
+					{!this.props.featuredProjects[0] ? (
+						<FeaturedProjectListTiles>
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+							<EmptyCard />
+						</FeaturedProjectListTiles>
+					) : (
+						<FeaturedProjectListTiles>
+							{this.props.featuredProjects.map(project => (
+								<ProjectTile
+									history={this.props.history}
+									project={project}
+									key={project.project_id}
+								/>
+							))}
+						</FeaturedProjectListTiles>
+					)}
 				</FeaturedProjectListTiles>
 			</FeaturedProjectsWrapper>
 		);
@@ -65,7 +87,7 @@ class FeaturedProjects extends Component {
 const mapStateToProps = state => ({
 	featuredProjects: state.landingPageReducer.featuredProjects,
 	gettingFeaturedProjects: state.landingPageReducer.fetchingFeaturedProjects,
-	featuredProjectsError: state.landingPageReducer.featuredProjectsError,
+	featuredProjectsError: state.landingPageReducer.featuredProjectsError
 });
 
 export default connect(

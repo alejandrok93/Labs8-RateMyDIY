@@ -14,18 +14,24 @@ import styled from 'styled-components';
 
 const PostContainer = styled.div`
 	background: #ffcccc;
+	padding: 16px 16px 8px 16px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const PostForm = styled.form``;
 
+const ImgContainer = styled.div`
+	padding-top: 12px;
+	margin: auto;
+	max-width: 100%;
+	height: auto;
+`;
+
 const Img = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
-	width: 100%;
-	background: #cceeee;
-	margin-bottom: 20px;
+	margin: 0 auto;
+	background: white;
+	max-width: 100%;
+	height: auto;
 `;
 
 const TextInput = styled.input``;
@@ -38,7 +44,6 @@ const PostButtonContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin-top: -12px;
-	margin-bottom: 20px;
 `;
 
 const StatusMessage = styled.p``;
@@ -123,12 +128,16 @@ class EditPost extends Component {
 	submitHandler = event => {
 		event.preventDefault();
 
-		this.props.updatePost(this.props.post.post_id, {
-			user_id: this.props.user_id,
-			project_id: this.props.project_id,
-			img_url: this.state.img_url,
-			text: this.state.text
-		});
+		this.props.updatePost(
+			this.props.post.post_id,
+			{
+				user_id: this.props.user_id,
+				project_id: this.props.project_id,
+				img_url: this.state.img_url,
+				text: this.state.text
+			},
+			() => this.props.willUpdatePost(false)
+		);
 	};
 
 	// Discard changes (with confirmation prompt)
@@ -169,24 +178,27 @@ class EditPost extends Component {
 			<PostContainer>
 				<PostForm onSubmit={this.submitHandler}>
 					{this.props.post.img_url && (
-						<Img
-							src={this.props.post.img_url}
-							alt={this.props.post.img_url || 'project image'}
-						/>
+						<ImgContainer>
+							<Img
+								src={this.props.post.img_url}
+								alt={this.props.post.img_url || 'project image'}
+							/>
+						</ImgContainer>
 					)}
 					<form>
-						<input type="file" onChange={this.singleFileChangedHandler} />
+						<input
+							type="file"
+							onChange={this.singleFileChangedHandler}
+							disabled={this.props.updatingPost || this.props.gettingProject}
+						/>
 						<div className="mt-5">
 							<button
 								className="btn btn-info"
 								onClick={this.singleFileUploadHandler}
+								disabled={this.props.updatingPost || this.props.gettingProject}
 							>
 								Upload!
 							</button>
-							<Img
-								src={this.state.img_url || 'placeholder image'}
-								alt={this.state.img_url || 'placeholder image'}
-							/>
 						</div>
 					</form>
 					<TextInput
@@ -198,12 +210,21 @@ class EditPost extends Component {
 						required={!this.state.img_url}
 					/>
 					<PostButtonContainer>
-						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-						<SubmitInput type="submit" value="Submit Changes" />
+						<CancelButton
+							onClick={this.cancelHandler}
+							disabled={this.props.updatingPost || this.props.gettingProject}
+						>
+							Cancel
+						</CancelButton>
+						<SubmitInput
+							type="submit"
+							value="Submit Changes"
+							disabled={this.props.updatingPost || this.props.gettingProject}
+						/>
 					</PostButtonContainer>
 				</PostForm>
 
-				{this.props.updatingPost && (
+				{(this.props.updatingPost || this.props.gettingProject) && (
 					<StatusMessage small>Updating post...</StatusMessage>
 				)}
 				{this.props.updatingPostError && (
@@ -220,6 +241,8 @@ class EditPost extends Component {
 
 const mapStateToProps = state => {
 	return {
+		gettingProject: state.projectReducer.gettingProject,
+
 		updatingPost: state.postReducer.updatingPost,
 		updatingPostError: state.postReducer.updatingPostError
 	};

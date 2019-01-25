@@ -7,12 +7,11 @@ const authorize = require('../config/authMiddleware');
 const db = require('../models/reviewModel');
 
 // get review by id
-router.get('/:review_id', function(req, res, next) {
-	const { review_id } = req.params;
+router.get('/:review_id/:user_id', function(req, res, next) {
+	const { review_id, user_id } = req.params;
 
-	db.getReview(review_id)
+	db.getReview(review_id, user_id)
 		.then(review => {
-			console.log('Returning review:', review);
 			if (review) {
 				res.status(200).json(review);
 			} else {
@@ -44,12 +43,16 @@ router.get('/getid/:user_id/:project_id', function(req, res, next) {
 // add review
 router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_id, rating, text } = req.body;
+
+	// Convert rating to integer
+	ratingInt = parseInt(rating);
+
 	if (!rating || !text) {
 		res.status(422).json({ error: 'Missing parameters.' });
-	} else if (rating < 1 || 5 < rating || !Number.isInteger(rating)) {
+	} else if (!Number.isInteger(ratingInt) || ratingInt < 1 || 5 < ratingInt) {
 		res.status(403).json({ error: 'Nice try.' });
 	} else {
-		const review = { user_id, project_id, rating, text };
+		const review = { user_id, project_id, rating: ratingInt, text };
 		console.log(
 			`\nUser ${user_id} attempting to add a review to project ${project_id} with rating = ${rating}, text = "${text}"\n...`
 		);
@@ -70,8 +73,10 @@ router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 				} else if (projectNotFound) {
 					res.status(404).json({ error: `Project not found.` });
 					console.log(`Rejected with error: "Project not found.\n`);
-				} else {
+				} else if (review_id) {
 					res.status(201).json(review_id);
+				} else {
+					res.status(500).json({ error: `Failed to add review` });
 				}
 			})
 			.catch(err => {
@@ -80,51 +85,83 @@ router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 	}
 });
 
-// NOT READY
 // // update review by id
-// router.put('/:review_id', ensureLoggedIn, authorize, function(req, res, next) {
-// 	const { user_id, review_name, img_url, text } = req.body;
-// 	const { review_id } = req.params;
+router.put('/:review_id', ensureLoggedIn, authorize, function(req, res, next) {
+	const { user_id, rating, project_id, text } = req.body;
+	const { review_id } = req.params;
 
-// 	if (!review_name || !img_url || !text) {
-// 		res.status(422).json({ error: 'Missing parameters.' });
-// 	} else {
-// 		const changes = { review_name, img_url, text };
-// 		db.editReview(user_id, review_id, changes)
-// 			.then(count => {
-// 				if (count) {
-// 					res.status(200).json(count);
-// 				} else {
-// 					res.status(404).json({ error: 'Review not found.' });
-// 				}
-// 			})
-// 			.catch(err => {
-// 				res.status(500).json(err);
-// 			});
-// 	}
-// });
+	// Convert rating to integer
+	ratingInt = parseInt(rating);
 
-// NOT READY
-// // delete review by id
-// router.delete('/:review_id', ensureLoggedIn, authorize, function(
-// 	req,
-// 	res,
-// 	next
-// ) {
-// 	const { user_id } = req.body;
-// 	const { review_id } = req.params;
+	if (!rating || !text) {
+		res.status(422).json({ error: 'Missing parameters.' });
+	} else if (!Number.isInteger(ratingInt) || ratingInt < 1 || 5 < ratingInt) {
+		res.status(403).json({ error: 'Nice try.' });
+	} else {
+		db.editReview({ user_id, review_id, project_id, rating: ratingInt, text })
+			.then(({ review_id, reviewNotFound }) => {
+				if (reviewNotFound) {
+					res.status(404).json({ error: 'Review not found.' });
+				} else if (review_id) {
+					res.status(200).json(review_id);
+				} else {
+					res.status(500).json({ error: `Failed to update review` });
+				}
+			})
+			.catch(err => {
+				res.status(500).json(err);
+			});
+	}
+});
 
-// 	db.removeReview(user_id, review_id)
-// 		.then(count => {
-// 			if (count) {
-// 				res.status(200).json(count);
-// 			} else {
-// 				res.status(404).json({ error: 'Review not found.' });
-// 			}
-// 		})
-// 		.catch(err => {
-// 			res.status(500).json(err);
-// 		});
-// });
+// delete review by id
+router.delete('/:review_id', ensureLoggedIn, authorize, function(
+	req,
+	res,
+	next
+) {
+	const { user_id } = req.body;
+	const { review_id } = req.params;
+
+	db.removeReview(user_id, review_id)
+		.then(({ deleted, reviewNotFound }) => {
+			if (reviewNotFound) {
+				res.status(404).json({ error: 'Review not found.' });
+			} else if (deleted) {
+				res.status(200).json(deleted);
+			} else {
+				res.status(500).json({ error: `Failed to delete review` });
+			}
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
+// like review by id
+router.put('/:review_id/like', ensureLoggedIn, authorize, function(
+	req,
+	res,
+	next
+) {
+	const { user_id, like } = req.body;
+	const { review_id } = req.params;
+
+	db.likeReview({ user_id, review_id, like })
+		.then(({ liked, reviewNotFound, ownReview }) => {
+			if (reviewNotFound) {
+				res.status(404).json({ error: 'Review not found.' });
+			} else if (ownReview) {
+				res.status(403).json({ error: `You can't like your own review.` });
+			} else if (liked) {
+				res.status(200).json(liked.like);
+			} else {
+				res.status(500).json({ error: `Failed to update like value` });
+			}
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
 
 module.exports = router;

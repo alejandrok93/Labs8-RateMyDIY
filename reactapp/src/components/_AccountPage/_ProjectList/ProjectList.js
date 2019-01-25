@@ -1,53 +1,101 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { fetchMyProjects } from '../../../actions';
 import { AccountSideBar, Nav } from '../../../components';
+import { Header } from '../../../components';
+import { ProjectTile } from '../../../components';
+import styled from 'styled-components';
+import { EmptyCard }from '../../../components';
 import './ProjectList.css';
 
+import {
+	loggedIn,
+	fetchMyProjects,
+	fetchSearchResults,
+	fetchCategoryResults
+} from '../../../actions';
+
+const AddButton = styled.div`
+	background-color: ${props => props.theme.mui.palette.primary.dark};
+`;
+
 class ProjectList extends Component {
-	componentDidUpdate(prevProps) {
-		if (prevProps.userInfo !== this.props.userInfo) {
-			console.log('USERINFO', this.props.userInfo);
-			this.props.fetchMyProjects(this.props.userInfo.user_id);
-		}
-		console.log(this.props.myProjects);
+	constructor(props) {
+		super(props);
+		this.state = { input: '' };
 	}
 
+	handleChange = e => {
+		this.setState({ ...this.state, input: e.target.value });
+	};
+
+	handleSearch = e => {
+		e.preventDefault();
+		const searchTerm = this.state.input;
+		console.log(searchTerm);
+		//call featch search results action
+		//push to search page
+		this.props.fetchSearchResults(searchTerm);
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
+
+	componentDidMount() {
+		this.props.loggedIn(fetchMyProjects);
+	}
 	render() {
 		return (
-			<div className="projectPage">
-				<Nav />
-				<div className="project-list-container">
-					<AccountSideBar />
+			<div className='projectPage'>
+				<Header
+					handleChange={this.handleChange}
+					handleSearch={this.handleSearch}
+				/>
+				<div className='projectContainer'>
+				{window.innerWidth <= 500 ? null : <AccountSideBar />}
+				{window.innerWidth <= 500 ? 
+				<AddButton className='addButton'>
+					<Link to='/newproject' style={{ color: 'white' }}>
+						New Project
+					</Link>
+				</AddButton>
+				:
+				null}
 
-					<div className="myProjectDisplay">
-						{this.props.myProjects.map(myProject => {
-							return (
-								<div className="myProjectDisplay" key={myProject.project_id}>
-									<Link to={`project/${myProject.project_id}`}>
-										<h2>{myProject.project_name}</h2>
-									</Link>
-									<p>{myProject.project_rating}</p>
-									<img src={myProject.img_url} alt="" />
-								</div>
-							);
-						})}
-						<div className="addNew">
-							<h2>New Project</h2>
-							<Link to="">
-								<img
-									alt="PLACEHOLDER! alt text"
-									src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
+					<div className="myProjectsDisplay">
+						{this.props.myProjects.map((myProject, index) => {
+							if (window.innerWidth <= 500) {
+								return <ProjectTile
+									key={myProject.project_id}
+									project={myProject}
 								/>
-							</Link>
-						</div>
+							}
+							if (index === 0) {
+								return (
+								<Fragment>
+								<EmptyCard addNew style={{ margin: '3%' }}/>
+								<ProjectTile 
+									key={myProject.project_id}
+									project={myProject}
+								/>
+								</Fragment>
+								)
+							} else {
+								return <ProjectTile
+									key={myProject.project_id}
+									project={myProject}
+								/>
+							}
+						})}
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
+
+// ProjectList.propTypes = {
+// 	classes: PropTypes.object.isRequired
+// };
 
 const mapStateToProps = state => {
 	return {
@@ -58,5 +106,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ fetchMyProjects }
+	{ loggedIn, fetchSearchResults, fetchCategoryResults, fetchMyProjects }
 )(ProjectList);

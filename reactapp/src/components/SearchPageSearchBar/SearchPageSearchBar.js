@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import {
 	Dropdown,
 	DropdownToggle,
@@ -8,14 +9,25 @@ import {
 	DropdownItem,
 	UncontrolledDropdown
 } from 'reactstrap';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+
+import { sortProjects } from '../../actions/index';
+
+import { SortDropDown } from '../index';
 
 //Apply styles
 const SearchWrapper = styled.div`
-	width: 80%;
-	height: 100px;
-	margin: 25px auto;
+	width: 35%;
+	height: 25px;
+	margin: 15px auto;
 	display: flex;
 	flex-direction: column;
+	margin-left: 55%;
 `;
 
 const SelectWrapper = styled.div`
@@ -30,38 +42,7 @@ const SelectStyle = styled.div`
 	/* border-radius: 5px; */
 `;
 
-// const SearchBarWrapper = styled.form`
-//   display: flex;
-//   width: 100%;
-//   height: 35px;
-//   align-items: baseline;
-// `;
-// const SearchBarSearchButtonWrapper = styled.div`
-//   display: flex;
-//   height: 100px;
-//   align-items: flex-end;
-// `;
-// const SearchBarInput = styled.input`
-//   width: 100%;
-//   height: 35px;
-//   color: black;
-//   outline: none;
-//   border: 2px solid black;
-//   border-radius: 5px;
-//   font-size: 14px;
-// `;
-
-// const SearchBarButton = styled.button`
-//   width: 80px;
-//   height: 25px;
-//   margin: 0px 15px;
-//   background: 0;
-//   border: none;
-//   border: 2px solid black;
-//   box-shadow: 5px 5px 0px;
-// `;
-
-export default class SearchPageSearchBar extends React.Component {
+class SearchPageSearchBar extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -70,6 +51,11 @@ export default class SearchPageSearchBar extends React.Component {
 			dropdownOpen: false
 		};
 	}
+
+	handleSort = sortBy => {
+		console.log('lets sort these projectsssss');
+		this.props.sortProjects(sortBy);
+	};
 
 	toggle() {
 		this.setState(prevState => ({
@@ -82,7 +68,7 @@ export default class SearchPageSearchBar extends React.Component {
 		return (
 			<SearchWrapper>
 				<SelectWrapper>
-					<h1>Filter by</h1>
+					{/* <h1>Filter by</h1>
 					<SelectStyle name="Category" id="category">
 						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 							<DropdownToggle caret>Categories</DropdownToggle>
@@ -106,22 +92,42 @@ export default class SearchPageSearchBar extends React.Component {
 								</DropdownItem>
 							</DropdownMenu>
 						</Dropdown>
-					</SelectStyle>
-					<h1>Sort by</h1>
-					<SelectStyle name="Stars" id="stars">
+					</SelectStyle> */}
+					<SortDropDown
+						options={['Tech', 'Food', 'Home']}
+						buttonLabel="Filter"
+					/>
+					<SortDropDown
+						handleSort={this.handleSort}
+						options={['Relevance', 'Rating', 'New']}
+						buttonLabel="Sort"
+					/>
+					{/* <SelectStyle name="Stars" id="stars">
 						<UncontrolledDropdown>
 							<DropdownToggle caret>Sort By</DropdownToggle>
 							<DropdownMenu>
-								<DropdownItem>Rateing Up</DropdownItem>
+								<DropdownItem>Rating Up</DropdownItem>
 								<DropdownItem divider />
-								<DropdownItem>Rateing Down</DropdownItem>
+								<DropdownItem>Rating Down</DropdownItem>
 								<DropdownItem divider />
 								<DropdownItem>Date of Review</DropdownItem>
 							</DropdownMenu>
 						</UncontrolledDropdown>
-					</SelectStyle>
+					</SelectStyle> */}
 				</SelectWrapper>
 			</SearchWrapper>
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		// projects: state.searchReducer.projects,
+		// gettingSearchResults: state.searchReducer.gettingSearchResults
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ sortProjects }
+)(SearchPageSearchBar);

@@ -13,9 +13,6 @@ import { sendEmail } from '../../actions';
 const loginURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`;
 
-const logoutURL =
-	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
-
 class Nav extends React.Component {
 	constructor(props) {
 		super(props);
@@ -25,16 +22,16 @@ class Nav extends React.Component {
 		this.toggle = this.toggle.bind(this);
 	}
 	// Custom client greeting based of client hour
-	clientGreeting() {
-		let clientHourTime = new Date().getHours();
-		if (clientHourTime < 10) {
-			return 'Good morning';
-		} else if (clientHourTime <= 16 && clientHourTime >= 10) {
-			return 'Good afternoon';
-		} else if (clientHourTime <= 24 && clientHourTime > 16) {
-			return 'Good evening';
-		}
-	}
+	// clientGreeting() {
+	// 	let clientHourTime = new Date().getHours();
+	// 	if (clientHourTime < 10) {
+	// 		return 'Good morning';
+	// 	} else if (clientHourTime <= 16 && clientHourTime >= 10) {
+	// 		return 'Good afternoon';
+	// 	} else if (clientHourTime <= 24 && clientHourTime > 16) {
+	// 		return 'Good evening';
+	// 	}
+	// }
 	// Sets state for the reactstrap modal
 	toggle() {
 		this.setState({
@@ -59,19 +56,17 @@ class Nav extends React.Component {
 					{/* if not logged in, show the login/signup buttons */}
 					{this.props.userInfo.user_id ? (
 						<Fragment>
-							<WelcomeMessage>
-								{this.clientGreeting()} {this.props.userInfo.username}
-							</WelcomeMessage>
+							<WelcomeMessage>{this.props.userInfo.username}</WelcomeMessage>
 							<DropDown />
 						</Fragment>
 					) : (
-						<Fragment>
+						<LoginContainer>
 							<a href={loginURL}>
-								<Button color="danger">
+								<Button color="primary">
 									<h3>Login/Signup</h3>
 								</Button>
 							</a>
-						</Fragment>
+						</LoginContainer>
 					)}
 
 					{/* if logged in, show component that says "Hello NAME then have a signout button" */}
@@ -99,17 +94,16 @@ const NavWrapper = styled.div`
 	max-width: 20%;
 	min-width: 10%;
 
-	@media (max-width: 800px) {
+	/* @media (max-width: 800px) {
 		display: flex;
 		justify-content: center;
 		margin: 0 auto;
-	}
+	} */
 `;
 const AuthWrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	border: 1px solid black;
 	margin: 0 8px 0 auto;
 	padding: 4px 8px;
 	padding: 10px;
@@ -123,10 +117,16 @@ const AuthWrapper = styled.div`
 	}
 `;
 
+const LoginContainer = styled.div`
+	display: flex;
+	align-items: center;
+	height: 56px;
+`;
+
 const WelcomeMessage = styled.p`
-	font-size: 14px;
-	margin-right: 8px;
+	font-size: 1.6rem;
 	white-space: nowrap;
+	color: white;
 
 	@media (max-width: 500px) {
 		display: none;

@@ -52,10 +52,12 @@ router.get('/:project_id', function(req, res, next) {
 });
 
 // get reviews by project id
-router.get('/:project_id/reviews', function(req, res, next) {
-	const { project_id } = req.params;
+router.get('/:project_id/reviews/:user_id', function(req, res, next) {
+	const { project_id, user_id } = req.params;
 
-	db.getReviewsByProjectID(project_id)
+	console.log(`getReviewsByProjectID:`, { project_id, user_id });
+
+	db.getReviewsByProjectID(project_id, user_id)
 		.then(reviews => {
 			if (reviews) {
 				res.status(200).json(reviews);

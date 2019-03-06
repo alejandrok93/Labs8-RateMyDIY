@@ -51,7 +51,7 @@ const Project = props => {
 					)}
 					<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
 						Reviews
-			</ReviewsLink>
+					</ReviewsLink>
 				</ProjectRatingAndReviewsContainer>
 			</ProjectHeader>
 
@@ -93,7 +93,6 @@ const ProjectContainer = styled.div`
 	flex-direction: column;
 	border-radius: 4px;
 	width: 100%;
-	max-height: 800px;
 	border: 1px solid lightgray;
 	margin: 0 0 30px 0;
 `;
@@ -134,7 +133,7 @@ const ProjectRatingAndReviewsContainer = styled.div`
 const ReviewsLink = styled(Link)`
 	margin: 8px 0 0 0;
 	display: flex;
-  align-self: flex-end;
+	align-self: flex-end;
 	&:hover {
 		text-decoration: none;
 		background: none;

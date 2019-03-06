@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react';
-import ModalImage from 'react-modal-image';
+// import ModalImage from 'react-modal-image';
 // import { Button } from 'reactstrap';
 // Components
 import StarRatings from 'react-star-ratings';
@@ -55,14 +55,12 @@ const Project = props => {
 				</ProjectRatingAndReviewsContainer>
 			</ProjectHeader>
 
-			<ImgContainer>
-				<Img
-					small={props.project.img_url}
-					large={props.project.img_url}
-					alt={props.project.project_name}
-					src={props.project.img_url}
-				/>
-			</ImgContainer>
+			<Img
+				// small={props.project.img_url}
+				// large={props.project.img_url}
+				alt={props.project.project_name}
+				src={props.project.img_url}
+			/>
 			<DescriptionContainer>
 				{props.project.text}
 				{props.owner && (
@@ -95,6 +93,7 @@ const ProjectContainer = styled.div`
 	flex-direction: column;
 	border-radius: 4px;
 	width: 100%;
+	max-height: 800px;
 	border: 1px solid lightgray;
 	margin: 0 0 30px 0;
 `;
@@ -165,19 +164,10 @@ const Category = styled(Link)`
 	}
 `;
 
-const ImgContainer = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
+const Img = styled.img`
+	background: #f6f6f6;
 	max-height: 600px;
-	width: auto;
-`;
-
-const Img = styled(ModalImage)`
-	margin: 0 auto;
-	background: white;
 	width: 100%;
-	min-height: 300px;
 	object-fit: contain;
 `;
 

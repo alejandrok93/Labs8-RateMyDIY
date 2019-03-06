@@ -205,13 +205,21 @@ class NewProject extends Component {
 		project_name: '',
 		img_url: null,
 		text: '',
-		categories: []
+		categories: [],
+		imagePreviewUrl: ''
+	};
+
+	handleSelect = categories => {
+		this.setState({ categories });
+		console.log(`Option selected:`, categories);
 	};
 
 	singleFileChangedHandler = event => {
 		this.setState({
 			selectedFile: event.target.files[0]
 		});
+		let reader = new FileReader();
+		let file = event.target.files[0];
 	};
 
 	singleFileUploadHandler = event => {

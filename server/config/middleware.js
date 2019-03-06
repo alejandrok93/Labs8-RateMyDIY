@@ -24,6 +24,7 @@ const sessionConfig = {
 };
 
 // https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
+// Added new qrafts.app domain to allowedOrigins and HEROKU
 var allowedOrigins = [
 	'http://localhost:3000',
 	'https://ratemydiy.netlify.com',

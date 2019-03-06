@@ -1,7 +1,7 @@
 // Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ModalImage from 'react-modal-image';
+// import ModalImage from 'react-modal-image';
 // import { Button } from 'reactstrap';
 // Components
 import { ConfirmModal } from '../../../components';
@@ -15,7 +15,7 @@ import styled from 'styled-components';
 const PostContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	border-radius: 4px;
+	border-radius: 0 0 4px 4px;
 	width: 100%;
 	border: 1px solid lightgray;
 	padding: 0 0 5px;
@@ -24,21 +24,11 @@ const PostContainer = styled.div`
 
 const ImgTextContainer = styled.div``;
 
-const ImgContainer = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
+const Img = styled.img`
+	background: #f6f6f6;
 	max-height: 600px;
-	width: auto;
-`;
-
-const Img = styled(ModalImage)`
-	margin: 0 auto;
-	background: white;
 	width: 100%;
-	min-height: 300px;
 	object-fit: contain;
-	border-radius: 4px 4px 0 0;
 `;
 
 const Text = styled.p`
@@ -114,14 +104,7 @@ class Post extends Component {
 			<PostContainer>
 				<ImgTextContainer>
 					{this.props.post.img_url && (
-						<ImgContainer>
-							<Img
-								small={this.props.post.img_url}
-								large={this.props.post.img_url}
-								alt={this.props.post.img_url}
-								hideZoom="true"
-							/>
-						</ImgContainer>
+						<Img alt={this.props.post.img_url} src={this.props.post.img_url} />
 					)}
 					{this.props.post.text && <Text>{this.props.post.text}</Text>}
 					{this.props.owner && (

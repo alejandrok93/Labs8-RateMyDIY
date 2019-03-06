@@ -52,7 +52,6 @@ class Header extends React.Component {
 			searchTerm: e.target.value
 		});
 	};
-
 	handleSearch = e => {
 		e.preventDefault();
 		const searchTerm = this.state.input;

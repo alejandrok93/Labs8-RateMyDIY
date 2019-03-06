@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react';
-import ModalImage from 'react-modal-image';
+// import ModalImage from 'react-modal-image';
 // import { Button } from 'reactstrap';
 // Components
 import StarRatings from 'react-star-ratings';
@@ -51,18 +51,16 @@ const Project = props => {
 					)}
 					<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
 						Reviews
-			</ReviewsLink>
+					</ReviewsLink>
 				</ProjectRatingAndReviewsContainer>
 			</ProjectHeader>
 
-			<ImgContainer>
-				<Img
-					small={props.project.img_url}
-					large={props.project.img_url}
-					alt={props.project.project_name}
-					src={props.project.img_url}
-				/>
-			</ImgContainer>
+			<Img
+				// small={props.project.img_url}
+				// large={props.project.img_url}
+				alt={props.project.project_name}
+				src={props.project.img_url}
+			/>
 			<DescriptionContainer>
 				{props.project.text}
 				{props.owner && (
@@ -135,7 +133,7 @@ const ProjectRatingAndReviewsContainer = styled.div`
 const ReviewsLink = styled(Link)`
 	margin: 8px 0 0 0;
 	display: flex;
-  align-self: flex-end;
+	align-self: flex-end;
 	&:hover {
 		text-decoration: none;
 		background: none;
@@ -165,19 +163,10 @@ const Category = styled(Link)`
 	}
 `;
 
-const ImgContainer = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
+const Img = styled.img`
+	background: #f6f6f6;
 	max-height: 600px;
-	width: auto;
-`;
-
-const Img = styled(ModalImage)`
-	margin: 0 auto;
-	background: white;
 	width: 100%;
-	min-height: 300px;
 	object-fit: contain;
 `;
 

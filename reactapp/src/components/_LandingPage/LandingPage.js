@@ -121,14 +121,13 @@ class LandingPage extends Component {
 	}
 
 	handleChange = e => {
-		console.log(e.target.value);
 		this.setState({ ...this.state, input: e.target.value });
 	};
 
 	handleSearch = e => {
 		const searchTerm = this.state.input;
 		e.preventDefault();
-		//if not signed in,
+		//Check if user is signed in
 		if (!this.props.loggedInObject.userInfo.user_id) {
 			//this.toggle();
 			//toggle loginpopup on
@@ -137,10 +136,7 @@ class LandingPage extends Component {
 				toggleLogInPopUp: !this.state.toggleLogInPopUp
 			});
 		} else {
-			//call featch search results action
-			// this.props.fetchSearchResults(this.state.input);
-
-			//push to search page
+			//push to search page with query
 			this.props.history.push(`/search?query=${searchTerm}`);
 		}
 	};
@@ -155,7 +151,7 @@ class LandingPage extends Component {
 	};
 
 	searchClick = input => {
-		//call featch search results action
+		//call fetch search results action
 		this.props.fetchSearchResults(input);
 
 		//push to search page

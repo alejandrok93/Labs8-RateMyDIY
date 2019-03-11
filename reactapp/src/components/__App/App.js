@@ -60,7 +60,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
 	userInfo: state.loggedInReducer.userInfo,
-
 	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
 	gettingUserInfoError: state.loggedInReducer.gettingUserInfoError
 });

@@ -7,6 +7,9 @@ export const GETTING_USER_INFO = 'GETTING_USER_INFO';
 export const GOT_USER_INFO = 'GOT_USER_INFO';
 export const GET_USER_INFO_ERROR = 'GET_USER_INFO_ERROR';
 
+/*
+ * Takes in nextAction and args as parameter. Retrieves user info from backend
+ */
 export const loggedIn = (nextAction, args) => {
 	return dispatch => {
 		dispatch({ type: GETTING_USER_INFO });

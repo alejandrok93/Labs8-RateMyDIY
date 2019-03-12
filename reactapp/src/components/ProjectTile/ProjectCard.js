@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 // import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
@@ -57,20 +57,22 @@ const styles = theme => ({
 	}
 });
 
-const CardTitle = styled(Link)`
-	width: 100%;
-	padding: 0 20px;
-	margin: 18px 0 8px;
-	font-size: 1.9rem;
-	display: inline-block;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-
+const LinkToProject = styled(Link)`
 	&:hover {
 		background: none;
 		text-decoration: none;
 	}
+`;
+
+const CardTitle = styled.h1`
+	width: 100%;
+	padding: 16px 20px 8px;
+	/* margin: 16px 0 8px; */
+	font-size: 1.9rem;
+	/* display: inline-block; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -150,7 +152,7 @@ class ProjectCard extends React.Component {
 					</CardContent>
 				</div>
 
-				<Link to={`/project/${this.props.project.project_id}`}>
+				<LinkToProject to={`/project/${this.props.project.project_id}`}>
 					<img
 						// className={classes.media}
 						src={this.props.project.img_url}
@@ -163,26 +165,26 @@ class ProjectCard extends React.Component {
 							background: '#bfbfbf'
 						}}
 					/>
-				</Link>
 
-				<CardTitle to={`/project/${this.props.project.project_id}`}>
-					{this.props.project.project_name}
-				</CardTitle>
+					<CardTitle to={`/project/${this.props.project.project_id}`}>
+						{this.props.project.project_name}
+					</CardTitle>
 
-				<CardContent style={{ padding: '2px 20px 16px' }}>
-					<Typography
-						style={{
-							fontSize: '1.5rem',
-							lineHeight: '2rem',
-							background: 'none',
-							height: '40px',
-							overflow: 'hidden'
-						}}
-						component="p"
-					>
-						{this.props.project.text}
-					</Typography>
-				</CardContent>
+					<CardContent style={{ padding: '2px 20px 16px' }}>
+						<Typography
+							style={{
+								fontSize: '1.5rem',
+								lineHeight: '2rem',
+								background: 'none',
+								height: '40px',
+								overflow: 'hidden'
+							}}
+							component="p"
+						>
+							{this.props.project.text}
+						</Typography>
+					</CardContent>
+				</LinkToProject>
 			</Card>
 		);
 	}

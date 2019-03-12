@@ -18,7 +18,7 @@ const PostContainer = styled.div`
 	border-radius: 0 0 4px 4px;
 	width: 100%;
 	border: 1px solid lightgray;
-	padding: 0 0 5px;
+	padding: 20px 20px 18px;
 	margin: 0 0 30px;
 `;
 
@@ -28,12 +28,13 @@ const Img = styled.img`
 	background: #f6f6f6;
 	max-height: 600px;
 	width: 100%;
-	object-fit: contain;
+	margin: 0 0 18px;
+
 `;
 
 const Text = styled.p`
 	width: auto;
-	margin: 18px 20px 5px 20px;
+	/* margin: 18px 20px 5px 20px; */
 	line-height: 18px;
 	text-align: justify;
 `;

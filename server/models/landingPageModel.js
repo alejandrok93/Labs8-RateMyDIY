@@ -35,7 +35,7 @@ function getPopularMakers() {
 			// .orderBy('user_rating', 'desc')
 			// For Heroku
 			.orderByRaw('user_rating DESC NULLS LAST')
-			.limit(4)
+			.limit(6)
 	);
 }
 
@@ -46,6 +46,6 @@ function getPopularReviewers() {
 			// .orderBy('helpfulness', 'desc')
 			// For Heroku
 			.orderByRaw('helpfulness DESC NULLS LAST')
-			.limit(4)
+			.limit(6)
 	);
 }

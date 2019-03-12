@@ -1,6 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -77,10 +77,28 @@ const ProjectButton = styled.a`
 	}
 `;
 
-const ReviewButton = styled.button``;
+const ReviewButton = styled.button`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: white;
+	background-color: #254f8d;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;
 
 class ProjectPage extends Component {
-	state = {};
+	state = {
+		loginUrl:
+			(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`,
+		loginRedirect: false
+	};
 
 	// Delete project (with confirmation prompt)
 	deleteHandler = event => {
@@ -115,18 +133,21 @@ class ProjectPage extends Component {
 	notLoggedInHandler = () => {
 		this.setState({
 			confirm: {
-				text: [
-					`You aren't logged in! todo: add a redirect to signup`,
-					'Cancel',
-					'Cancel'
-				],
+				text: [`Please Log in to add a review`, 'Cancel', 'Login'],
 				cancel: event => {
 					event.preventDefault();
 					this.setState({ confirm: undefined });
 				},
 				submit: event => {
 					event.preventDefault();
-					this.setState({ confirm: undefined });
+					this.setState(
+						{
+							//redirect: this.state.loginUrl,
+							redirect: '/',
+							loginRedirect: true
+						},
+						console.log(this.state.loginRedirect)
+					);
 				}
 			}
 		});
@@ -160,140 +181,140 @@ class ProjectPage extends Component {
 				<ProjectPageContainer>
 					<ProjectContainer>
 						{this.props.gettingUserInfo ||
-							this.props.gettingReviewId ||
-							(this.props.gettingProject &&
-								!(
-									this.props.updatingProject ||
-									this.state.projectToUpdate ||
-									this.state.postToAdd ||
-									this.state.postToUpdate ||
-									this.state.postToDelete
-								)) ? (
-								<React.Fragment>
-									<StatusMessage>Loading project...</StatusMessage>
-								</React.Fragment>
-							) : this.props.gettingUserInfoError ||
-								this.props.gettingProjectError ||
-								this.props.gettingReviewIdError ? (
-									<React.Fragment>
-										<StatusMessage>Failed to load project</StatusMessage>
-										<StatusMessage error>
-											{this.props.gettingUserInfoError ||
-												this.props.gettingProjectError ||
-												this.props.gettingReviewIdError}
-										</StatusMessage>
-									</React.Fragment>
-								) : this.props.deletingProjectError ? (
-									<React.Fragment>
-										<StatusMessage>Failed to delete project</StatusMessage>
-										<StatusMessage error>
-											{this.props.gettingProjectError}
-										</StatusMessage>
-									</React.Fragment>
+						this.props.gettingReviewId ||
+						(this.props.gettingProject &&
+							!(
+								this.props.updatingProject ||
+								this.state.projectToUpdate ||
+								this.state.postToAdd ||
+								this.state.postToUpdate ||
+								this.state.postToDelete
+							)) ? (
+							<React.Fragment>
+								<StatusMessage>Loading project...</StatusMessage>
+							</React.Fragment>
+						) : this.props.gettingUserInfoError ||
+						  this.props.gettingProjectError ||
+						  this.props.gettingReviewIdError ? (
+							<React.Fragment>
+								<StatusMessage>Failed to load project</StatusMessage>
+								<StatusMessage error>
+									{this.props.gettingUserInfoError ||
+										this.props.gettingProjectError ||
+										this.props.gettingReviewIdError}
+								</StatusMessage>
+							</React.Fragment>
+						) : this.props.deletingProjectError ? (
+							<React.Fragment>
+								<StatusMessage>Failed to delete project</StatusMessage>
+								<StatusMessage error>
+									{this.props.gettingProjectError}
+								</StatusMessage>
+							</React.Fragment>
+						) : (
+							<React.Fragment>
+								{this.state.projectToUpdate ? (
+									<EditProject
+										user_id={this.props.userInfo.user_id}
+										project={this.props.project}
+										willUpdateProject={value =>
+											this.setState({ projectToUpdate: value })
+										}
+									/>
 								) : (
-										<React.Fragment>
-											{this.state.projectToUpdate ? (
-												<EditProject
-													user_id={this.props.userInfo.user_id}
-													project={this.props.project}
-													willUpdateProject={value =>
-														this.setState({ projectToUpdate: value })
-													}
-												/>
-											) : (
-													<Project
-														project={this.props.project}
-														owner={owner}
-														willUpdateProject={value =>
-															this.setState({ projectToUpdate: value })
-														}
-														deleteHandler={this.deleteHandler}
-														disabled={disabled}
-													/>
-												)}
+									<Project
+										project={this.props.project}
+										owner={owner}
+										willUpdateProject={value =>
+											this.setState({ projectToUpdate: value })
+										}
+										deleteHandler={this.deleteHandler}
+										disabled={disabled}
+									/>
+								)}
 
-											{/* Display posts */}
-											{this.props.project.posts &&
-												this.props.project.posts.map(post =>
-													// Could probably move this logic to Post
-													post.post_id === this.state.postToUpdate ? (
-														<EditPost
-															key={post.post_id}
-															user_id={this.props.userInfo.user_id}
-															project_id={this.props.project.project_id}
-															post={post}
-															willUpdatePost={value =>
-																this.setState({ postToUpdate: value })
-															}
-														/>
-													) : (
-															<Post
-																key={post.post_id}
-																post={post}
-																user_id={this.props.userInfo.user_id}
-																project_id={this.props.project.project_id}
-																owner={owner}
-																willUpdatePost={value =>
-																	this.setState({ postToUpdate: value })
-																}
-																willDeletePost={value =>
-																	this.setState({ postToDelete: value })
-																}
-																postToDelete={post.post_id === this.state.postToDelete}
-																disabled={disabled}
-															/>
-														)
-												)}
-
-											{/* Add new post */}
-											{this.state.postToAdd && (
-												<NewPost
-													postType={this.state.postToAdd}
-													user_id={this.props.userInfo.user_id}
-													project_id={this.props.project.project_id}
-													willAddPost={value => this.setState({ postToAdd: value })}
-												/>
-											)}
-
-											{/* Bottom buttons */}
-											{owner ? (
-												<ButtonContainer>
-													<ProjectButton
-														onClick={() => this.setState({ postToAdd: 'text' })}
-														disabled={disabled}
-													>
-														Add Text Field
-										</ProjectButton>
-													<ProjectButton
-														onClick={() => this.setState({ postToAdd: 'image' })}
-														disabled={disabled}
-													>
-														Add Picture
-										</ProjectButton>
-												</ButtonContainer>
-											) : this.props.reviewId ? (
-												<ReviewButton
-													onClick={() =>
-														this.setState({ reviewModal: this.props.reviewId })
-													}
-													disabled={this.props.gettingReviewId}
-												>
-													View Your Review
-									</ReviewButton>
-											) : (
-														<ReviewButton
-															onClick={() =>
-																this.props.userInfo.user_id
-																	? this.setState({ reviewModal: 'new' })
-																	: this.notLoggedInHandler()
-															}
-															disabled={this.props.gettingReviewId}
-														>
-															Review Project
-									</ReviewButton>
-													)}
-										</React.Fragment>
+								{/* Display posts */}
+								{this.props.project.posts &&
+									this.props.project.posts.map(post =>
+										// Could probably move this logic to Post
+										post.post_id === this.state.postToUpdate ? (
+											<EditPost
+												key={post.post_id}
+												user_id={this.props.userInfo.user_id}
+												project_id={this.props.project.project_id}
+												post={post}
+												willUpdatePost={value =>
+													this.setState({ postToUpdate: value })
+												}
+											/>
+										) : (
+											<Post
+												key={post.post_id}
+												post={post}
+												user_id={this.props.userInfo.user_id}
+												project_id={this.props.project.project_id}
+												owner={owner}
+												willUpdatePost={value =>
+													this.setState({ postToUpdate: value })
+												}
+												willDeletePost={value =>
+													this.setState({ postToDelete: value })
+												}
+												postToDelete={post.post_id === this.state.postToDelete}
+												disabled={disabled}
+											/>
+										)
 									)}
+
+								{/* Add new post */}
+								{this.state.postToAdd && (
+									<NewPost
+										postType={this.state.postToAdd}
+										user_id={this.props.userInfo.user_id}
+										project_id={this.props.project.project_id}
+										willAddPost={value => this.setState({ postToAdd: value })}
+									/>
+								)}
+
+								{/* Bottom buttons */}
+								{owner ? (
+									<ButtonContainer>
+										<ProjectButton
+											onClick={() => this.setState({ postToAdd: 'text' })}
+											disabled={disabled}
+										>
+											Add Text Field
+										</ProjectButton>
+										<ProjectButton
+											onClick={() => this.setState({ postToAdd: 'image' })}
+											disabled={disabled}
+										>
+											Add Picture
+										</ProjectButton>
+									</ButtonContainer>
+								) : this.props.reviewId ? (
+									<ReviewButton
+										onClick={() =>
+											this.setState({ reviewModal: this.props.reviewId })
+										}
+										disabled={this.props.gettingReviewId}
+									>
+										View Your Review
+									</ReviewButton>
+								) : (
+									<ReviewButton
+										onClick={() =>
+											this.props.userInfo.user_id
+												? this.setState({ reviewModal: 'new' })
+												: this.notLoggedInHandler()
+										}
+										disabled={this.props.gettingReviewId}
+									>
+										Add a review
+									</ReviewButton>
+								)}
+							</React.Fragment>
+						)}
 						{this.state.reviewModal && (
 							<ReviewModal
 								review_id={this.props.reviewId}

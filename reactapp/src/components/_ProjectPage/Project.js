@@ -16,7 +16,7 @@ const Project = props => {
 			<ProjectHeader>
 				<ProjectNameAuthorCategoryContainer>
 					<ProjectName>{props.project.project_name}</ProjectName>
-					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+					<ProjectAuthor>by {props.project.username}</ProjectAuthor>
 					<CategoryContainer>
 						{props.project.categories &&
 							// [
@@ -94,6 +94,7 @@ const ProjectContainer = styled.div`
 	border-radius: 4px;
 	width: 100%;
 	border: 1px solid lightgray;
+	padding: 18px 20px;
 	margin: 0 0 30px 0;
 `;
 
@@ -101,10 +102,10 @@ const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
 	flex-direction: row;
-	padding: 18px 20px 0 20px;
+	/* padding: 18px 20px 0 20px; */
 	justify-content: space-between;
 	align-items: center;
-	margin: 0 0 20px 0;
+	/* margin: 0 0 20px 0; */
 `;
 
 const ProjectNameAuthorCategoryContainer = styled.div`
@@ -120,7 +121,10 @@ const ProjectName = styled.h2`
 	margin: 0 0 0 -2px;
 `;
 
-const ProjectAuthor = styled.div``;
+const ProjectAuthor = styled.div`
+	padding: 4px 0 0;
+	font-size: 1.6rem;
+`;
 
 const ProjectRatingAndReviewsContainer = styled.div`
 	display: flex;
@@ -167,23 +171,23 @@ const Img = styled.img`
 	background: #f6f6f6;
 	max-height: 600px;
 	width: 100%;
-	object-fit: contain;
+	margin: 20px 0 18px;
 `;
 
 const ProjectRatingTool = styled(StarRatings)``;
 
 const DescriptionContainer = styled.div`
 	width: auto;
-	margin: 18px 20px 4px 20px;
+	/* margin: 18px 20px 4px 20px; */
+	font-size: 1.6rem;
 	line-height: 18px;
 	/* text-align: justify; */
 `;
 
 const OptionsContainer = styled.div`
 	display: flex;
-	margin: 5px 0 0 0;
-	font-size: 11px;
-	color: rgb(42, 43, 45);
+	margin: 8px 0 -6px 0;
+	font-size: 1.4rem;
 	width: auto;
 	justify-content: flex-end;
 `;
@@ -194,7 +198,7 @@ const EditLink = styled.button`
 	outline: none;
 	cursor: pointer;
 	padding: 0;
-	margin-right: 8px;
+	margin-right: 12px;
 `;
 
 const DeleteButton = styled.button`

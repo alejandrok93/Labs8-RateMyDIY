@@ -6,35 +6,52 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-// import CardContent from '@material-ui/core/CardContent';
+import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
+import styled from 'styled-components';
 
 const styles = theme => ({
 	card: {
-		width: 300,
-		margin: '25px',
-		fontSize: 24,
+		width: '31%',
+		height: '300px',
+		'min-width': '300px',
+		margin: '0 0 15px 1.75%',
+		fontSize: '24px',
 		backgroundColor: theme.palette.secondary.light,
-		borderRadius: '35px',
 		color: theme.palette.secondary.main,
+		// border: '1px solid lightgray',
+		cursor: 'pointer',
+		position: 'relative',
+
+		['@media (max-width: 1000px)']: {
+			width: '47%',
+			marginLeft: '2%'
+		},
+
 		['@media (max-width: 500px)']: {
-			width: '100%',
-			// margin: '25px auto 25px'
+			width: '90%',
+			margin: '25px auto 30px'
 		}
 	},
 	media: {
 		height: 0,
-		paddingTop: '56.25%' // 16:9
+		paddingTop: '100%' // 16:9
 	},
 	actions: {
 		display: 'flex'
 	},
-
 	avatar: {
 		backgroundColor: red[500]
 	}
 });
+
+const ReviewerInfo = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	width: 100%;
+`;
 
 class ReviewerCard extends React.Component {
 	state = { expanded: false };
@@ -53,30 +70,48 @@ class ReviewerCard extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<Card className={classes.card}>
-				<CardHeader
-					avatar={
-						<Avatar aria-label="Rrecipe" className={classes.avatar}>
-							{/* <img src={ this.props.userInfo.img_url ? this.props.userInfo.img_url : 'https://previews.123rf.com/images/alekseyvanin/alekseyvanin1801/alekseyvanin180100897/93405661-user-account-avatar-line-icon-outline-vector-sign-linear-style-pictogram-isolated-on-white-admin-pro.jpg'} alt="user profile pic" /> */}
-						</Avatar>
-					}
-					action={null}
-					title={
-						<a
-							style={{ fontSize: '2rem', background: 'none' }}
-							onClick={e =>
-								this.searchReviewer(e, this.props.reviewer.username)
-							}
-							href={`/search?query=${this.props.reviewer.username}`}
-						>
-							{this.props.reviewer.username}
-						</a>
-					}
-				/>
+			<Card
+				className={classes.card}
+				onClick={e => this.searchReviewer(e, this.props.reviewer.username)}
+			>
 				<CardMedia
 					className={classes.media}
 					image={this.props.reviewer.img_url}
 				/>
+
+				<CardContent
+					style={{
+						position: 'absolute',
+						bottom: '0',
+						width: '100%',
+						right: '0',
+						// margin: '0 11px 8px 0',
+						// alignSelf: 'center',
+						padding: '8px 10px 14px',
+						background: 'rgba(0, 0, 0, 0.6)'
+					}}
+				>
+					<ReviewerInfo>
+						<h1
+							style={{
+								fontSize: '2rem',
+								color: 'white'
+							}}
+						>
+							{this.props.reviewer.username}
+						</h1>
+						<p
+							style={{
+								fontSize: '1.2rem',
+								color: 'white',
+								height: '26px',
+								lineHeight: '3rem'
+							}}
+						>
+							reviews # here
+						</p>
+					</ReviewerInfo>
+				</CardContent>
 
 				<CardActions className={classes.actions} disableActionSpacing />
 			</Card>

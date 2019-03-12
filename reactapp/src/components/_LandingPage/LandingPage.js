@@ -95,7 +95,7 @@ const NewProjectLink = styled(Link)`
 	left: 50%;
 	transform: translate(-50%, -50%); */
 	height: 30px;
-	font-size: 2rem;
+	font-size: 2.2rem;
 	color: white;
 
 	&:hover {

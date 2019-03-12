@@ -13,9 +13,10 @@ const FeaturedProjectsWrapper = styled.div`
 	flex-direction: column;
 	/* background-color: ${props => props.theme.mui.palette.primary.light}; */
 	background: white;
-	padding: 12px 0;
+	padding: 12px 0 4px;
 	border: 1px solid lightgray;
-	border-radius: 8px;
+	border-radius: 4px;
+	margin-bottom: 30px;
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -38,7 +39,7 @@ const FeaturedProjectTitle = styled.h1`
 	font-weight: bold;
 	width: 100%;
 	color: ${props => props.theme.mui.palette.primary.dark};
-	margin: 0 0 13px 2%;
+	margin: 4px 0 16px 2%;
 
 	@media (max-width: 500px) {
 		width: 80%;

@@ -13,10 +13,12 @@ import { getPopularReviewers } from '../../../actions/landingPageActions';
 const PopularReviewersWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	// background: #fff;
-	border-radius: 30px;
-	background-color: ${props => props.theme.mui.palette.primary.light}
-	margin: 3% 0%;
+	/* background-color: ${props => props.theme.mui.palette.primary.light}; */
+	background: white;
+	padding: 12px 0 4px;
+	border: 1px solid lightgray;
+	border-radius: 4px;
+	margin-bottom: 30px;
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -26,7 +28,7 @@ const PopularReviewersWrapper = styled.div`
 const PopularReviewersListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	align-content: space-between;
+	/* justify-content: space-between; */
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -34,12 +36,12 @@ const PopularReviewersListTiles = styled.div`
 	}
 `;
 
-const PopularMakersTitle = styled.h1`
-	font-size: 18px;
+const PopularReviewersTitle = styled.h1`
+	font-size: 22px;
+	font-weight: bold;
 	width: 100%;
-	// margin: 10px 25px;
-	margin: 25px 50px 0px 50px;
-	color: ${props => props.theme.mui.palette.primary.dark}
+	color: ${props => props.theme.mui.palette.primary.dark};
+	margin: 4px 0 16px 2%;
 
 	@media (max-width: 500px) {
 		width: 80%;
@@ -56,7 +58,7 @@ class PopularReviewers extends Component {
 	render() {
 		return (
 			<PopularReviewersWrapper>
-				<PopularMakersTitle>Popular Reviewers</PopularMakersTitle>
+				<PopularReviewersTitle>Popular Reviewers</PopularReviewersTitle>
 				<PopularReviewersListTiles>
 					{this.props.popularReviewers.map(reviewer => (
 						<ReviewerTile

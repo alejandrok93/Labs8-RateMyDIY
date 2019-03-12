@@ -15,7 +15,7 @@ import styled from 'styled-components';
 const PostContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	border-radius: 4px;
+	border-radius: 0 0 4px 4px;
 	width: 100%;
 	border: 1px solid lightgray;
 	padding: 20px 20px 18px;
@@ -29,7 +29,7 @@ const Img = styled.img`
 	max-height: 600px;
 	width: 100%;
 	margin: 0 0 18px;
-	object-fit: contain;
+
 `;
 
 const Text = styled.p`

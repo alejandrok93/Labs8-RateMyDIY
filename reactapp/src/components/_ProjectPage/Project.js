@@ -172,7 +172,6 @@ const Img = styled.img`
 	max-height: 600px;
 	width: 100%;
 	margin: 20px 0 18px;
-	object-fit: contain;
 `;
 
 const ProjectRatingTool = styled(StarRatings)``;

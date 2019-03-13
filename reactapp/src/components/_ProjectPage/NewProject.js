@@ -209,6 +209,14 @@ class NewProject extends Component {
 		imagePreviewUrl: ''
 	};
 
+	componentDidMount() {
+		//Check if User is logged in, if not then redirect to home
+		if (!this.props.userInfo.user_id) {
+			console.log('Not logged in!');
+			this.setState({ redirect: '/' });
+		}
+	}
+
 	handleSelect = categories => {
 		this.setState({ categories });
 		console.log(`Option selected:`, categories);

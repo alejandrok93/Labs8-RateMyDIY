@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Styles
 import './index.css';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
 	<Provider store={store}>

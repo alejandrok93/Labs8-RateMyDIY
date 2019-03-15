@@ -1,6 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
@@ -23,7 +23,11 @@ import { loggedIn, project_ReviewId_Chain, deleteProject } from '../../actions';
 import styled from 'styled-components';
 
 class ProjectPage extends Component {
-	state = {};
+	state = {
+		loginUrl:
+			(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signin`,
+		loginRedirect: false
+	};
 
 	// Delete project (with confirmation prompt)
 	deleteHandler = event => {
@@ -59,18 +63,21 @@ class ProjectPage extends Component {
 	notLoggedInHandler = () => {
 		this.setState({
 			confirm: {
-				text: [
-					`You aren't logged in! todo: add a redirect to signup`,
-					'Cancel',
-					'Cancel'
-				],
+				text: [`Please Log in to add a review`, 'Cancel', 'Login'],
 				cancel: event => {
 					event.preventDefault();
 					this.setState({ confirm: undefined });
 				},
 				submit: event => {
 					event.preventDefault();
-					this.setState({ confirm: undefined });
+					this.setState(
+						{
+							//redirect: this.state.loginUrl,
+							redirect: '/',
+							loginRedirect: true
+						},
+						console.log(this.state.loginRedirect)
+					);
 				}
 			}
 		});

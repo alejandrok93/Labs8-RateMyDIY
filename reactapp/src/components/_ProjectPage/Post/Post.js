@@ -11,8 +11,6 @@ import { deletePost } from '../../../actions';
 // Styles
 import styled from 'styled-components';
 
-const StatusMessage = styled.p``;
-
 class Post extends Component {
 	state = {};
 
@@ -147,6 +145,8 @@ const OptionsContainer = styled.div`
 	width: auto;
 	justify-content: flex-end;
 `;
+
+const StatusMessage = styled.p``;
 
 const EditLink = styled.button`
 	background: none;

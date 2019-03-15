@@ -106,7 +106,7 @@ class MakerCard extends React.Component {
 						</h1>
 
 						<StarRatings
-							rating={Math.round(this.props.maker.user_rating)}
+							rating={Number(this.props.maker.user_rating)}
 							starDimension="19px"
 							starSpacing="1px"
 							starRatedColor="gold"

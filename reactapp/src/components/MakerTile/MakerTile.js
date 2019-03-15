@@ -91,7 +91,7 @@ class MakerTile extends React.Component {
 				<Details>
 					<div className="star-rating">
 						<StarRatings
-							rating={Math.round(this.props.maker.user_rating)}
+							rating={Number(this.props.maker.user_rating)}
 							starDimension="14px"
 							starSpacing="4px"
 							starRatedColor="black"
@@ -123,7 +123,7 @@ class MakerTile extends React.Component {
 						</ModalHeader>
 						<ModalBody>
 							<StarRatings
-								rating={Math.round(this.props.maker.user_rating)}
+								rating={Number(this.props.maker.user_rating)}
 								starDimension="14px"
 								starSpacing="4px"
 								starRatedColor="black"

@@ -2,10 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
+import TextareaAutosize from 'react-autosize-textarea';
 // Components
 import { ConfirmModal } from '../../components';
 import UploadProjectPictureIcon from './circleplus.png';
-import TextareaAutosize from 'react-autosize-textarea';
 // Actions
 import { updateProject, updateProjectImage } from '../../actions';
 
@@ -29,10 +31,10 @@ class EditProject extends Component {
 			projectDescriptionText: this.props.project.text,
 			categories: this.props.project.categories
 		});
-		document.addEventListener("keydown", this.escCancelHandler, false);
+		document.addEventListener('keydown', this.escCancelHandler, false);
 	}
 
-	// This stores the project image file recieved in the ReactFileReader form data  
+	// This stores the project image file recieved in the ReactFileReader form data
 	singleFileChangedHandler = event => {
 		this.setState({
 			selectedFile: event.target.files[0]
@@ -57,16 +59,16 @@ class EditProject extends Component {
 			axios
 				.post(
 					(process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
-					`/api/projects/image-upload`,
+						`/api/projects/image-upload`,
 					data,
 					{
 						onUploadProgress: progressEvent => {
 							console.log(
 								'Upload Progress:' +
-								Math.round(
-									(progressEvent.loaded / progressEvent.total) * 100
-								) +
-								'%'
+									Math.round(
+										(progressEvent.loaded / progressEvent.total) * 100
+									) +
+									'%'
 							);
 						}
 					},
@@ -98,10 +100,15 @@ class EditProject extends Component {
 							}
 						} else {
 							let photo = response.data.location;
-							this.setState({
-								projectImage: photo,
-								uploadingProjectImage: false
-							}, () => { this.submitProjectChanges() });
+							this.setState(
+								{
+									projectImage: photo,
+									uploadingProjectImage: false
+								},
+								() => {
+									this.submitProjectChanges();
+								}
+							);
 						}
 					} else {
 						console.log('error');
@@ -117,7 +124,7 @@ class EditProject extends Component {
 	// Keep form data in the state
 	changeHandler = event => {
 		this.setState({ [event.target.name]: event.target.value });
-		console.log(this.state)
+		console.log(this.state);
 	};
 
 	// updates the project with the edited data
@@ -168,7 +175,7 @@ class EditProject extends Component {
 
 	render() {
 		return (
-			<EditProjectFormContainer onSubmit={this.singleFileUploadHandler}>
+			<EditProjectContainer onSubmit={this.singleFileUploadHandler}>
 				<ProjectHeader>
 					<ProjectNameAndAuthorContainer>
 						<ProjectName>
@@ -181,8 +188,39 @@ class EditProject extends Component {
 								required
 							/>
 						</ProjectName>
-						<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
+						<ProjectAuthor>by {this.props.project.username}</ProjectAuthor>
+						<CategoryContainer>
+							{/* Any categories? */}
+							{this.props.project.categories &&
+								// Display categories
+								this.props.project.categories.map(
+									({ category_id, category_name }) => (
+										// Needs category search!
+										<Category
+											to={`/make/search/queries/for/categories/please/${category_id}`}
+											key={category_id}
+										>
+											{category_name}
+										</Category>
+									)
+								)}
+						</CategoryContainer>
 					</ProjectNameAndAuthorContainer>
+
+					<ReviewsLink onClick={this.cancelHandler}>
+						{this.props.project.project_rating && (
+							<ProjectRatingTool
+								rating={Number(this.props.project.project_rating)}
+								starRatedColor="black"
+								starEmptyColor="#bfbfbf"
+								starRatedColor="#cc0000"
+								starDimension="24px"
+								starSpacing="3px"
+								numberOfStars={5}
+							/>
+						)}
+						<ReviewsLinkText>View Reviews</ReviewsLinkText>
+					</ReviewsLink>
 				</ProjectHeader>
 				<ImgContainer>
 					<ProjectPictureHiddenInput
@@ -196,7 +234,8 @@ class EditProject extends Component {
 					>
 						<UploadProjectPictureIconStyle
 							className="upload-icon"
-							src={UploadProjectPictureIcon} />
+							src={UploadProjectPictureIcon}
+						/>
 					</ProjectPictureUploadLabel>
 					<ProjectImage
 						src={this.state.projectImage}
@@ -204,16 +243,15 @@ class EditProject extends Component {
 					/>
 				</ImgContainer>
 				{/* HiddenProfilePictureInput is hidden */}
-				<DescriptionContainer>
-					<DescriptionInput
-						name="projectDescriptionText"
-						type="text"
-						placeholder="project description"
-						value={this.state.projectDescriptionText}
-						onChange={this.changeHandler}
-						required
-					/>
-				</DescriptionContainer>
+				<DescriptionInput
+					name="projectDescriptionText"
+					type="text"
+					placeholder="project description"
+					value={this.state.projectDescriptionText}
+					onChange={this.changeHandler}
+					autoFocus
+					required
+				/>
 				<EditProjectOptionsContainer>
 					<CancelLink
 						onClick={this.cancelHandler}
@@ -227,11 +265,14 @@ class EditProject extends Component {
 						type="submit"
 						value="Submit Changes"
 						disabled={this.props.updatingProject || this.props.gettingProject}
-					>submit
+					>
+						submit
 					</SubmitLink>
 				</EditProjectOptionsContainer>
 
-				{(this.props.updatingProject || this.props.gettingProject || this.state.uploadingProjectImage) && (
+				{(this.props.updatingProject ||
+					this.props.gettingProject ||
+					this.state.uploadingProjectImage) && (
 					<StatusMessage small>Updating project...</StatusMessage>
 				)}
 				{this.props.updatingProjectError && (
@@ -241,10 +282,10 @@ class EditProject extends Component {
 				)}
 
 				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
-			</EditProjectFormContainer>
+			</EditProjectContainer>
 		);
-	};
-};
+	}
+}
 
 const mapStateToProps = state => {
 	return {
@@ -257,58 +298,105 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
-		updateProject, updateProjectImage
+		updateProject,
+		updateProjectImage
 	}
 )(EditProject);
 
-
 // Styled-components
-const EditProjectFormContainer = styled.form`
+
+const EditProjectContainer = styled.form`
 	display: flex;
 	flex-direction: column;
 	border-radius: 4px;
 	width: 100%;
+	background: #cbd6e7;
 	border: 1px solid lightgray;
-	margin: 0 0 18px 0;
+	padding: 18px 20px;
+	margin: 0 0 30px 0;
 `;
 
 const ProjectHeader = styled.div`
 	display: flex;
-	position: 50%;
-	flex-direction: row;
-	padding: 18px 20px 10px 20px;
+	/* position: 50%; */
+	/* flex-direction: row; */
 	justify-content: space-between;
-  align-items: center;
+	align-items: center;
 `;
 
 const ProjectNameAndAuthorContainer = styled.div`
 	display: flex;
-	min-width: 70%;
 	flex-direction: column;
 `;
 
 const ProjectName = styled.h2`
-	display: flex;
 	margin: 0 0 0 -2px;
 `;
 
-const ProjectNameInput = styled.input`
+const ProjectNameInput = styled(TextareaAutosize)`
 	border: 0;
-	margin: -3px 0 -4px 0;
+	margin: -2px 0 -4px -2px;
+	width: 100%;
+	background: #eef1f7;
 	font-size: 32px;
 	font-weight: bold;
 `;
 
 const ProjectAuthor = styled.div`
+	padding: 4px 0 0;
+	font-size: 1.6rem;
+`;
+
+const ReviewsLink = styled.div`
+	margin: -10px 0 0 0;
+	display: flex;
+	flex-direction: column;
+	/* align-self: flex-end; */
+	align-items: flex-end;
+	min-width: 160px;
+	&:hover {
+		text-decoration: none;
+		background: none;
+	}
+`;
+
+const ProjectRatingTool = styled(StarRatings)``;
+
+const ReviewsLinkText = styled.p`
+	color: #808080;
+	padding: 6px 0 0;
+`;
+
+const CategoryContainer = styled.div`
+	font-size: 1.6rem;
+	margin: 12px 0 0;
+	display: flex;
+`;
+
+const Category = styled(Link)`
+	min-width: 54px;
+	margin: 0 4px 0 0;
+	text-align: center;
+	letter-spacing: 0.05rem;
+	color: white;
+	background: #254f8d;
+	padding: 4px 5px 2px;
+	border-radius: 4px;
+	font-size: 12px;
+	&:hover {
+		text-decoration: none;
+		color: white;
+		background: #1c293b;
+	}
 `;
 
 const ProjectPictureHiddenInput = styled.input`
 	opacity: 0;
-  position: absolute;
-  pointer-events: none;
-  // alternative to pointer-events, compatible with all browsers, just make it impossible to find
-  width: 1px;
-  height: 1px;
+	position: absolute;
+	pointer-events: none;
+	// alternative to pointer-events, compatible with all browsers, just make it impossible to find
+	width: 1px;
+	height: 1px;
 `;
 
 const ProjectPictureUploadLabel = styled.label`
@@ -317,50 +405,51 @@ const ProjectPictureUploadLabel = styled.label`
 
 const ImgContainer = styled.div`
 	position: relative;
-	display: flex;
-	height: auto;
+	/* display: flex; */
+	/* height: auto;
 	margin: 0 auto;
 	max-height: 600px !important;
 	width: auto;
-	margin: 0 auto;
-	transition: .5s ease;
+	margin: 0 auto; */
+	width: 100%;
+	margin: 20px 0 18px;
+	transition: 0.5s ease;
 	:hover {
-		opacity: .9;
+		opacity: 0.9;
 	}
 `;
 
 const UploadProjectPictureIconStyle = styled.img`
 	position: absolute;
-  top: 50%;
-  left: 50%;
+	top: 50%;
+	left: 50%;
 	height: 35%;
-	opacity: .4;
-  transform: translate(-50%, -50%);
+	opacity: 0.4;
+	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-	margin: auto;
-	padding: auto;
-	transition: .5s ease;
+	/* margin: auto;
+	padding: auto; */
+	transition: 0.5s ease;
 	z-index: 1;
 	:hover {
-		opacity: .9;
+		opacity: 0.9;
 	}
 `;
 
 const ProjectImage = styled.img`
-	position: relative;
-	height: 100%;
+	background: #f6f6f6;
+	max-height: 600px;
 	width: 100%;
-	transition: .5s ease;
+	/* margin: 20px 0 18px; */
+	object-fit: contain;
+	transition: 0.5s ease;
 `;
 
-const DescriptionContainer = styled.div`
-	width: auto;
-	margin: 18px 20px 10px 20px;
-	line-height: 18px;
-	text-align: justify;
-`;
 const DescriptionInput = styled(TextareaAutosize)`
 	width: 100%;
+	min-height: 4rem;
+	background: #eef1f7;
+	line-height: 1.6rem;
 	border: none;
 	padding: none;
 	margin: -2px;
@@ -368,15 +457,15 @@ const DescriptionInput = styled(TextareaAutosize)`
 
 const CancelLink = styled.a`
 	cursor: pointer;
-	margin-right: 8px;
+	margin-right: 12px;
 	text-decoration: none;
-	color: rgb(42,43,45);
+	color: black;
 	position: relative;
 	z-index: 10;
 	:hover {
 		background: none;
 		text-decoration: none;
-		color: rgb(42,43,45);
+		color: #33393f;
 	}
 `;
 
@@ -386,20 +475,22 @@ const SubmitLink = styled.button`
 	padding: 0;
 	background: none;
 	cursor: pointer;
-	color: rgb(42,43,45);
+	color: black;
+	:hover {
+		background: none;
+		text-decoration: none;
+		color: #33393f;
+	}
 `;
 
 // const ReviewsButton = styled.button``;
 
-
-
 const EditProjectOptionsContainer = styled.div`
 	display: flex;
-	justify-content: flex-end;
-	margin: -5px 20px 13px 20px;
-	font-size: 11px;
-	color: rgb(42, 43, 45);
+	margin: 8px 0 -6px 0;
+	font-size: 1.4rem;
 	width: auto;
+	justify-content: flex-end;
 `;
 
 const StatusMessage = styled.p``;

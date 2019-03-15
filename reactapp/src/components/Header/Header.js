@@ -22,7 +22,7 @@ const HeaderContainerWraper = styled.div`
 
 const HeaderSearchContainer = styled.div`
 	width: 50%;
-	margin: 0 20px;
+	margin: 0 20px 12px;
 
 	@media (max-width: 500px) {
 		width: 90%;

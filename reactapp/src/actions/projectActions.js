@@ -41,7 +41,7 @@ export const getProject = project_id => {
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/${project_id}`
+					`/api/projects/${project_id}`
 			)
 
 			.then(({ data }) => {
@@ -61,7 +61,7 @@ export const getProjectLite = (project_id, callback) => {
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/${project_id}`
+					`/api/projects/${project_id}`
 			)
 
 			.then(({ data }) => {
@@ -73,8 +73,8 @@ export const getProjectLite = (project_id, callback) => {
 	};
 };
 
-// todo: Refactor this mess. These are leftovers from the old setup.
 // get project, then reviewId
+// todo: merge this into getProject
 export const project_ReviewId_Chain = (user_id, project_id) => {
 	return dispatch => {
 		dispatch({ type: GETTING_PROJECT });
@@ -82,7 +82,7 @@ export const project_ReviewId_Chain = (user_id, project_id) => {
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/${project_id}`
+					`/api/projects/${project_id}`
 			)
 
 			.then(({ data }) => {
@@ -107,7 +107,7 @@ export const addProject = (project, callback) => {
 		axios
 			.post(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/`,
+					`/api/projects/`,
 				project
 			)
 			.then(({ data }) => {
@@ -126,7 +126,7 @@ export const updateProject = (project_id, changes, callback) => {
 		axios
 			.put(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/${project_id}`,
+					`/api/projects/${project_id}`,
 				changes
 			)
 
@@ -148,7 +148,7 @@ export const deleteProject = (project_id, user_id, callback) => {
 		axios
 			.delete(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/${project_id}`,
+					`/api/projects/${project_id}`,
 				{ data: { user_id } } // Have to use { data: body } for DELETE
 			)
 
@@ -163,17 +163,16 @@ export const deleteProject = (project_id, user_id, callback) => {
 
 // update project image
 export const updateProjectImage = (selectedFile, headerData, callback) => {
-
 	return dispatch => {
 		dispatch({ type: UPDATING_PROJECT_IMAGE });
 
 		axios
 			.post(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/image-upload`,
-				selectedFile, headerData
+					`/api/projects/image-upload`,
+				selectedFile,
+				headerData
 			)
-
 
 			.then(response => {
 				// If file size is larger than expected.
@@ -181,32 +180,27 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 					let error = 'Unhelpful generic error';
 
 					if ('LIMIT_FILE_SIZE' === response.data.error.code) {
-						error = 'File exceeded size limit of 2MB'
+						error = 'File exceeded size limit of 2MB';
 					} else {
 						console.log(response.data.location);
-						error = 'Something went wrong.'
+						error = 'Something went wrong.';
 					}
 
 					dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error });
-
-
-
 				} else {
-					const img_url = response.data.location
+					const img_url = response.data.location;
 					console.log(`projectActions img_url:`, img_url);
 
 					dispatch({ type: UPDATED_PROJECT_IMAGE });
 					callback(img_url);
 				}
-			}
-			)
+			})
 
-
-			.catch(error => dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error }))
-
-
-	}
-}
+			.catch(error =>
+				dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error })
+			);
+	};
+};
 
 // get reviews by project_id
 export const getProjectReviews = (user_id, project_id) => {
@@ -216,7 +210,7 @@ export const getProjectReviews = (user_id, project_id) => {
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-				`/api/projects/${project_id}/reviews/${user_id || 0}`
+					`/api/projects/${project_id}/reviews/${user_id || 0}`
 			)
 
 			.then(({ data }) => {

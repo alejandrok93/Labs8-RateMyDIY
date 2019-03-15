@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import TextareaAutosize from 'react-autosize-textarea';
 
 // Components
 import { ConfirmModal } from '../../../components';
@@ -11,42 +12,6 @@ import { updatePost } from '../../../actions';
 
 // Styles
 import styled from 'styled-components';
-
-const PostContainer = styled.div`
-	background: #ffcccc;
-	padding: 16px 16px 8px 16px;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-`;
-
-const PostForm = styled.form``;
-
-const ImgContainer = styled.div`
-	padding-top: 12px;
-	margin: auto;
-	max-width: 100%;
-	height: auto;
-`;
-
-const Img = styled.img`
-	margin: 0 auto;
-	background: white;
-	max-width: 100%;
-	height: auto;
-`;
-
-const TextInput = styled.input``;
-
-const CancelButton = styled.button``;
-
-const SubmitInput = styled.input``;
-
-const PostButtonContainer = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-`;
-
-const StatusMessage = styled.p``;
 
 class EditPost extends Component {
 	state = {
@@ -207,6 +172,7 @@ class EditPost extends Component {
 						placeholder="optional text description"
 						value={this.state.text}
 						onChange={this.changeHandler}
+						autoFocus
 						required={!this.state.img_url}
 					/>
 					<PostButtonContainer>
@@ -214,11 +180,11 @@ class EditPost extends Component {
 							onClick={this.cancelHandler}
 							disabled={this.props.updatingPost || this.props.gettingProject}
 						>
-							Cancel
+							cancel
 						</CancelButton>
 						<SubmitInput
 							type="submit"
-							value="Submit Changes"
+							value="submit"
 							disabled={this.props.updatingPost || this.props.gettingProject}
 						/>
 					</PostButtonContainer>
@@ -254,3 +220,79 @@ export default connect(
 		updatePost
 	}
 )(EditPost);
+
+// Styles
+const PostContainer = styled.form`
+	display: flex;
+	flex-direction: column;
+	border-radius: 4px;
+	width: 100%;
+	background: #cbd6e7;
+	border: 1px solid lightgray;
+	padding: 18px 20px;
+	margin: 0 0 30px 0;
+`;
+
+const PostForm = styled.form``;
+
+const ImgContainer = styled.div`
+	padding-top: 12px;
+	margin: auto;
+	max-width: 100%;
+	height: auto;
+`;
+
+const Img = styled.img`
+	margin: 0 auto;
+	background: white;
+	max-width: 100%;
+	height: auto;
+`;
+
+const TextInput = styled(TextareaAutosize)`
+	width: 100%;
+	min-height: 4rem;
+	background: #eef1f7;
+	line-height: 1.6rem;
+	border: none;
+	padding: none;
+	margin: -2px;
+`;
+
+const PostButtonContainer = styled.div`
+	display: flex;
+	margin: 8px 0 -6px 0;
+	font-size: 1.4rem;
+	width: auto;
+	justify-content: flex-end;
+`;
+
+const CancelButton = styled.a`
+	cursor: pointer;
+	margin-right: 12px;
+	text-decoration: none;
+	color: black;
+	position: relative;
+	z-index: 10;
+	:hover {
+		background: none;
+		text-decoration: none;
+		color: #33393f;
+	}
+`;
+
+const SubmitInput = styled.input`
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: none;
+	cursor: pointer;
+	color: black;
+	:hover {
+		background: none;
+		text-decoration: none;
+		color: #33393f;
+	}
+`;
+
+const StatusMessage = styled.p``;

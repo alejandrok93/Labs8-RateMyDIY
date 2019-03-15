@@ -60,13 +60,13 @@ class Nav extends React.Component {
 							<DropDown />
 						</Fragment>
 					) : (
-						<LoginContainer>
-							<a href={loginURL}>
-								<Button color="primary">
-									<h3>Login/Signup</h3>
-								</Button>
-							</a>
-						</LoginContainer>
+						<LoginLink href={loginURL}>
+							<LoginContainer>
+								<LoginButton color="primary">
+									<LoginText>Signup or Login</LoginText>
+								</LoginButton>
+							</LoginContainer>
+						</LoginLink>
 					)}
 
 					{/* if logged in, show component that says "Hello NAME then have a signout button" */}
@@ -121,6 +121,22 @@ const LoginContainer = styled.div`
 	display: flex;
 	align-items: center;
 	height: 56px;
+`;
+
+const LoginLink = styled.a`
+	&:hover {
+		text-decoration: none;
+		outline: none;
+		background: none;
+	}
+`;
+
+const LoginButton = styled(Button)`
+	height: 40px;
+`;
+
+const LoginText = styled.h3`
+	font-size: 1.4rem;
 `;
 
 const WelcomeMessage = styled.p`

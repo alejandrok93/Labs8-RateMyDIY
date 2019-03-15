@@ -22,77 +22,6 @@ import { loggedIn, project_ReviewId_Chain, deleteProject } from '../../actions';
 // Styles
 import styled from 'styled-components';
 
-const ProjectPageHeaderContainer = styled.div`
-	width: 100%;
-`;
-
-const ProjectPageContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	/* margin: 100px auto 0 auto; */
-	margin: 100px auto;
-	width: 100%;
-`;
-
-const ProjectContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	min-width: 20%;
-	width: 50%;
-	max-width: 750px;
-`;
-
-// const SideBarContainer = styled.div`
-// 	display: flex;
-// 	border: 1px solid green;
-// 	margin: 0 0 0 5px;
-// 	width: 10%;
-// 	min-width: 150px;
-// 	height: 500px;
-// 	min-height: 500px;
-// `;
-
-const StatusMessage = styled.p``;
-
-const ButtonContainer = styled.div`
-	display: flex;
-	justify-content: space-around;
-	margin-top: 20px;
-`;
-
-const ProjectButton = styled.a`
-	display: flex;
-	max-height: 100px;
-	max-width: 100px;
-	height: 100px;
-	width: 100px;
-	border-radius: 50%;
-	align-items: center;
-	justify-content: center;
-	/* background: ; */
-	border: 3px lightgray solid;
-	:hover {
-		background: purple;
-	}
-`;
-
-const ReviewButton = styled.button`
-	font-size: 1.25em;
-	font-weight: 700;
-	color: white;
-	background-color: #254f8d;
-	padding: 10px 15px 10px 15px;
-	cursor: pointer;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-
-	&:hover {
-		outline: 1px dotted #000;
-		outline: -webkit-focus-ring-color auto 5px;
-		background-color: #1c293b;
-	}
-`;
-
 class ProjectPage extends Component {
 	state = {
 		loginUrl:
@@ -104,6 +33,7 @@ class ProjectPage extends Component {
 	deleteHandler = event => {
 		event.preventDefault();
 
+		// Trigger confirmation modal
 		this.setState({
 			confirm: {
 				text: [
@@ -154,6 +84,8 @@ class ProjectPage extends Component {
 	};
 
 	componentDidMount() {
+		// Check if user is logged in, then get project and review_id if it exists
+		// - Currently goes through three request/response cycles (once for login check, once for project data, once for review id) - can definitely by improved!
 		this.props.loggedIn(
 			project_ReviewId_Chain,
 			this.props.match.params.project_id
@@ -175,11 +107,16 @@ class ProjectPage extends Component {
 
 		return (
 			<ProjectPageHeaderContainer>
+				{/* Redirect functionality */}
 				{this.state.redirect && <Redirect push to={this.state.redirect} />}
+
 				<ScrollToTopOnMount />
+
 				<Header history={this.props.history} />
+
 				<ProjectPageContainer>
 					<ProjectContainer>
+						{/* Loading the project? */}
 						{this.props.gettingUserInfo ||
 						this.props.gettingReviewId ||
 						(this.props.gettingProject &&
@@ -190,12 +127,15 @@ class ProjectPage extends Component {
 								this.state.postToUpdate ||
 								this.state.postToDelete
 							)) ? (
+							// Display loading status
 							<React.Fragment>
 								<StatusMessage>Loading project...</StatusMessage>
 							</React.Fragment>
-						) : this.props.gettingUserInfoError ||
+						) : // Error loading project?
+						this.props.gettingUserInfoError ||
 						  this.props.gettingProjectError ||
 						  this.props.gettingReviewIdError ? (
+							// Display error
 							<React.Fragment>
 								<StatusMessage>Failed to load project</StatusMessage>
 								<StatusMessage error>
@@ -204,7 +144,9 @@ class ProjectPage extends Component {
 										this.props.gettingReviewIdError}
 								</StatusMessage>
 							</React.Fragment>
-						) : this.props.deletingProjectError ? (
+						) : // Error deleting project?
+						this.props.deletingProjectError ? (
+							// Display error
 							<React.Fragment>
 								<StatusMessage>Failed to delete project</StatusMessage>
 								<StatusMessage error>
@@ -213,7 +155,9 @@ class ProjectPage extends Component {
 							</React.Fragment>
 						) : (
 							<React.Fragment>
+								{/* Editing project? */}
 								{this.state.projectToUpdate ? (
+									// Display editable project
 									<EditProject
 										user_id={this.props.userInfo.user_id}
 										project={this.props.project}
@@ -222,6 +166,7 @@ class ProjectPage extends Component {
 										}
 									/>
 								) : (
+									// Display project
 									<Project
 										project={this.props.project}
 										owner={owner}
@@ -233,11 +178,13 @@ class ProjectPage extends Component {
 									/>
 								)}
 
-								{/* Display posts */}
+								{/* Any posts? */}
 								{this.props.project.posts &&
+									// Display posts
 									this.props.project.posts.map(post =>
-										// Could probably move this logic to Post
+										// Is this post being edited?
 										post.post_id === this.state.postToUpdate ? (
+											// Display editable post
 											<EditPost
 												key={post.post_id}
 												user_id={this.props.userInfo.user_id}
@@ -248,6 +195,7 @@ class ProjectPage extends Component {
 												}
 											/>
 										) : (
+											// Display post
 											<Post
 												key={post.post_id}
 												post={post}
@@ -266,8 +214,9 @@ class ProjectPage extends Component {
 										)
 									)}
 
-								{/* Add new post */}
+								{/* Adding a new post? */}
 								{this.state.postToAdd && (
+									// Display newPost component
 									<NewPost
 										postType={this.state.postToAdd}
 										user_id={this.props.userInfo.user_id}
@@ -276,8 +225,9 @@ class ProjectPage extends Component {
 									/>
 								)}
 
-								{/* Bottom buttons */}
+								{/* Is the user the author? */}
 								{owner ? (
+									// Display edit/delete buttons
 									<ButtonContainer>
 										<ProjectButton
 											onClick={() => this.setState({ postToAdd: 'text' })}
@@ -292,7 +242,9 @@ class ProjectPage extends Component {
 											Add Picture
 										</ProjectButton>
 									</ButtonContainer>
-								) : this.props.reviewId ? (
+								) : // Has the user reviewed this post?
+								this.props.reviewId ? (
+									// Display button to view review
 									<ReviewButton
 										onClick={() =>
 											this.setState({ reviewModal: this.props.reviewId })
@@ -302,6 +254,7 @@ class ProjectPage extends Component {
 										View Your Review
 									</ReviewButton>
 								) : (
+									// Display button to add review
 									<ReviewButton
 										onClick={() =>
 											this.props.userInfo.user_id
@@ -310,12 +263,15 @@ class ProjectPage extends Component {
 										}
 										disabled={this.props.gettingReviewId}
 									>
-										Add a review
+										Review Project
 									</ReviewButton>
 								)}
 							</React.Fragment>
 						)}
+
+						{/* Show the review modal? */}
 						{this.state.reviewModal && (
+							// Display review modal
 							<ReviewModal
 								review_id={this.props.reviewId}
 								showReviewModal={value => this.setState({ reviewModal: value })}
@@ -323,14 +279,17 @@ class ProjectPage extends Component {
 							/>
 						)}
 
+						{/* Show the confirmation modal? */}
 						{this.state.confirm && (
+							// Display confirmation modal
 							<ConfirmModal confirm={this.state.confirm} />
 						)}
+						{/* Deleting the project? */}
 						{this.props.deletingProject && (
+							// Display deleting status
 							<ConfirmModal statusMessage={'Deleting project...'} />
 						)}
 					</ProjectContainer>
-					{/* <SideBarContainer /> */}
 				</ProjectPageContainer>
 			</ProjectPageHeaderContainer>
 		);
@@ -367,3 +326,63 @@ export default connect(
 		deleteProject
 	}
 )(ProjectPage);
+
+// Styled components
+const ProjectPageHeaderContainer = styled.div`
+	width: 100%;
+`;
+
+const ProjectPageContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	margin: 100px auto;
+	width: 100%;
+`;
+
+const ProjectContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-width: 20%;
+	width: 50%;
+	max-width: 750px;
+`;
+
+const StatusMessage = styled.p``;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+`;
+
+const ProjectButton = styled.button`
+	display: flex;
+	max-height: 100px;
+	max-width: 100px;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	border: 3px lightgray solid;
+	:hover {
+		background: purple;
+	}
+`;
+
+const ReviewButton = styled.button`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: white;
+	background-color: #254f8d;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;

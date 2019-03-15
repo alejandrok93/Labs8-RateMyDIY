@@ -90,7 +90,7 @@ class ProjectTile extends React.Component {
 				</ImageHolder>
 				<Details>
 					<StarRatings
-						rating={Math.round(this.props.project.project_rating)}
+						rating={Number(this.props.project.project_rating)}
 						starDimension="14px"
 						starSpacing="4px"
 						starRatedColor="black"
@@ -124,7 +124,7 @@ class ProjectTile extends React.Component {
 						</ModalHeader>
 						<ModalBody>
 							<StarRatings
-								rating={Math.round(this.props.project.project_rating)}
+								rating={Number(this.props.project.project_rating)}
 								starDimension="14px"
 								starSpacing="4px"
 								starRatedColor="black"
@@ -145,8 +145,6 @@ class ProjectTile extends React.Component {
 }
 
 export default ProjectTile;
-
-
 
 // import React from 'react';
 // import PropTypes from 'prop-types';

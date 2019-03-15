@@ -21,7 +21,7 @@ const NewProjectContainer = styled.div`
 	margin-top: 110px;
 	display: flex;
 	flex-direction: column;
-	background: #e9ded8;
+	background: #cbd6e7;
 	border-radius: 4px;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
@@ -208,6 +208,14 @@ class NewProject extends Component {
 		categories: [],
 		imagePreviewUrl: ''
 	};
+
+	componentDidMount() {
+		//Check if User is logged in, if not then redirect to home
+		if (!this.props.userInfo.user_id) {
+			console.log('Not logged in!');
+			this.setState({ redirect: '/' });
+		}
+	}
 
 	handleSelect = categories => {
 		this.setState({ categories });

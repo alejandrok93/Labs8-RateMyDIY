@@ -1,10 +1,6 @@
 // Dependencies
 import React from 'react';
-// import ModalImage from 'react-modal-image';
-// import { Button } from 'reactstrap';
-// Components
 import StarRatings from 'react-star-ratings';
-
 import { Link } from 'react-router-dom';
 
 // Styles
@@ -18,12 +14,9 @@ const Project = props => {
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by {props.project.username}</ProjectAuthor>
 					<CategoryContainer>
+						{/* Any categories? */}
 						{props.project.categories &&
-							// [
-							// 	{ category_id: 1, category_name: 'Tech' },
-							// 	{ category_id: 2, category_name: 'Home' },
-							// 	{ category_id: 3, category_name: 'Cooking' }
-							// ].map(({ category_id, category_name }) => (
+							// Display categories
 							props.project.categories.map(({ category_id, category_name }) => (
 								// Needs category search!
 								<Category
@@ -36,23 +29,20 @@ const Project = props => {
 					</CategoryContainer>
 				</ProjectNameAuthorCategoryContainer>
 
-				<ProjectRatingAndReviewsContainer>
+				<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
 					{props.project.project_rating && (
 						<ProjectRatingTool
 							rating={Number(props.project.project_rating)}
 							starRatedColor="black"
 							starEmptyColor="#bfbfbf"
 							starRatedColor="#cc0000"
-							// changeRating={this.changeRating}
-							starDimension="20px"
-							starSpacing="5px"
+							starDimension="24px"
+							starSpacing="3px"
 							numberOfStars={5}
 						/>
 					)}
-					<ReviewsLink to={`/project/${props.project.project_id}/reviews`}>
-						Reviews
-					</ReviewsLink>
-				</ProjectRatingAndReviewsContainer>
+					<ReviewsLinkText>View Reviews</ReviewsLinkText>
+				</ReviewsLink>
 			</ProjectHeader>
 
 			<Img
@@ -63,7 +53,9 @@ const Project = props => {
 			/>
 			<DescriptionContainer>
 				{props.project.text}
+				{/* Is user the author? */}
 				{props.owner && (
+					// Display edit/delete buttons
 					<OptionsContainer>
 						<EditLink
 							onClick={() => props.willUpdateProject(true)}
@@ -102,15 +94,12 @@ const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
 	flex-direction: row;
-	/* padding: 18px 20px 0 20px; */
 	justify-content: space-between;
 	align-items: center;
-	/* margin: 0 0 20px 0; */
 `;
 
 const ProjectNameAuthorCategoryContainer = styled.div`
 	display: flex;
-	min-width: 70%;
 	flex-direction: column;
 `;
 
@@ -126,22 +115,21 @@ const ProjectAuthor = styled.div`
 	font-size: 1.6rem;
 `;
 
-const ProjectRatingAndReviewsContainer = styled.div`
+const ReviewsLink = styled(Link)`
+	margin: -10px 0 0 0;
 	display: flex;
 	flex-direction: column;
-	align-self: flex-end;
-	min-width: 140px;
-	align-content: flex-end;
-`;
-
-const ReviewsLink = styled(Link)`
-	margin: 8px 0 0 0;
-	display: flex;
-	align-self: flex-end;
+	/* align-self: flex-end; */
+	align-items: flex-end;
+	min-width: 160px;
 	&:hover {
 		text-decoration: none;
 		background: none;
 	}
+`;
+
+const ReviewsLinkText = styled.p`
+	padding: 6px 0 0;
 `;
 
 const CategoryContainer = styled.div`
@@ -172,16 +160,15 @@ const Img = styled.img`
 	max-height: 600px;
 	width: 100%;
 	margin: 20px 0 18px;
+	object-fit: contain;
 `;
 
 const ProjectRatingTool = styled(StarRatings)``;
 
 const DescriptionContainer = styled.div`
 	width: auto;
-	/* margin: 18px 20px 4px 20px; */
-	font-size: 1.6rem;
-	line-height: 18px;
-	/* text-align: justify; */
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 `;
 
 const OptionsContainer = styled.div`

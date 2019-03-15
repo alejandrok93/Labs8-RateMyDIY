@@ -146,7 +146,7 @@ class ReviewCard extends React.Component {
 
 					<CardContent style={{ padding: '0 14px 7px 0', alignSelf: 'center' }}>
 						<StarRatings
-							rating={Math.round(this.props.review.rating)}
+							rating={Number(this.props.review.rating)}
 							starDimension="19px"
 							starSpacing="1px"
 							// starRatedColor="e68a00" // yellow

@@ -142,11 +142,12 @@ class ProjectCard extends React.Component {
 							style={{ padding: '0 0 7px 0', background: 'none' }}
 						>
 							<StarRatings
-								rating={Math.round(this.props.project.project_rating)}
+								rating={Number(this.props.project.project_rating)}
 								starDimension="19px"
 								starSpacing="1px"
 								starRatedColor="#cc0000"
 								starEmptyColor="#bfbfbf"
+								numberOfStars={5}
 							/>
 						</Link>
 					</CardContent>

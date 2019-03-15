@@ -45,23 +45,30 @@ const ButtonContainer = styled.div`
 `;
 
 const SubmitButton = styled.button`
+	width: 188px;
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 191px;
-	height: 43px;
-	font-size: 1.5rem;
-	font-weight: bold;
-	text-decoration: none;
-	color: white;
-	background: #24b8bd;
-	border: 1px solid #969696;
+	padding: 10px 15px 10px 15px;
 	cursor: pointer;
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
 
 	${props =>
 		props.cancel &&
 		css`
-			background: #ca001a;
+			background: #8d2525;
+
+			&:hover {
+				background-color: #3b1c1c;
+			}
 		`};
 `;
 
@@ -72,18 +79,18 @@ const ConfirmModal = props => {
 				{props.statusMessage ? (
 					<StatusMessage>{props.statusMessage}</StatusMessage>
 				) : (
-						<React.Fragment>
-							<ModalPrompt>{props.confirm.text[0] || 'u sure tho?'}</ModalPrompt>
-							<ButtonContainer>
-								<SubmitButton cancel onClick={props.confirm.cancel}>
-									{props.confirm.text[1] || 'No'}
-								</SubmitButton>
-								<SubmitButton onClick={props.confirm.submit}>
-									{props.confirm.text[2] || 'Yes'}
-								</SubmitButton>
-							</ButtonContainer>
-						</React.Fragment>
-					)}
+					<React.Fragment>
+						<ModalPrompt>{props.confirm.text[0] || 'u sure tho?'}</ModalPrompt>
+						<ButtonContainer>
+							<SubmitButton cancel onClick={props.confirm.cancel}>
+								{props.confirm.text[1] || 'No'}
+							</SubmitButton>
+							<SubmitButton onClick={props.confirm.submit}>
+								{props.confirm.text[2] || 'Yes'}
+							</SubmitButton>
+						</ButtonContainer>
+					</React.Fragment>
+				)}
 			</ModalBox>
 		</ModalShade>
 	);

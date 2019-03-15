@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import TextareaAutosize from 'react-autosize-textarea';
 
 // Components
 import { ConfirmModal } from '../../../components';
@@ -11,35 +12,6 @@ import { addPost } from '../../../actions';
 
 // Styles
 import styled from 'styled-components';
-
-const PostContainer = styled.div`
-	background: #ffcccc;
-	padding: 16px 16px 8px 16px;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-`;
-const Img = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
-	width: 100%;
-	background: #cceeee;
-	margin-bottom: 20px;
-`;
-
-const PostForm = styled.form``;
-
-const TextInput = styled.input``;
-
-const CancelButton = styled.button``;
-
-const SubmitInput = styled.input``;
-
-const PostButtonContainer = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-`;
 
 const StatusMessage = styled.p``;
 
@@ -163,7 +135,9 @@ class NewPost extends Component {
 				{/* I can probably combine these */}
 				{this.props.postType === 'text' ? (
 					<PostForm onSubmit={this.submitHandler}>
-						<p>You can add an image to this post at a later time</p>
+						<ImageReminder>
+							You can add an image to this post at a later time
+						</ImageReminder>
 						<TextInput
 							name="text"
 							type="text"
@@ -178,11 +152,11 @@ class NewPost extends Component {
 								onClick={this.cancelHandler}
 								disabled={this.props.addingPost || this.props.gettingProject}
 							>
-								Cancel
+								cancel
 							</CancelButton>
 							<SubmitInput
 								type="submit"
-								value="Add Text Field"
+								value="submit"
 								disabled={this.props.addingPost || this.props.gettingProject}
 							/>
 						</PostButtonContainer>
@@ -214,6 +188,7 @@ class NewPost extends Component {
 							type="text"
 							placeholder="optional text description"
 							value={this.state.text}
+							autoFocus
 							onChange={this.changeHandler}
 						/>
 						<PostButtonContainer>
@@ -221,11 +196,11 @@ class NewPost extends Component {
 								onClick={this.cancelHandler}
 								disabled={this.props.addingPost || this.props.gettingProject}
 							>
-								Cancel
+								cancel
 							</CancelButton>
 							<SubmitInput
 								type="submit"
-								value="Add Picture"
+								value="submit"
 								disabled={this.props.addingPost || this.props.gettingProject}
 							/>
 						</PostButtonContainer>
@@ -260,3 +235,79 @@ export default connect(
 		addPost
 	}
 )(NewPost);
+
+// Styles
+
+const PostContainer = styled.form`
+	display: flex;
+	flex-direction: column;
+	border-radius: 4px;
+	width: 100%;
+	background: #cbd6e7;
+	border: 1px solid lightgray;
+	padding: 18px 20px;
+	margin: 0 0 30px 0;
+`;
+
+const Img = styled.img`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 380px;
+	width: 100%;
+	background: #cceeee;
+	margin-bottom: 20px;
+`;
+
+const ImageReminder = styled.p`
+	color: #666666;
+	margin: 0 0 12px;
+`;
+
+const PostForm = styled.form``;
+
+const TextInput = styled(TextareaAutosize)`
+	width: 100%;
+	min-height: 4rem;
+	background: #eef1f7;
+	line-height: 1.6rem;
+	border: none;
+	padding: none;
+	margin: -2px;
+`;
+
+const PostButtonContainer = styled.div`
+	display: flex;
+	margin: 8px 0 -6px 0;
+	font-size: 1.4rem;
+	width: auto;
+	justify-content: flex-end;
+`;
+
+const CancelButton = styled.a`
+	cursor: pointer;
+	margin-right: 12px;
+	text-decoration: none;
+	color: black;
+	position: relative;
+	z-index: 10;
+	:hover {
+		background: none;
+		text-decoration: none;
+		color: #33393f;
+	}
+`;
+
+const SubmitInput = styled.input`
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: none;
+	cursor: pointer;
+	color: black;
+	:hover {
+		background: none;
+		text-decoration: none;
+		color: #33393f;
+	}
+`;

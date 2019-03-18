@@ -57,8 +57,8 @@ DATABASE_URL= <<DATABASE_URL>>
 
 ```
 
-3. Run `npm install` on reactapp/ and server/ folders to install dependencies
-4. Run `npm start` on reactapp/ and server/ folders to start the web application and the server
+3. Run `yarn` inside reactapp/ and server/ folders to install dependencies
+4. Run `yarn start` inside reactapp/ and server/ folders to start the web application and the server
 
 # API Endpoints
 

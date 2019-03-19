@@ -112,9 +112,6 @@ class MenuDrawer extends React.Component {
 							<ListItem className={classes.center}>
 								<Link to="/ReviewList">My Reviews</Link>
 							</ListItem>
-							{/* <ListItem className={classes.center}>
-								<Link to="/Billing">Billing</Link>
-							</ListItem> */}
 							<ListItem className={classes.center}>
 								<Link to="/settings">Settings</Link>
 							</ListItem>

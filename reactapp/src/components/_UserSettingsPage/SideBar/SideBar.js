@@ -44,7 +44,6 @@
 //       'education',
 //       'skills',
 //       'resumes',
-//       'billing',
 //       'settings'
 //     ],
 //     input: ''

@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 // import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 // import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 // import IconButton from '@material-ui/core/IconButton';
 // import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
@@ -31,16 +29,17 @@ const styles = theme => ({
 		// border: '1px solid lightgray',
 		cursor: 'pointer',
 		position: 'relative',
-
-		['@media (max-width: 1000px)']: {
-			width: '47%',
-			marginLeft: '2%'
-		},
-
-		['@media (max-width: 500px)']: {
-			width: '90%',
-			margin: '25px auto 30px'
-		}
+		
+		// Unnecessarily computed property ['@media (max-width: 1000px)'] found
+		// ['@media (max-width: 1000px)']: {
+		// 	width: '47%',
+		// 	marginLeft: '2%'
+		// },
+		// Unnecessarily computed property ['@media (max-width: 500px)'] found
+		// ['@media (max-width: 500px)']: {
+		// 	width: '90%',
+		// 	margin: '25px auto 30px'
+		// }
 	},
 	media: {
 		height: 0,

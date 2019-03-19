@@ -256,20 +256,6 @@ const PostContainer = styled.form`
 
 const PostForm = styled.form``;
 
-const ImgContainer1 = styled.div`
-  padding-top: 12px;
-  margin: auto;
-  max-width: 100%;
-  height: auto;
-`;
-
-const Img = styled.img`
-  margin: 0 auto;
-  background: white;
-  max-width: 100%;
-  height: auto;
-`;
-
 const TextInput = styled(TextareaAutosize)`
   width: 100%;
   min-height: 4rem;

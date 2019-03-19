@@ -85,31 +85,6 @@ const ProjectImageFile = styled.div`
   }
 `;
 
-const ProjectImageUpload = styled.div`
-  font-size: 1.25em;
-  font-weight: 700;
-  color: #f1e5e6;
-  background-color: #254f8d;
-  padding: 10px 15px 10px 15px;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-
-  &:hover {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-    background-color: #1c293b;
-  }
-`;
-
-const ProfileHeader = styled.h2`
-  width: 80%;
-  height: 24px;
-  color: ${props => props.theme.mui.palette.primary.dark};
-  font-size: 2.5rem;
-  margin: 2% auto;
-  text-align: center;
-`;
-
 const ImageFileUpload = styled.div`
   width: 1em;
   height: 1em;

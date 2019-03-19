@@ -223,7 +223,6 @@ class EditProject extends Component {
             {this.props.project.project_rating && (
               <ProjectRatingTool
                 rating={Number(this.props.project.project_rating)}
-                starRatedColor="black"
                 starEmptyColor="#bfbfbf"
                 starRatedColor="#cc0000"
                 starDimension="24px"

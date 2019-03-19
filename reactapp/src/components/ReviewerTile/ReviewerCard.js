@@ -51,6 +51,7 @@ const ReviewerInfo = styled.div`
 	justify-content: space-between;
 	align-items: flex-end;
 	width: 100%;
+	padding: 6px 0 0;
 `;
 
 class ReviewerCard extends React.Component {
@@ -103,12 +104,12 @@ class ReviewerCard extends React.Component {
 						<p
 							style={{
 								fontSize: '1.2rem',
-								color: 'white',
-								height: '26px',
-								lineHeight: '3rem'
+								lineHeight: '1.5rem',
+								color: 'white'
 							}}
 						>
-							reviews # here
+							{this.props.reviewer.review_count}{' '}
+							{this.props.reviewer.review_count === `1` ? `review` : `reviews`}
 						</p>
 					</ReviewerInfo>
 				</CardContent>

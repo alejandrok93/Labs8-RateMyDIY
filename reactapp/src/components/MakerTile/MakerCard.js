@@ -57,6 +57,20 @@ const MakerInfo = styled.div`
 	justify-content: space-between;
 	align-items: flex-start;
 	width: 100%;
+	padding: 8px 0 0;
+`;
+
+const SubInfo1 = styled.div`
+	width: 50%;
+	font-size: 1.2rem;
+	padding-left: 2px;
+`;
+
+const SubInfo2 = styled.div`
+	width: 50%;
+	font-size: 1.2rem;
+	text-align: right;
+	padding-right: 3px;
 `;
 
 const MakerName = styled.h1`

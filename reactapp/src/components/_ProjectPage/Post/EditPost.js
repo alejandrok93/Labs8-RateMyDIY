@@ -26,6 +26,17 @@ class EditPost extends Component {
     this.setState({
       selectedFile: event.target.files[0]
     });
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
   };
 
   singleFileUploadHandler = event => {
@@ -164,6 +175,7 @@ class EditPost extends Component {
   }
 
   render() {
+    let {imagePreviewUrl} = this.state;
     return (
       <PostContainer>
         <PostForm onSubmit={this.singleFileUploadHandler}>
@@ -183,7 +195,7 @@ class EditPost extends Component {
               />
             </ProjectPictureUploadLabel>
             <ProjectImage
-              src={this.props.post.img_url}
+              src={imagePreviewUrl || this.props.post.img_url}
               alt={this.props.post.img_url || 'project image'}
             />
           </ImgContainer>

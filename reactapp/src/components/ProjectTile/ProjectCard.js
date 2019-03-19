@@ -27,7 +27,7 @@ const styles = theme => ({
 		backgroundColor: theme.palette.secondary.light,
 		// borderRadius: '35px',
 		color: theme.palette.secondary.main,
-
+    
 		// Unnecessarily computed property ['@media (max-width: 1000px)'] found
 		// ['@media (max-width: 1000px)']: {
 		// 	width: '47%',

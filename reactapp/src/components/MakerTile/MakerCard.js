@@ -29,7 +29,6 @@ const styles = theme => ({
 		// border: '1px solid lightgray',
 		cursor: 'pointer',
 		position: 'relative',
-		
 		// Unnecessarily computed property ['@media (max-width: 1000px)'] found
 		// ['@media (max-width: 1000px)']: {
 		// 	width: '47%',

@@ -73,8 +73,8 @@
 	}
 
 	.myProjectsDisplay {
-		width: 80%;
-		align-self: center;
+		width: 93%;
+		justify-content: center;
 	}
 
 	.addButton {

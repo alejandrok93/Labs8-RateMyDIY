@@ -50,8 +50,8 @@ const FeaturedProjectListTiles = styled.div`
 	/* justify-content: space-between; */
 
 	@media (max-width: 500px) {
-		width: 100%;
-		align-self: center;
+		width: 80%;
+		justify-content: center;
 	}
 `;
 
@@ -64,7 +64,6 @@ const FeaturedProjectTitle = styled.h1`
 
 	@media (max-width: 500px) {
 		width: 80%;
-		margin: 15px auto;
 		text-align: center;
 		font-weight: bold;
 	}

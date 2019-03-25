@@ -34,8 +34,8 @@ class LogInPopUp extends React.Component {
 				>
 					<ModalHeader toggle={this.toggle}>Please log in</ModalHeader>
 					<ModalBody>
-						Hey there, RateMyDIY works best when logged in. You can go to our
-						log in page below.
+						Hey there, Qraft works best when logged in. You can go to our log in
+						page below.
 					</ModalBody>
 					<ModalFooter>
 						<Button color="primary">

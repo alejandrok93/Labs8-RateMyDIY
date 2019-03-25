@@ -60,3 +60,4 @@ export { default as ReviewPage } from './_ReviewPage/ReviewPage';
 export { default as ReviewCard } from './ReviewCard/ReviewCard';
 export { default as EmptyCard } from './EmptyCard/EmptyCard';
 export { default as SortDropDown } from './SearchPageSearchBar/SortDropDown';
+export { default as Auth0 } from './Login/Auth0';

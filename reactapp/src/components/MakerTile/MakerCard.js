@@ -28,7 +28,7 @@ const styles = theme => ({
 		color: theme.palette.secondary.main,
 		// border: '1px solid lightgray',
 		cursor: 'pointer',
-		position: 'relative',
+		position: 'relative'
 		// Unnecessarily computed property ['@media (max-width: 1000px)'] found
 		// ['@media (max-width: 1000px)']: {
 		// 	width: '47%',
@@ -118,14 +118,14 @@ class MakerCard extends React.Component {
 				>
 					<MakerInfo>
 						<MakerName>
-							<h1
+							<span
 								style={{
 									fontSize: '2rem',
 									color: 'white'
 								}}
 							>
 								{this.props.maker.username}
-							</h1>
+							</span>
 						</MakerName>
 
 						<StarRatings

@@ -14,6 +14,8 @@ import { App } from './components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // Styles
 import './index.css';
+
+//Env variables
 require('dotenv').config();
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

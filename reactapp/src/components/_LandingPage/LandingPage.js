@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import { Link } from 'react-router-dom';
+import { Auth0Lock } from 'auth0-lock';
 
 import plusIcon from '../../assets/images/plus-icon.svg';
 
@@ -27,8 +28,16 @@ import {
 	// Twillio,
 	Footer,
 	LogInPopUp,
-	SearchTags
+	SearchTags,
+	Auth0
 } from '../../components';
+
+//Auth0 lock - debug only
+const auth = new Auth0Lock(
+	process.env.REACT_APP_AUTH_CLIENT_ID,
+	process.env.REACT_APP_AUTH_DOMAIN_URL
+);
+//const auth = new Auth0();
 
 // styled-components
 const LandingPageContentWrapper = styled.div`
@@ -167,14 +176,19 @@ class LandingPage extends Component {
 	};
 
 	render() {
+		console.log(auth);
 		return (
 			<LandingPageWrapper>
 				<ScrollToTopOnMount />
 				<HeroImageContainer>
 					{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
-
+					<button onClick={auth.show}>Login</button>
 					<NewProjectLink to={`/newproject`}>
-						<img src={plusIcon} style={{ width: '30px', height: '30px' }} alt="Button to add new project" />
+						<img
+							src={plusIcon}
+							style={{ width: '30px', height: '30px' }}
+							alt="Button to add new project"
+						/>
 						<p style={{ margin: '1px 0 0 8px' }}>Submit a new project</p>
 					</NewProjectLink>
 

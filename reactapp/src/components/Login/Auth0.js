@@ -16,13 +16,19 @@ const options = {
 };
 
 export default class Auth0 {
-	lock = new Auth0Lock(
-		process.env.REACT_APP_AUTH_CLIENT_ID,
-		process.env.REACT_APP_AUTH_DOMAIN_URL,
-		options
-	);
+	constructor() {
+		this.lock = new Auth0Lock(
+			process.env.REACT_APP_AUTH_CLIENT_ID,
+			process.env.REACT_APP_AUTH_DOMAIN_URL,
+			options
+		);
+	}
 
+	hello = () => {
+		console.log('hello friend');
+	};
 	login = () => {
+		console.log('lets login, open lock');
 		this.lock.show({ initialScreen: 'login' });
 	};
 

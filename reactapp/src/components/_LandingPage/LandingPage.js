@@ -9,8 +9,10 @@ import {
 } from '../../actions/index';
 import { connect } from 'react-redux';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
+import Auth0 from '../Login/Auth0';
 import { Link } from 'react-router-dom';
 import { Auth0Lock } from 'auth0-lock';
+import logo from '../../assets/images/qraft-logo.png';
 
 import plusIcon from '../../assets/images/plus-icon.svg';
 
@@ -28,16 +30,28 @@ import {
 	// Twillio,
 	Footer,
 	LogInPopUp,
-	SearchTags,
-	Auth0
+	SearchTags
 } from '../../components';
 
 //Auth0 lock - debug only
-const auth = new Auth0Lock(
-	process.env.REACT_APP_AUTH_CLIENT_ID,
-	process.env.REACT_APP_AUTH_DOMAIN_URL
-);
-//const auth = new Auth0();
+const options = {
+	theme: {
+		logo: logo
+	},
+	socialButtonStyle: 'small',
+	auth: {
+		sso: false,
+		redirectUrl:
+			process.env.REACT_APP_REDIRECT_URL || 'http://localhost:3000/callback'
+	}
+};
+
+// const auth = new Auth0Lock(
+// 	process.env.REACT_APP_AUTH_CLIENT_ID,
+// 	process.env.REACT_APP_AUTH_DOMAIN_URL,
+// 	options
+// );
+const auth = new Auth0();
 
 // styled-components
 const LandingPageContentWrapper = styled.div`
@@ -182,7 +196,7 @@ class LandingPage extends Component {
 				<ScrollToTopOnMount />
 				<HeroImageContainer>
 					{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
-					<button onClick={auth.show}>Login</button>
+					<button onClick={auth.login}>Login</button>
 					<NewProjectLink to={`/newproject`}>
 						<img
 							src={plusIcon}

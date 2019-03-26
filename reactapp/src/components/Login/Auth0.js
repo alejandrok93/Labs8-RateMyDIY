@@ -11,7 +11,7 @@ const options = {
 	auth: {
 		sso: false,
 		redirectUrl:
-			process.env.REACT_APP_REDIRECT_URL || 'http://localhost:3000/callback'
+			process.env.REACT_APP_REDIRECT_URL || 'http://localhost:5000/callback'
 	}
 };
 

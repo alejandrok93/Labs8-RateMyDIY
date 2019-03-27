@@ -337,6 +337,7 @@ const ProjectPageContainer = styled.div`
 	justify-content: center;
 	margin: 100px auto;
 	width: 100%;
+	
 `;
 
 const ProjectContainer = styled.div`
@@ -346,6 +347,10 @@ const ProjectContainer = styled.div`
 	min-width: 20%;
 	width: 50%;
 	max-width: 750px;
+	@media (max-width: 500px) {
+		margin-right: 18%;
+	}
+	
 `;
 
 const StatusMessage = styled.p``;

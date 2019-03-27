@@ -6,6 +6,7 @@
 	width: 90%;
 	display: flex;
 	flex-direction: column;
+	
 }
 .search-results {
 	width: 90%;
@@ -39,5 +40,11 @@
 	.search-results {
 		width: 80%;
 		margin: 15px auto;
+		justify-content: center;
+	}
+	.search-results-container {
+		width: 100%;
+		
+		
 	}
 }

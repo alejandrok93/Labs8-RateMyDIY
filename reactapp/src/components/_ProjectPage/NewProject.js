@@ -24,6 +24,11 @@ const NewProjectContainer = styled.div`
   background: #e9ded8;
   border-radius: 4px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  @media (max-width: 500px) {
+    width: 80%; 
+    margin: 80px 0 0 10px ;
+    padding: 20px 25px 20px 25px;
+  }
 `;
 
 const NewProjectBody = styled.div`
@@ -103,6 +108,9 @@ const TextArea = styled.textarea`
   resize: none;
   padding: 10px;
   margin: 6px 0 20px;
+  @media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const CancelButton = styled.button`
@@ -340,7 +348,6 @@ class NewProject extends Component {
         <NewProjectContainer>
           {this.state.redirect && <Redirect push to={this.state.redirect} />}
           <ProjectForm onSubmit={this.singleFileUploadHandler}>
-            Project title:
             <ProjectHeader>
               <ProjectNameInput
                 name="project_name"
@@ -400,7 +407,6 @@ class NewProject extends Component {
                 </ProjectImageFile>
               </label>
             </ProjectImageFlex>
-            Project description:
             <TextArea
               name="text"
               rows="6"

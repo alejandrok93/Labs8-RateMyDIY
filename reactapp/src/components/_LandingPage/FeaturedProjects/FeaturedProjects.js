@@ -30,7 +30,7 @@ const FeaturedProjectListTiles = styled.div`
 
 	@media (max-width: 500px) {
 		width: 100%;
-		align-self: center;
+		justify-content: center;
 	}
 `;
 

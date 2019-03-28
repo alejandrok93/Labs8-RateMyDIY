@@ -391,7 +391,7 @@ class NewProject extends Component {
               disabled={this.props.addingProject}
             />
             <ProjectImageFlex>
-              <label for="myuniqueid">
+              <label htmlFor="myuniqueid">
                 <ProjectImageFile>
                   <ImageFileUpload>
                     <svg

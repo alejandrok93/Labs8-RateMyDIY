@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import axios from 'axios';
 
 // Components
 import { ConfirmModal, Header } from '../../components';
 
 // Actions
-import { addProject } from '../../actions';
+import { addProject, uploadProjectImage } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -185,33 +184,36 @@ const options = [
 
 class NewProject extends Component {
   state = {
-    project_name: '',
-    img_url: null,
-    text: '',
+    project_name: 'test',
+    text: 'test',
     categories: [],
     imagePreviewUrl: ''
   };
 
-  handleSelect = categories => {
+  handleCategorySelect = categories => {
     this.setState({ categories });
     console.log(`Option selected:`, categories);
   };
 
   singleFileChangedHandler = event => {
+
     this.setState({
       selectedFile: event.target.files[0]
     });
+    
     let reader = new FileReader();
     let file = event.target.files[0];
 
+    reader.readAsDataURL(file);
+
+    // sets state once reader loads successfully
     reader.onloadend = () => {
       this.setState({
         file: file,
         imagePreviewUrl: reader.result
       });
     };
-
-    reader.readAsDataURL(file);
+    
   };
 
   singleFileUploadHandler = event => {
@@ -226,72 +228,11 @@ class NewProject extends Component {
         this.state.selectedFile,
         this.state.selectedFile.name
       );
-      this.setState({
-        uploadingProjectImage: true
-      });
-      axios
-        .post(
-          (process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
-            `/api/projects/image-upload`,
-          data,
-          {
-            onUploadProgress: progressEvent => {
-              console.log(
-                'Upload Progress:' +
-                  Math.round(
-                    (progressEvent.loaded / progressEvent.total) * 100
-                  ) +
-                  '%'
-              );
-            }
-          },
-          {
-            headers: {
-              accept: 'application/json',
-              'Accept-Language': 'en-US,en;q=0.8',
-              'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-            }
-          }
-        )
-        .then(response => {
-          if (200 === response.status) {
-            // If file size is larger than expected.
-            if (response.data.error) {
-              if ('LIMIT_FILE_SIZE' === response.data.error.code) {
-                // this.ocShowAlert("Max size: 2MB", "red");
-                this.setState({
-                  uploadingProjectImage: false
-                });
-              } else {
-                this.setState({
-                  uploadingProjectImage: false
-                });
-                console.log(response.data.location);
-                // If not the given file type
-                // this.ocShowAlert(response.data.error, "red");
-                console.log(response.data.path);
-              }
-            } else {
-              let photo = response.data.location;
-              this.setState(
-                {
-                  projectImage: photo,
-                  uploadingProjectImage: false
-                },
-                () => {
-                  this.submitProjectChanges();
-                }
-              );
-            }
-          } else {
-            console.log('error');
-          }
-        })
-        .catch(error => {
-          // If another error
-          console.log('error');
-        });
+      this.props.uploadProjectImage(data,
+        url => this.setState({ img_url: url })
+        );
     }
+    
   };
   // Keep form data in the state
   changeHandler = event => {
@@ -299,21 +240,22 @@ class NewProject extends Component {
   };
 
   // Submit new project
-  submitProjectChanges = event => {
-    if (this.props.selectedFile && !this.state.uploadingProjectImage) {
-      this.singleFileUploadHandler(event);
-    }
-		this.props.addProject(
-			{
-				user_id: this.props.userInfo.user_id,
-				project_name: this.state.project_name,
-				img_url: this.state.projectImage,
-				text: this.state.text,
-				categories: [this.state.categories.value]
-			},
-			url => this.setState({ redirect: url })
-		);
-	};
+  // submitProjectChanges = event => {
+  //   if (this.props.selectedFile && !this.state.uploadingProjectImage) {
+  //     console.log(this.singleFileUploadHandler(event,));
+  //   };
+
+	// 	this.props.addProject(
+	// 		{
+	// 			user_id: this.props.userInfo.user_id,
+	// 			project_name: this.state.project_name,
+	// 			img_url: this.state.projectImage,
+	// 			text: this.state.text,
+	// 			categories: [this.state.categories.value]
+	// 		},
+	// 		url => this.setState({ redirect: url })
+	// 	);
+	// };
 
   // Cancel new project (with confirmation prompt)
   cancelHandler = event => {
@@ -363,7 +305,7 @@ class NewProject extends Component {
                 {/* // Not multi select !! */}
                 <Select
                   value={this.state.categories}
-                  onChange={this.handleSelect}
+                  onChange={this.handleCategorySelect}
                   options={options}
                   placeholder="Select category"
                   style={{ fontSize: '1.6rem' }}
@@ -391,7 +333,7 @@ class NewProject extends Component {
               disabled={this.props.addingProject}
             />
             <ProjectImageFlex>
-              <label for="myuniqueid">
+              <label htmlFor="myuniqueid">
                 <ProjectImageFile>
                   <ImageFileUpload>
                     <svg
@@ -457,6 +399,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    addProject
+    addProject,
+    uploadProjectImage
   }
 )(NewProject);

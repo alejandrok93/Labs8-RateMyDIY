@@ -11,6 +11,9 @@ import {
 	DELETING_PROJECT,
 	DELETED_PROJECT,
 	DELETE_PROJECT_ERROR,
+	UPLOADING_PROJECT_IMAGE,
+	UPLOADED_PROJECT_IMAGE,
+	UPLOAD_PROJECT_IMAGE_ERROR,
 	UPDATING_PROJECT_IMAGE,
 	UPDATED_PROJECT_IMAGE,
 	UPDATE_PROJECT_IMAGE_ERROR,
@@ -112,6 +115,18 @@ const projectReducer = (state = initialState, action) => {
 				deletingProject: false,
 				DeletingProjectError: `${action.payload}`
 			};
+		
+		// uploadProjectImage
+		case UPLOADING_PROJECT_IMAGE:
+			return { ...state, uploadingProjectImage: true};
+		
+		case UPLOADED_PROJECT_IMAGE:
+			return { ...state, uploadingProjectImage: false, img_url: action.location};
+
+		case UPLOAD_PROJECT_IMAGE_ERROR:
+			return { ...state,
+				uploadingProjectImage: false,
+				uploadingProjectImageError: `${action.payload}`}
 
 		// updateProjectImage
 		case UPDATING_PROJECT_IMAGE:

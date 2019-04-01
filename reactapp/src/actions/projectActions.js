@@ -19,6 +19,10 @@ export const UPDATE_PROJECT_ERROR = 'UPDATE_PROJECT_ERROR';
 export const DELETING_PROJECT = 'DELETING_PROJECT';
 export const DELETED_PROJECT = 'DELETED_PROJECT';
 export const DELETE_PROJECT_ERROR = 'DELETE_PROJECT_ERROR';
+// uploadProjectImage
+export const UPLOADING_PROJECT_IMAGE = 'UPLOADING_PROJECT_IMAGE';
+export const UPLOADED_PROJECT_IMAGE = 'UPLOADED_PROJECT_IMAGE';
+export const UPLOAD_PROJECT_IMAGE_ERROR = 'UPLOAD_PROJECT_IMAGE_ERROR';
 // updateProjectImage
 export const UPDATING_PROJECT_IMAGE = 'UPDATING_PROJECT_IMAGE';
 export const UPDATED_PROJECT_IMAGE = 'UPDATED_PROJECT_IMAGE';
@@ -201,6 +205,27 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 			);
 	};
 };
+
+export const uploadProjectImage = (image) => {
+	return dispatch => {
+		dispatch({ type: UPLOADING_PROJECT_IMAGE });
+
+		axios
+			.post(
+				(process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
+				`/api/projects/image-upload`,
+				image
+			)
+			.then(({ data }) => {
+				dispatch({ type: UPLOADED_PROJECT_IMAGE, payload: data });
+				console.log(data);
+			})
+			
+			.catch(error => 
+				dispatch({ type: UPLOAD_PROJECT_IMAGE_ERROR, payload: error })
+			);
+	};
+}
 
 // get reviews by project_id
 export const getProjectReviews = (user_id, project_id) => {

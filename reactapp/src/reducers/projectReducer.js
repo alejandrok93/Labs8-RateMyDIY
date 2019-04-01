@@ -121,8 +121,8 @@ const projectReducer = (state = initialState, action) => {
 			return { ...state, uploadingProjectImage: true};
 		
 		case UPLOADED_PROJECT_IMAGE:
-			return { ...state, uploadingProjectImage: false, img_url: action.location};
-
+			return { ...state, uploadingProjectImage: false};
+			
 		case UPLOAD_PROJECT_IMAGE_ERROR:
 			return { ...state,
 				uploadingProjectImage: false,

@@ -219,7 +219,6 @@ export const uploadProjectImage = (image, callback) => {
 			.then(response => {
 				dispatch({ type: UPLOADED_PROJECT_IMAGE, payload: response });
 				callback(response.data.location);
-				console.log(response.data.location);
 			})
 			
 			.catch(error => 

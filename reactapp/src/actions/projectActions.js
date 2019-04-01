@@ -206,7 +206,7 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 	};
 };
 
-export const uploadProjectImage = (image) => {
+export const uploadProjectImage = (image, callback) => {
 	return dispatch => {
 		dispatch({ type: UPLOADING_PROJECT_IMAGE });
 
@@ -216,9 +216,10 @@ export const uploadProjectImage = (image) => {
 				`/api/projects/image-upload`,
 				image
 			)
-			.then(({ data }) => {
-				dispatch({ type: UPLOADED_PROJECT_IMAGE, payload: data });
-				console.log(data);
+			.then(response => {
+				dispatch({ type: UPLOADED_PROJECT_IMAGE, payload: response });
+				callback(response.data.location);
+				console.log(response.data.location);
 			})
 			
 			.catch(error => 

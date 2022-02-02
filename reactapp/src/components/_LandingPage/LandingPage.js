@@ -53,7 +53,7 @@ const LandingPageWrapper = styled.div`
 `;
 
 const imgUrl =
-	'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
+	'https://www.pexels.com/photo/man-using-a-laptop-at-a-wood-workshop-4491881';
 
 const HeroImageContainer = styled.div`
 	width: 100%;

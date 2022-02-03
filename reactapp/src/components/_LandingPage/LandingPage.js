@@ -12,6 +12,7 @@ import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import { Link } from 'react-router-dom';
 
 import plusIcon from '../../assets/images/plus-icon.svg';
+import imgUrl from '../../../public/img/craft-project-laptop.jpg';
 
 // ReactStrap
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -51,9 +52,6 @@ const LandingPageWrapper = styled.div`
 		width: 100vw;
 	}
 `;
-
-const imgUrl =
-	'https://www.pexels.com/photo/man-using-a-laptop-at-a-wood-workshop-4491881';
 
 const HeroImageContainer = styled.div`
 	width: 100%;

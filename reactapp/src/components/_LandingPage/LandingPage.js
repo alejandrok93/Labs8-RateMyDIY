@@ -12,7 +12,7 @@ import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import { Link } from 'react-router-dom';
 
 import plusIcon from '../../assets/images/plus-icon.svg';
-import imgUrl from '../../../public/img/craft-project-laptop.jpg';
+import imgUrl from '../../assets/images/craft-project-laptop.jpg';
 
 // ReactStrap
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
